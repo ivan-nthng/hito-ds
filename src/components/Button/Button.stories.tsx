@@ -1,37 +1,38 @@
 import React from "react";
-import type { Meta, StoryObj } from "@storybook/react";
+import { Meta, StoryObj } from "@storybook/react";
 import { Button } from "./Button";
 import { Icons } from "../Icons";
 
-const meta = {
+const meta: Meta<typeof Button> = {
   title: "Components/Button/Interactive Playground",
   component: Button,
   parameters: {
     layout: "centered",
+    controls: { sort: "requiredFirst" },
   },
-  tags: ["autodocs"],
   argTypes: {
+    // Size
     size: {
       control: { type: "select" },
       options: ["sm", "md", "lg", "xl"],
-      description: "Controls the size of the button",
+      description: "Sets the size of the button.",
       table: {
-        type: { summary: "sm | md | lg | xl" },
-        defaultValue: { summary: "md" },
+        category: "Size",
       },
     },
+
+    // State
     state: {
       control: { type: "select" },
-      options: ["default", "hover", "focused", "push", "disabled", "loading"],
-      description: "Manages button states",
+      options: ["default", "hover", "focused", "push", "disabled"],
+      description: "Defines the current state of the button.",
       table: {
-        type: {
-          summary: "default | hover | focused | push | disabled | loading",
-        },
-        defaultValue: { summary: "default" },
+        category: "State",
       },
     },
-    style: {
+
+    // Variant
+    variant: {
       control: { type: "select" },
       options: [
         "primary",
@@ -44,130 +45,135 @@ const meta = {
         "ghost-icon",
         "plain-icon",
       ],
-      description: "Changes button style",
+      description: "Specifies the variant of the button.",
       table: {
-        type: {
-          summary:
-            "primary | secondary | ghost | plain | link | primary-icon | secondary-icon | ghost-icon | plain-icon",
-        },
-        defaultValue: { summary: "primary" },
+        category: "Variant",
       },
     },
+
+    // Feedback
     feedback: {
       control: { type: "select" },
       options: ["default", "error", "success"],
-      description: "Allows feedback styling",
+      description: "Sets feedback styling for the button.",
       table: {
-        type: { summary: "default | error | success" },
-        defaultValue: { summary: "default" },
+        category: "Feedback",
       },
     },
-    left: {
+
+    // Icons
+    leftIcon: {
       control: "boolean",
-      description: "Toggle left icon visibility",
+      description: "Toggle visibility of the left icon.",
       table: {
-        type: { summary: "boolean" },
-        defaultValue: { summary: false },
+        category: "Icons",
       },
     },
-    right: {
+    rightIcon: {
       control: "boolean",
-      description: "Toggle right icon visibility",
+      description: "Toggle visibility of the right icon.",
       table: {
-        type: { summary: "boolean" },
-        defaultValue: { summary: false },
-      },
-    },
-    children: {
-      control: "text",
-      description: "Button text content",
-      table: {
-        type: { summary: "string" },
+        category: "Icons",
       },
     },
   },
-} satisfies Meta<typeof Button>;
+};
 
 export default meta;
 type Story = StoryObj<typeof Button>;
 
+// Interactive Playground
 export const Playground: Story = {
   args: {
+    children: "Button",
     size: "md",
     state: "default",
-    style: "primary",
+    variant: "primary",
     feedback: "default",
-    left: false,
-    right: false,
-    children: "Button",
-    leftContent: <Icons.ArrowLeft />,
-    rightContent: <Icons.ArrowRight />,
+    leftIcon: false,
+    rightIcon: false,
   },
+  render: (args) => (
+    <Button
+      {...args}
+      leftIcon={args.leftIcon ? <Icons.Plus size={16} /> : undefined}
+      rightIcon={args.rightIcon ? <Icons.X size={16} /> : undefined}
+    />
+  ),
 };
 
-// Documentation examples
+// Size Examples
 export const Sizes: Story = {
   render: () => (
-    <div className="flex items-center gap-4">
-      <Button size="sm">Small</Button>
-      <Button size="md">Medium</Button>
-      <Button size="lg">Large</Button>
-      <Button size="xl">Extra Large</Button>
+    <div className="space-y-4">
+      <Button size="sm">Small button</Button>
+      <Button size="md">Medium button</Button>
+      <Button size="lg">Large button</Button>
+      <Button size="xl">Extra large button</Button>
     </div>
   ),
 };
 
-export const Styles: Story = {
+// Variant Examples
+export const Variants: Story = {
   render: () => (
-    <div className="flex flex-wrap items-center gap-4">
-      <Button style="primary">Primary</Button>
-      <Button style="secondary">Secondary</Button>
-      <Button style="ghost">Ghost</Button>
-      <Button style="plain">Plain</Button>
-      <Button style="link">Link</Button>
+    <div className="space-y-4">
+      <Button variant="primary">Primary button</Button>
+      <Button variant="secondary">Secondary button</Button>
+      <Button variant="ghost">Ghost button</Button>
+      <Button variant="plain">Plain button</Button>
+      <Button variant="link">Link button</Button>
+      <Button variant="primary-icon">
+        <Icons.Plus size={16} />
+      </Button>
+      <Button variant="secondary-icon">
+        <Icons.Plus size={16} />
+      </Button>
+      <Button variant="ghost-icon">
+        <Icons.Plus size={16} />
+      </Button>
+      <Button variant="plain-icon">
+        <Icons.Plus size={16} />
+      </Button>
     </div>
   ),
 };
 
+// State Examples
 export const States: Story = {
   render: () => (
-    <div className="flex flex-wrap items-center gap-4">
-      <Button state="default">Default</Button>
-      <Button state="hover">Hover</Button>
-      <Button state="focused">Focused</Button>
-      <Button state="push">Push</Button>
-      <Button state="disabled">Disabled</Button>
-      <Button isLoading>Loading</Button>
+    <div className="space-y-4">
+      <Button state="default">Default state</Button>
+      <Button state="hover">Hover state</Button>
+      <Button state="focused">Focused state</Button>
+      <Button state="push">Push state</Button>
+      <Button state="disabled">Disabled state</Button>
     </div>
   ),
 };
 
+// Feedback Examples
 export const Feedback: Story = {
   render: () => (
-    <div className="flex items-center gap-4">
-      <Button feedback="default">Default</Button>
-      <Button feedback="error">Error</Button>
-      <Button feedback="success">Success</Button>
+    <div className="space-y-4">
+      <Button feedback="default">Default feedback</Button>
+      <Button feedback="error">Error feedback</Button>
+      <Button feedback="success">Success feedback</Button>
     </div>
   ),
 };
 
+// Icon Examples
 export const WithIcons: Story = {
   render: () => (
-    <div className="flex items-center gap-4">
-      <Button left leftContent={<Icons.ArrowLeft />}>
-        Left Icon
-      </Button>
-      <Button right rightContent={<Icons.ArrowRight />}>
-        Right Icon
-      </Button>
+    <div className="space-y-4">
+      <Button leftIcon={<Icons.Plus size={16} />}>With left icon</Button>
+      <Button rightIcon={<Icons.X size={16} />}>With right icon</Button>
       <Button
-        left
-        right
-        leftContent={<Icons.ArrowLeft />}
-        rightContent={<Icons.ArrowRight />}
+        leftIcon={<Icons.Plus size={16} />}
+        rightIcon={<Icons.X size={16} />}
       >
-        Both Icons
+        With both icons
       </Button>
     </div>
   ),
