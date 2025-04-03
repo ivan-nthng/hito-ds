@@ -1,0 +1,117 @@
+import { Meta, ColorPalette, ColorItem } from "@storybook/blocks";
+import { LightTheme, DarkTheme } from "./colors";
+
+<Meta title="Design System/Colors" />
+
+# Color System
+
+Our color system is built with accessibility and flexibility in mind. Colors are defined using HSL values for better manipulation and theme support.
+
+## Primary Colors
+
+<ColorPalette>
+	<ColorItem
+		title="Primary"
+		subtitle="Primary brand colors"
+		colors={{
+			50: "hsl(213, 100%, 96%)",
+			100: "hsl(214, 95%, 93%)",
+			200: "hsl(213, 97%, 87%)",
+			300: "hsl(212, 96%, 78%)",
+			400: "hsl(213, 94%, 68%)",
+			500: "hsl(217, 91%, 60%)",
+			600: "hsl(221, 83%, 53%)",
+			700: "hsl(224, 76%, 48%)",
+			800: "hsl(226, 71%, 40%)",
+			900: "hsl(224, 64%, 33%)",
+			950: "hsl(226, 57%, 21%)",
+		}}
+	/>
+</ColorPalette>
+
+## Gray Scale
+
+<ColorPalette>
+	<ColorItem
+		title="Gray"
+		subtitle="Neutral colors"
+		colors={{
+			50: "hsl(0, 0%, 98%)",
+			100: "hsl(0, 0%, 96%)",
+			200: "hsl(0, 0%, 90%)",
+			300: "hsl(0, 0%, 83%)",
+			400: "hsl(0, 0%, 64%)",
+			500: "hsl(0, 0%, 45%)",
+			600: "hsl(0, 0%, 32%)",
+			700: "hsl(0, 0%, 25%)",
+			800: "hsl(0, 0%, 15%)",
+			900: "hsl(0, 0%, 9%)",
+			950: "hsl(0, 0%, 4%)",
+		}}
+	/>
+</ColorPalette>
+
+## Theme Colors
+
+### Light Theme
+
+<ColorPalette>
+	<ColorItem
+		title="Background & Foreground"
+		colors={{
+			background: LightTheme.background,
+			foreground: LightTheme.foreground,
+		}}
+	/>
+	<ColorItem
+		title="UI Elements"
+		colors={{
+			border: LightTheme.border,
+			divider: LightTheme.divider,
+			ring: LightTheme.ring,
+			focus: LightTheme.focus,
+		}}
+	/>
+</ColorPalette>
+
+### Dark Theme
+
+<ColorPalette>
+	<ColorItem
+		title="Background & Foreground"
+		colors={{
+			background: DarkTheme.background,
+			foreground: DarkTheme.foreground,
+		}}
+	/>
+	<ColorItem
+		title="UI Elements"
+		colors={{
+			border: DarkTheme.border,
+			divider: DarkTheme.divider,
+			ring: DarkTheme.ring,
+			focus: DarkTheme.focus,
+		}}
+	/>
+</ColorPalette>
+
+## Usage
+
+### Direct Color Usage
+
+```tsx
+<div className="bg-primary-500">Primary Color</div>
+<div className="text-gray-700">Gray Text</div>
+```
+
+### Theme-Aware Usage
+
+```tsx
+<div className="bg-background text-foreground">Theme-aware content</div>
+```
+
+### Dark Mode Support
+
+```tsx
+<div className="bg-primary-500 dark:bg-primary-600">Dark mode supported content</div>
+```

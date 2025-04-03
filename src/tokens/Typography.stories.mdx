@@ -1,0 +1,122 @@
+import { Meta, Typeset } from "@storybook/blocks";
+import { Typography } from "./primitives/typography";
+
+<Meta title="Design System/Typography" />
+
+# Typography System
+
+Our typography system is built with readability and scalability in mind. It uses a modular scale and consistent line heights to maintain vertical rhythm.
+
+## Font Families
+
+### Sans Serif
+
+<div style={{ fontFamily: Typography.fonts.sans }}>The quick brown fox jumps over the lazy dog</div>
+
+### Serif
+
+<div style={{ fontFamily: Typography.fonts.serif }}>The quick brown fox jumps over the lazy dog</div>
+
+### Monospace
+
+<div style={{ fontFamily: Typography.fonts.mono }}>The quick brown fox jumps over the lazy dog</div>
+
+## Font Sizes
+
+### Display & Headings
+
+<Typeset
+	fontSizes={[Typography.fontSizes["5xl"], Typography.fontSizes["4xl"], Typography.fontSizes["3xl"], Typography.fontSizes["2xl"]]}
+	fontWeight={Typography.fontWeights.bold}
+	sampleText="The quick brown fox jumps over the lazy dog"
+	fontFamily={Typography.fonts.sans}
+/>
+
+### Body Text
+
+<Typeset
+	fontSizes={[Typography.fontSizes.xl, Typography.fontSizes.lg, Typography.fontSizes.base, Typography.fontSizes.sm, Typography.fontSizes.xs]}
+	fontWeight={Typography.fontWeights.normal}
+	sampleText="The quick brown fox jumps over the lazy dog"
+	fontFamily={Typography.fonts.sans}
+/>
+
+## Font Weights
+
+<div className="space-y-4">
+	<div style={{ fontWeight: Typography.fontWeights.thin }}>Thin (100)</div>
+	<div style={{ fontWeight: Typography.fontWeights.extralight }}>Extra Light (200)</div>
+	<div style={{ fontWeight: Typography.fontWeights.light }}>Light (300)</div>
+	<div style={{ fontWeight: Typography.fontWeights.normal }}>Normal (400)</div>
+	<div style={{ fontWeight: Typography.fontWeights.medium }}>Medium (500)</div>
+	<div style={{ fontWeight: Typography.fontWeights.semibold }}>Semibold (600)</div>
+	<div style={{ fontWeight: Typography.fontWeights.bold }}>Bold (700)</div>
+	<div style={{ fontWeight: Typography.fontWeights.extrabold }}>Extra Bold (800)</div>
+	<div style={{ fontWeight: Typography.fontWeights.black }}>Black (900)</div>
+</div>
+
+## Line Heights
+
+<div className="space-y-8">
+	<div>
+		<div className="text-sm text-gray-500 mb-2">None (1)</div>
+		<div style={{ lineHeight: Typography.lineHeights.none }} className="bg-gray-100 p-4">
+			This text has no line height.
+			<br />
+			See how the lines are very close together?
+		</div>
+	</div>
+
+	<div>
+		<div className="text-sm text-gray-500 mb-2">Normal (1.5)</div>
+		<div style={{ lineHeight: Typography.lineHeights.normal }} className="bg-gray-100 p-4">
+			This text has normal line height.
+			<br />
+			See how the lines have comfortable spacing?
+		</div>
+	</div>
+
+	<div>
+		<div className="text-sm text-gray-500 mb-2">Relaxed (1.625)</div>
+		<div style={{ lineHeight: Typography.lineHeights.relaxed }} className="bg-gray-100 p-4">
+			This text has relaxed line height.
+			<br />
+			See how the lines have more breathing room?
+		</div>
+	</div>
+</div>
+
+## Usage
+
+### Headings
+
+```tsx
+<h1 className="text-5xl font-bold">Heading 1</h1>
+<h2 className="text-4xl font-bold">Heading 2</h2>
+<h3 className="text-3xl font-semibold">Heading 3</h3>
+<h4 className="text-2xl font-semibold">Heading 4</h4>
+```
+
+### Body Text
+
+```tsx
+<p className="text-base">Default body text</p>
+<p className="text-lg">Larger body text</p>
+<p className="text-sm">Smaller body text</p>
+```
+
+### Font Weights
+
+```tsx
+<p className="font-normal">Normal text</p>
+<p className="font-medium">Medium text</p>
+<p className="font-bold">Bold text</p>
+```
+
+### Line Heights
+
+```tsx
+<p className="leading-none">No line height</p>
+<p className="leading-normal">Normal line height</p>
+<p className="leading-relaxed">Relaxed line height</p>
+```

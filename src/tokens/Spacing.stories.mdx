@@ -1,0 +1,112 @@
+import { Meta } from "@storybook/blocks";
+import { SpacingTokens } from "./spacing";
+
+<Meta title="Design System/Spacing" />
+
+# Spacing System
+
+Our spacing system is built on a consistent scale that helps maintain visual harmony throughout the application.
+
+## Content Spacing
+
+Used for spacing within content areas, such as paragraphs, lists, and other text elements.
+
+<div className="space-y-4">
+	{Object.entries(SpacingTokens.content).map(([key, value]) => (
+		<div key={key} className="flex items-center">
+			<div className="w-24">{key}</div>
+			<div className="bg-primary-100 h-4" style={{ width: value }}></div>
+			<div className="ml-4 text-sm text-gray-500">{value}</div>
+		</div>
+	))}
+</div>
+
+## Layout Spacing
+
+Used for major layout elements like grids, margins, and gaps between sections.
+
+<div className="space-y-4">
+	{Object.entries(SpacingTokens.layout).map(([key, value]) => (
+		<div key={key} className="flex items-center">
+			<div className="w-24">{key}</div>
+			<div className="bg-primary-100 h-4" style={{ width: value }}></div>
+			<div className="ml-4 text-sm text-gray-500">{value}</div>
+		</div>
+	))}
+</div>
+
+## Component Spacing
+
+Used for spacing within and between components.
+
+<div className="space-y-4">
+	{Object.entries(SpacingTokens.component).map(([key, value]) => (
+		<div key={key} className="flex items-center">
+			<div className="w-24">{key}</div>
+			<div className="bg-primary-100 h-4" style={{ width: value }}></div>
+			<div className="ml-4 text-sm text-gray-500">{value}</div>
+		</div>
+	))}
+</div>
+
+## Section Spacing
+
+Used for spacing between major sections of a page.
+
+<div className="space-y-4">
+	{Object.entries(SpacingTokens.section).map(([key, value]) => (
+		<div key={key} className="flex items-center">
+			<div className="w-24">{key}</div>
+			<div className="bg-primary-100 h-4" style={{ width: value }}></div>
+			<div className="ml-4 text-sm text-gray-500">{value}</div>
+		</div>
+	))}
+</div>
+
+## Usage Examples
+
+### Content Spacing
+
+```tsx
+<div className="space-y-content-md">
+	<p>First paragraph</p>
+	<p>Second paragraph</p>
+</div>
+```
+
+### Layout Spacing
+
+```tsx
+<div className="grid gap-layout-gutter">
+	<div>Grid item 1</div>
+	<div>Grid item 2</div>
+</div>
+```
+
+### Component Spacing
+
+```tsx
+<button className="p-component-md">
+	<span>Button text</span>
+</button>
+```
+
+### Section Spacing
+
+```tsx
+<section className="mb-section-lg">
+	<h2>Section Title</h2>
+	<div>Section content</div>
+</section>
+```
+
+## Spacing Scale
+
+Our spacing scale is based on a 4px unit (0.25rem), providing consistent increments throughout the application.
+
+### Tips for Using Spacing
+
+1. **Consistent Rhythm**: Use the spacing scale to maintain consistent vertical rhythm in your layouts.
+2. **Component Spacing**: Use component-specific spacing tokens for consistent padding and margins within components.
+3. **Responsive Design**: Adjust spacing based on viewport size using responsive utilities.
+4. **Visual Hierarchy**: Use larger spacing values to create clear separation between major sections.
