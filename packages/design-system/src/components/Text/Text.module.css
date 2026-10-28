@@ -1,0 +1,37 @@
+@layer hito.components {
+  .root {
+    margin: 0;
+    color: var(--color-text-primary);
+  }
+
+  .regular { --text-emphasis: var(--type-emphasis-regular); }
+  .medium { --text-emphasis: var(--type-emphasis-medium); }
+  .strong { --text-emphasis: var(--type-emphasis-strong); }
+  .bold { --text-emphasis: var(--type-emphasis-bold); }
+
+  .uiSm { font: var(--text-emphasis, var(--type-ui-sm-font-weight)) var(--type-ui-sm-font-size) / var(--type-ui-sm-line-height) var(--type-family-base); letter-spacing: var(--type-ui-sm-letter-spacing); }
+  .uiMd { font: var(--text-emphasis, var(--type-ui-md-font-weight)) var(--type-ui-md-font-size) / var(--type-ui-md-line-height) var(--type-family-base); letter-spacing: var(--type-ui-md-letter-spacing); }
+  .uiLg { font: var(--text-emphasis, var(--type-ui-lg-font-weight)) var(--type-ui-lg-font-size) / var(--type-ui-lg-line-height) var(--type-family-base); letter-spacing: var(--type-ui-lg-letter-spacing); }
+  .uiXl { font: var(--text-emphasis, var(--type-ui-xl-font-weight)) var(--type-ui-xl-font-size) / var(--type-ui-xl-line-height) var(--type-family-base); letter-spacing: var(--type-ui-xl-letter-spacing); }
+  .labelSm { font: var(--text-emphasis, var(--type-label-sm-font-weight)) var(--type-label-sm-font-size) / var(--type-label-sm-line-height) var(--type-family-display); letter-spacing: var(--type-label-sm-letter-spacing); }
+  .labelBase { font: var(--text-emphasis, var(--type-label-base-font-weight)) var(--type-label-base-font-size) / var(--type-label-base-line-height) var(--type-family-display); letter-spacing: var(--type-label-base-letter-spacing); }
+  .labelLg { font: var(--text-emphasis, var(--type-label-lg-font-weight)) var(--type-label-lg-font-size) / var(--type-label-lg-line-height) var(--type-family-display); letter-spacing: var(--type-label-lg-letter-spacing); }
+  .labelEyebrow { font: var(--text-emphasis, var(--type-label-eyebrow-font-weight)) var(--type-label-eyebrow-font-size) / var(--type-label-eyebrow-line-height) var(--type-family-display); letter-spacing: var(--type-label-eyebrow-letter-spacing); text-transform: uppercase; }
+  .bodySm { font: var(--text-emphasis, var(--type-body-sm-font-weight)) var(--type-body-sm-font-size) / var(--type-body-sm-line-height) var(--type-family-base); letter-spacing: var(--type-body-sm-letter-spacing); }
+  .bodyBase { font: var(--text-emphasis, var(--type-body-base-font-weight)) var(--type-body-base-font-size) / var(--type-body-base-line-height) var(--type-family-base); letter-spacing: var(--type-body-base-letter-spacing); }
+  .bodyMd { font: var(--text-emphasis, var(--type-body-md-font-weight)) var(--type-body-md-font-size) / var(--type-body-md-line-height) var(--type-family-base); letter-spacing: var(--type-body-md-letter-spacing); }
+  .bodyLg { font: var(--text-emphasis, var(--type-body-lg-font-weight)) var(--type-body-lg-font-size) / var(--type-body-lg-line-height) var(--type-family-base); letter-spacing: var(--type-body-lg-letter-spacing); }
+  .headingSm { font: var(--text-emphasis, var(--type-heading-sm-font-weight)) var(--type-heading-sm-font-size) / var(--type-heading-sm-line-height) var(--type-family-display); letter-spacing: var(--type-heading-sm-letter-spacing); }
+  .headingBase { font: var(--text-emphasis, var(--type-heading-base-font-weight)) var(--type-heading-base-font-size) / var(--type-heading-base-line-height) var(--type-family-display); letter-spacing: var(--type-heading-base-letter-spacing); }
+  .headingMd { font: var(--text-emphasis, var(--type-heading-md-font-weight)) var(--type-heading-md-font-size) / var(--type-heading-md-line-height) var(--type-family-display); letter-spacing: var(--type-heading-md-letter-spacing); }
+  .headingLg { font: var(--text-emphasis, var(--type-heading-lg-font-weight)) var(--type-heading-lg-font-size) / var(--type-heading-lg-line-height) var(--type-family-display); letter-spacing: var(--type-heading-lg-letter-spacing); }
+  .headingXl { font: var(--text-emphasis, var(--type-heading-xl-font-weight)) var(--type-heading-xl-font-size) / var(--type-heading-xl-line-height) var(--type-family-display); letter-spacing: var(--type-heading-xl-letter-spacing); }
+  .technicalSm { font: var(--text-emphasis, var(--type-technical-sm-font-weight)) var(--type-technical-sm-font-size) / var(--type-technical-sm-line-height) var(--type-family-base); letter-spacing: var(--type-technical-sm-letter-spacing); }
+  .dataSm { font: var(--text-emphasis, var(--type-data-sm-font-weight)) var(--type-data-sm-font-size) / var(--type-data-sm-line-height) var(--type-family-mono); letter-spacing: var(--type-data-sm-letter-spacing); }
+  .dataBase { font: var(--text-emphasis, var(--type-data-base-font-weight)) var(--type-data-base-font-size) / var(--type-data-base-line-height) var(--type-family-mono); letter-spacing: var(--type-data-base-letter-spacing); }
+  .dataLg { font: var(--text-emphasis, var(--type-data-lg-font-weight)) var(--type-data-lg-font-size) / var(--type-data-lg-line-height) var(--type-family-mono); letter-spacing: var(--type-data-lg-letter-spacing); }
+  .displayHero { font: var(--text-emphasis, var(--type-display-hero-font-weight)) var(--type-display-hero-font-size) / var(--type-display-hero-line-height) var(--type-family-display); letter-spacing: var(--type-display-hero-letter-spacing); }
+  .displaySection { font: var(--text-emphasis, var(--type-display-section-font-weight)) var(--type-display-section-font-size) / var(--type-display-section-line-height) var(--type-family-display); letter-spacing: var(--type-display-section-letter-spacing); }
+  .displaySubtitle { font: var(--text-emphasis, var(--type-display-subtitle-font-weight)) var(--type-display-subtitle-font-size) / var(--type-display-subtitle-line-height) var(--type-family-display); letter-spacing: var(--type-display-subtitle-letter-spacing); }
+  .displayEyebrow { font: var(--text-emphasis, var(--type-display-eyebrow-font-weight)) var(--type-display-eyebrow-font-size) / var(--type-display-eyebrow-line-height) var(--type-family-display); letter-spacing: var(--type-display-eyebrow-letter-spacing); text-transform: uppercase; }
+}

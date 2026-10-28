@@ -1,0 +1,3 @@
+.example { display: grid; justify-items: start; gap: var(--layout-space-fixed-sm); max-inline-size: 100%; }
+.expanded { inline-size: 232px; max-inline-size: 100%; }
+.long { inline-size: 180px; max-inline-size: 100%; }

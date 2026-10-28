@@ -1,0 +1,59 @@
+@layer hito.components {
+  .root { min-inline-size: 0; }
+  .validationProxy {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    padding: 0;
+    border: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+  .popover {
+    flex-direction: column;
+    inline-size: calc(var(--ui-interaction-target-min) * 20);
+    max-inline-size: calc(100vw - var(--layout-space-fixed-md) - var(--layout-space-fixed-md));
+    overflow: hidden;
+  }
+  .popover:popover-open { display: flex; }
+  .compactPopover { inline-size: calc(var(--ui-interaction-target-min) * 12); }
+  .pairedCompactPopover { inline-size: calc(var(--ui-interaction-target-min) * 4 + var(--ref-space-10) * 14 + var(--layout-space-fixed-lg) * 2 + var(--layout-space-fixed-md) * 2); }
+  .popover [data-popover-content] { display: flex; flex-direction: column; min-block-size: 0; }
+  .popover [data-popover-body] { min-block-size: 0; overflow: auto; }
+  .content { display: grid; gap: var(--layout-space-fixed-md); min-inline-size: 0; }
+  .workspace { display: grid; grid-template-columns: calc(var(--ui-interaction-target-min) * 4) minmax(0, 1fr); gap: var(--layout-space-fixed-md); min-inline-size: 0; }
+  .content[data-calendar-layout="compact"] .workspace { grid-template-columns: calc(var(--ui-interaction-target-min) * 3) minmax(0, 1fr); }
+  .content[data-panel-layout="aligned"] .workspace { grid-template-columns: calc(var(--ui-interaction-target-min) * 4) minmax(0, 1fr); gap: var(--layout-space-fixed-lg); }
+  .workspace[data-has-presets="false"] { grid-template-columns: minmax(0, 1fr); }
+  .main { display: grid; align-content: start; gap: var(--layout-space-fixed-md); min-inline-size: 0; }
+  .rangeField { min-inline-size: 0; }
+  .rangeField fieldset > legend { position: absolute; inline-size: 1px; block-size: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+  .desktopPresets { min-inline-size: 0; border-inline-end: var(--border-width-default) solid var(--color-border-subtle); padding-inline-end: var(--ui-space-sm); }
+  .content[data-panel-layout="aligned"] .desktopPresets { display: grid; align-content: start; gap: var(--ui-space-2xs); padding-inline-end: 0; border: 0; }
+  .content[data-panel-layout="aligned"] .main { gap: var(--layout-space-fixed-lg); }
+  .quickPeriods { display: grid; align-content: start; gap: var(--ui-space-xs); min-inline-size: 0; }
+  .quickChoice { display: grid; gap: var(--ui-space-2xs); min-inline-size: 0; }
+  .periodButton { inline-size: 100%; justify-content: start; text-align: start; }
+  .reason { color: var(--color-text-secondary); }
+  .months { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--layout-space-fixed-md); }
+  .content[data-month-count="1"] .months { grid-template-columns: minmax(0, 1fr); justify-items: center; }
+  .content[data-panel-layout="aligned"] .months { gap: var(--layout-space-fixed-lg); }
+  .mobilePresetTrigger { inline-size: 100%; justify-content: space-between; text-align: start; }
+  .backButton { justify-self: start; }
+  .monthYearView { display: grid; align-content: start; gap: var(--layout-space-fixed-md); min-inline-size: 0; }
+  .yearNavigation { display: flex; align-items: center; justify-content: space-between; gap: var(--ui-space-xs); }
+  .yearNavigation h3 { margin: 0; }
+  .yearGrid, .monthGrid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--ui-space-xs); }
+  .monthGrid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .yearGrid > button, .monthGrid > button { min-inline-size: 0; }
+  .summary { color: var(--color-text-secondary); }
+  .hiddenSummary { position: absolute; inline-size: 1px; block-size: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  @media (width < 40rem) {
+    .workspace, .content[data-calendar-layout="compact"] .workspace, .content[data-panel-layout="aligned"] .workspace { grid-template-columns: minmax(0, 1fr); }
+    .desktopPresets { display: none; }
+    .months { grid-template-columns: minmax(0, 1fr); justify-items: center; }
+    .monthYearView { inline-size: 100%; }
+    .yearGrid > button, .monthGrid > button { min-block-size: var(--ui-interaction-target-min); padding-inline: var(--ui-space-xs); }
+  }
+}

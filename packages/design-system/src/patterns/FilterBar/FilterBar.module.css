@@ -1,0 +1,16 @@
+@layer hito.patterns {
+  .root { display: grid; gap: var(--ui-space-md); min-inline-size: 0; }
+  .header, .actions, .filters { display: flex; align-items: center; min-inline-size: 0; }
+  .header { justify-content: space-between; gap: var(--ui-space-lg); min-block-size: calc(var(--type-heading-md-font-size) * var(--type-heading-md-line-height)); }
+  .title { flex: 1 1 auto; min-inline-size: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .actions { flex: 0 0 auto; gap: var(--ui-space-sm); margin-inline-start: auto; max-inline-size: 100%; justify-content: end; }
+  .actions > * { flex-shrink: 0; }
+  .actions > [data-expanded="true"] { flex: 1 1 auto; min-inline-size: 0; }
+  .filters { flex-wrap: wrap; gap: var(--ui-space-sm); }
+  @media (max-width: 39.999rem) {
+    .header { gap: var(--ui-space-sm); min-block-size: calc(var(--type-heading-sm-font-size) * var(--type-heading-sm-line-height)); }
+    .title { font: var(--type-heading-sm-font-weight) var(--type-heading-sm-font-size) / var(--type-heading-sm-line-height) var(--type-family-display); letter-spacing: var(--type-heading-sm-letter-spacing); }
+    .header:has([data-expanded="true"]) .title { position: absolute; inline-size: 1px; block-size: 1px; clip-path: inset(50%); }
+    .actions:has([data-expanded="true"]) { flex: 1 1 0; }
+  }
+}

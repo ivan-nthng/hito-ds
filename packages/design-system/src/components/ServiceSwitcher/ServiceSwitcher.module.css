@@ -1,0 +1,15 @@
+@layer hito.components {
+  .slot { display: inline-flex; align-items: center; min-inline-size: 0; inline-size: 100%; min-block-size: var(--ui-interaction-target-min); }
+  .slot[data-compact] { inline-size: var(--ui-interaction-target-min); justify-content: center; flex-shrink: 0; }
+  .trigger[data-size="md"] {
+    --button-subtle-default: transparent;
+    --button-soft-foreground: var(--color-text-primary);
+    --button-soft-foreground-hover: var(--color-text-primary);
+    inline-size: 100%; min-inline-size: 0; block-size: var(--ui-control-height-md);
+    padding-block: 0; padding-inline: var(--ui-space-sm); justify-content: flex-start;
+  }
+  .trigger[data-compact] { inline-size: var(--ui-control-height-md); flex-shrink: 0; justify-content: center; padding: 0; }
+  .content { display: flex; align-items: center; gap: var(--ui-space-sm); min-inline-size: 0; }
+  .artwork { display: block; inline-size: var(--ui-icon-size-md); block-size: var(--ui-icon-size-md); object-fit: contain; flex-shrink: 0; }
+  .label { min-inline-size: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+}

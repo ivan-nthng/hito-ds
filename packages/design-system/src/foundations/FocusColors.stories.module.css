@@ -1,0 +1,316 @@
+.page {
+  display: grid;
+  gap: var(--layout-space-responsive-2xl);
+}
+
+.secondary,
+.policyNote {
+  color: var(--color-text-secondary);
+}
+
+.decisionNote {
+  display: grid;
+  gap: var(--layout-space-fixed-xs);
+  padding: var(--layout-space-fixed-md);
+  border: var(--border-width-default) solid var(--color-border-info-subtle);
+  border-radius: var(--radius-layout-fixed-sm);
+  background: var(--color-surface-info-subtle-default);
+}
+
+.contextGrid,
+.controlGrid,
+.controlRow,
+.keyboardSection,
+.keyboardRow,
+.composite,
+.compositeItems {
+  display: grid;
+}
+
+.target,
+.control,
+.field,
+.listRow,
+.compositeItem,
+.keyboardTarget,
+.keyboardField {
+  min-block-size: var(--ui-control-height-md);
+  font: inherit;
+}
+
+.target {
+  display: grid;
+  place-items: center;
+  inline-size: min(100%, 10rem);
+  padding-inline: var(--ui-space-lg);
+  color: var(--color-text-primary);
+  border: var(--border-width-default) solid var(--color-border-default);
+  border-radius: var(--radius-ui-md);
+  background: var(--color-surface-raised);
+  font-size: var(--type-ui-md-font-size);
+  font-weight: var(--type-ui-md-font-weight);
+  line-height: var(--type-ui-md-line-height);
+}
+
+.staticFocus {
+  outline: var(--focus-indicator-width) solid var(--focus-indicator-color);
+  outline-offset: var(--focus-indicator-offset);
+}
+
+.contextGrid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--layout-space-fixed-md);
+}
+
+.contextCard {
+  display: grid;
+  align-content: space-between;
+  gap: var(--layout-space-fixed-xl);
+  min-block-size: 9rem;
+  padding: var(--layout-space-fixed-md);
+  border-radius: var(--radius-layout-fixed-md);
+}
+
+.contextCard .target {
+  color: inherit;
+  border-color: currentColor;
+  background: transparent;
+}
+
+.contextCard .contextLabel {
+  color: inherit;
+}
+
+.canvas {
+  color: var(--color-text-primary);
+  background: var(--color-surface-canvas);
+}
+
+.base {
+  color: var(--color-text-primary);
+  background: var(--color-surface-base);
+}
+
+.subtle {
+  color: var(--color-text-primary);
+  background: var(--color-surface-subtle);
+}
+
+.accent {
+  --focus-indicator-color: var(--color-focus-on-light);
+
+  color: var(--color-foreground-on-accent-strong);
+  background: var(--color-surface-accent-strong-default);
+}
+
+.info {
+  --focus-indicator-color: var(--color-focus-on-dark);
+
+  color: var(--color-foreground-on-info-strong);
+  background: var(--color-surface-info-strong-default);
+}
+
+.success {
+  --focus-indicator-color: var(--color-focus-on-dark);
+
+  color: var(--color-foreground-on-success-strong);
+  background: var(--color-surface-success-strong-default);
+}
+
+.warning {
+  --focus-indicator-color: var(--color-focus-on-dark);
+
+  color: var(--color-foreground-on-warning-strong);
+  background: var(--color-surface-warning-strong-default);
+}
+
+.destructive {
+  --focus-indicator-color: var(--color-focus-on-dark);
+
+  color: var(--color-foreground-on-destructive-strong);
+  background: var(--color-surface-destructive-strong-default);
+}
+
+:global([data-hito-color-scheme="dark"]) .accent,
+:global([data-hito-color-scheme="dark"]) .info,
+:global([data-hito-color-scheme="dark"]) .success,
+:global([data-hito-color-scheme="dark"]) .warning,
+:global([data-hito-color-scheme="dark"]) .destructive {
+  --focus-indicator-color: var(--color-focus-on-light);
+}
+
+.policyNote {
+  max-inline-size: 48rem;
+}
+
+.controlGrid {
+  gap: var(--layout-space-responsive-xl);
+}
+
+.controlRow {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  align-items: start;
+  gap: var(--layout-space-fixed-lg);
+}
+
+.control,
+.field,
+.listRow,
+.compositeItem,
+.keyboardTarget,
+.keyboardField,
+.keyboardLink,
+.link {
+  color: var(--color-text-primary);
+}
+
+.control,
+.field,
+.listRow,
+.compositeItem,
+.keyboardTarget,
+.keyboardField {
+  border: var(--border-width-default) solid var(--color-border-default);
+  border-radius: var(--radius-ui-md);
+}
+
+.control,
+.compositeItem,
+.keyboardTarget {
+  cursor: pointer;
+}
+
+.control {
+  inline-size: 100%;
+  padding-inline: var(--ui-space-lg);
+}
+
+.filled {
+  color: var(--color-foreground-on-accent-strong);
+  border-color: transparent;
+  background: var(--color-surface-accent-strong-default);
+}
+
+.outlined,
+.iconButton,
+.keyboardTarget {
+  background: var(--color-surface-base);
+}
+
+.ghost {
+  border-color: transparent;
+  background: transparent;
+}
+
+.iconButton {
+  inline-size: var(--ui-control-height-md);
+  padding: 0;
+}
+
+.field,
+.keyboardField {
+  inline-size: 100%;
+  padding-inline: var(--ui-space-lg);
+  background: var(--color-surface-base);
+}
+
+.invalid {
+  border-color: var(--color-border-destructive-default);
+}
+
+.link,
+.keyboardLink {
+  display: inline-block;
+  border-radius: var(--radius-ui-xs);
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}
+
+.listRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--layout-space-fixed-lg);
+  inline-size: 100%;
+  min-block-size: 4.5rem;
+  padding: var(--layout-space-fixed-md);
+  text-align: start;
+  background: var(--color-surface-base);
+}
+
+.listRow > span {
+  display: grid;
+  gap: var(--layout-space-fixed-xs);
+}
+
+.composite {
+  gap: var(--layout-space-fixed-sm);
+  min-inline-size: 0;
+}
+
+.compositeItems {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--layout-space-fixed-sm);
+}
+
+.compositeItem {
+  padding-inline: var(--ui-space-lg);
+  background: var(--color-surface-base);
+}
+
+.selected {
+  border-color: var(--color-border-accent-default);
+  background: var(--color-surface-accent-subtle-default);
+}
+
+.keyboardSection {
+  gap: var(--layout-space-fixed-sm);
+}
+
+.keyboardRow {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: center;
+  gap: var(--layout-space-fixed-lg);
+  margin-block-start: var(--layout-space-fixed-md);
+}
+
+.keyboardTarget,
+.keyboardField {
+  padding-inline: var(--ui-space-lg);
+}
+
+.keyboardLink {
+  justify-self: start;
+}
+
+@media (forced-colors: active) {
+  .staticFocus {
+    outline-color: Highlight;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :global([data-hito-story-canvas]:not([data-hito-color-scheme])) .accent,
+  :global([data-hito-story-canvas]:not([data-hito-color-scheme])) .info,
+  :global([data-hito-story-canvas]:not([data-hito-color-scheme])) .success,
+  :global([data-hito-story-canvas]:not([data-hito-color-scheme])) .warning,
+  :global([data-hito-story-canvas]:not([data-hito-color-scheme]))
+    .destructive {
+    --focus-indicator-color: var(--color-focus-on-light);
+  }
+}
+
+@media (max-width: 64rem) {
+  .contextGrid,
+  .controlRow {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 40rem) {
+  .contextGrid,
+  .controlRow,
+  .keyboardRow {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

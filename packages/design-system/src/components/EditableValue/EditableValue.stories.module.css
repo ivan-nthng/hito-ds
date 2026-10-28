@@ -1,0 +1,43 @@
+.page,
+.intro,
+.stack,
+.regression {
+  display: grid;
+}
+
+.page {
+  gap: var(--layout-space-responsive-2xl);
+  padding: var(--layout-space-responsive-xl);
+}
+
+.intro,
+.stack {
+  gap: var(--layout-space-fixed-md);
+}
+
+.stack {
+  align-items: start;
+}
+
+.measure,
+.stack {
+  inline-size: 100%;
+  max-inline-size: var(--ref-space-96);
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--layout-space-fixed-md);
+  align-items: end;
+}
+
+.regression {
+  inline-size: 100%;
+  max-inline-size: var(--ref-space-96);
+  gap: var(--layout-space-responsive-xl);
+}
+
+.secondary {
+  color: var(--color-text-secondary);
+}

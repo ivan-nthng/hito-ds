@@ -1,0 +1,16 @@
+@layer hito.components {
+  .root {
+    min-inline-size: 0;
+  }
+
+  .popover {
+    inline-size: max-content;
+    max-inline-size: calc(100vw - var(--layout-space-fixed-md) - var(--layout-space-fixed-md));
+  }
+
+  .calendar {
+    display: flex;
+    justify-content: center;
+    min-inline-size: 0;
+  }
+}

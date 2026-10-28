@@ -1,0 +1,318 @@
+{
+  "fileKey": "C8ymDNFqGISrgIe6iGimHX",
+  "nativeCodeConnect": false,
+  "components": [
+    {
+      "name": "Icon",
+      "nodeId": "8221:2",
+      "source": "packages/design-system/src/components/Icon/Icon.tsx",
+      "figmaUrl": "https://www.figma.com/design/C8ymDNFqGISrgIe6iGimHX/Hito-DS?node-id=8221-2"
+    },
+    {
+      "name": "KeyboardShortcut",
+      "nodeId": "8849:551",
+      "source": "packages/design-system/src/components/KeyboardShortcut/KeyboardShortcut.tsx",
+      "figmaUrl": "https://www.figma.com/design/C8ymDNFqGISrgIe6iGimHX/Hito-DS?node-id=8849-551"
+    },
+    {
+      "name": "Separator",
+      "nodeId": "8235:2",
+      "source": "packages/design-system/src/components/Separator/Separator.tsx",
+      "figmaUrl": "https://www.figma.com/design/C8ymDNFqGISrgIe6iGimHX/Hito-DS?node-id=8235-2"
+    },
+    {
+      "name": "Surface",
+      "nodeId": "8228:3",
+      "source": "packages/design-system/src/components/Surface/Surface.tsx",
+      "figmaUrl": "https://www.figma.com/design/C8ymDNFqGISrgIe6iGimHX/Hito-DS?node-id=8228-3"
+    },
+    {
+      "name": "Button",
+      "nodeId": "8247:60",
+      "source": "packages/design-system/src/components/Button/Button.tsx",
+      "figmaUrl": "https://www.figma.com/design/C8ymDNFqGISrgIe6iGimHX/Hito-DS?node-id=8247-60"
+    },
+    {
+      "name": "InlineTrigger",
+      "nodeId": "9181:127",
+      "source": "packages/design-system/src/components/InlineTrigger/InlineTrigger.tsx",
+      "figmaUrl": "https://www.figma.com/design/C8ymDNFqGISrgIe6iGimHX/Hito-DS?node-id=9181-127"
+    },
+    {
+      "name": "Link",
+      "nodeId": "8360:6",
+      "source": "packages/design-system/src/components/Link/Link.tsx",
+      "figmaUrl": "https://www.figma.com/design/C8ymDNFqGISrgIe6iGimHX/Hito-DS?node-id=8360-6"
+    },
+    {
+      "name": "Checkbox",
+      "nodeId": "8424:7",
+      "source": "packages/design-system/src/components/Checkbox/Checkbox.tsx",
+      "figmaUrl": "https://www.figma.com/design/C8ymDNFqGISrgIe6iGimHX/Hito-DS?node-id=8424-7"
+    },
+    {
+      "name": "Combobox",
+      "nodeId": "8497:231",
+      "source": "packages/design-system/src/components/Combobox/Combobox.tsx",
+      "figmaUrl": "https://www.figma.com/design/C8ymDNFqGISrgIe6iGimHX/Hito-DS?node-id=8497-231"
+    },
+    {
+      "name": "EditableValue",
+      "nodeId": "8752:66",
+      "source": "packages/design-system/src/components/EditableValue/EditableValue.tsx",
+      "figmaUrl": "https://www.figma.com/design/C8ymDNFqGISrgIe6iGimHX/Hito-DS?node-id=8752-66"
+    },
+    {
+      "name": "Field",
+      "nodeId": "8371:3",
+      "source": "packages/design-system/src/components/Field/Field.tsx",
+      "figmaUrl": "https://www.figma.com/design/C8ymDNFqGISrgIe6iGimHX/Hito-DS?node-id=8371-3"
+    },
+    {
+      "name": "TextInput",
+      "nodeId": "8374:14",
+      "source": "packages/design-system/src/components/TextInput/TextInput.tsx",
+      "figmaUrl": "https://www.figma.com/design/C8ymDNFqGISrgIe6iGimHX/Hito-DS?node-id=8374-14"
+    },
+    {
+      "name": "InlineEdit",
+      "nodeId": "8769:34",
+      "source": "packages/design-system/src/components/InlineEdit/InlineEdit.tsx",
+      "figmaUrl": "https://www.figma.com/design/C8ymDNFqGISrgIe6iGimHX/Hito-DS?node-id=8769-34"
+    },
+    {
+      "name": "NumberField",
+      "nodeId": "8779:120",
+      "source": "packages/design-system/src/components/NumberField/NumberField.tsx",
+      "figmaUrl": "https://www.figma.com/design/C8ymDNFqGISrgIe6iGimHX/Hito-DS?node-id=8779-120"
+    },
+    {
+      "name": "Radio",
+      "nodeId": "8438:2",
+      "source": "packages/design-system/src/components/Radio/Radio.tsx",
+      "figmaUrl": "https://www.figma.com/design/C8ymDNFqGISrgIe6iGimHX/Hito-DS?node-id=8438-2"
+    },
+    {
+      "name": "RangeSlider",
+      "nodeId": "9245:14",
+      "source": "packages/design-system/src/components/RangeSlider/RangeSlider.tsx",
+      "figmaUrl": "https://www.figma.com/design/C8ymDNFqGISrgIe6iGimHX/Hito-DS?node-id=9245-14"
+    },
+    {
+      "name": "SearchField",
+      "nodeId": "8388:129",
+      "source": "packages/design-system/src/components/SearchField/SearchField.tsx",
+      "figmaUrl": "https://www.figma.com/design/C8ymDNFqGISrgIe6iGimHX/Hito-DS?node-id=8388-129"
+    },
+    {
+      "name": "Select",
+      "nodeId": "8459:111",
+      "source": "packages/design-system/src/components/Select/Select.tsx",
+      "figmaUrl": "https://www.figma.com/design/C8ymDNFqGISrgIe6iGimHX/Hito-DS?node-id=8459-111"
+    },
+    {
+      "name": "TimePicker",
+      "nodeId": "9729:1274",
+      "source": "packages/design-system/src/components/TimePicker/TimePicker.tsx",
+      "figmaUrl": "https://www.figma.com/design/C8ymDNFqGISrgIe6iGimHX/Hito-DS?node-id=9729-1274"
+    },
+    {
+      "name": "Switch",
+      "nodeId": "8445:2",
+      "source": "packages/design-system/src/components/Switch/Switch.tsx",
+      "figmaUrl": "https://www.figma.com/design/C8ymDNFqGISrgIe6iGimHX/Hito-DS?node-id=8445-2"
+    },
+    {
+      "name": "Textarea",
+      "nodeId": "8409:63",
+      "source": "packages/design-system/src/components/Textarea/Textarea.tsx",
+      "figmaUrl": "https://www.figma.com/design/C8ymDNFqGISrgIe6iGimHX/Hito-DS?node-id=8409-63"
+    },
+    {
+      "name": "ServiceSwitcher",
+      "nodeId": "9547:17",
+      "source": "packages/design-system/src/components/ServiceSwitcher/ServiceSwitcher.tsx",
+      "figmaUrl": "https://www.figma.com/design/C8ymDNFqGISrgIe6iGimHX/Hito-DS?node-id=9547-17"
+    },
+    {
+      "name": "AccountTrigger",
+      "nodeId": "9167:83",
+      "source": "packages/design-system/src/components/AccountTrigger/AccountTrigger.tsx",
+      "figmaUrl": "https://www.figma.com/design/C8ymDNFqGISrgIe6iGimHX/Hito-DS?node-id=9167-83"
+    },
+    {
+      "name": "Breadcrumbs",
+      "nodeId": "8544:52",
+      "source": "packages/design-system/src/components/Breadcrumbs/Breadcrumbs.tsx",
+      "figmaUrl": "https://www.figma.com/design/C8ymDNFqGISrgIe6iGimHX/Hito-DS?node-id=8544-52"
+    },
+    {
+      "name": "Tabs",
+      "nodeId": "8535:33",
+      "source": "packages/design-system/src/components/Tabs/Tabs.tsx",
+      "figmaUrl": "https://www.figma.com/design/C8ymDNFqGISrgIe6iGimHX/Hito-DS?node-id=8535-33"
+    },
+    {
+      "name": "AlertDialog",
+      "nodeId": "8569:7",
+      "source": "packages/design-system/src/components/AlertDialog/AlertDialog.tsx",
+      "figmaUrl": "https://www.figma.com/design/C8ymDNFqGISrgIe6iGimHX/Hito-DS?node-id=8569-7"
+    },
+    {
+      "name": "BottomSheet",
+      "nodeId": "8580:5",
+      "source": "packages/design-system/src/components/BottomSheet/BottomSheet.tsx",
+      "figmaUrl": "https://www.figma.com/design/C8ymDNFqGISrgIe6iGimHX/Hito-DS?node-id=8580-5"
+    },
+    {
+      "name": "Dialog",
+      "nodeId": "8560:11",
+      "source": "packages/design-system/src/components/Dialog/Dialog.tsx",
+      "figmaUrl": "https://www.figma.com/design/C8ymDNFqGISrgIe6iGimHX/Hito-DS?node-id=8560-11"
+    },
+    {
+      "name": "Disclosure",
+      "nodeId": "8801:87",
+      "source": "packages/design-system/src/components/Disclosure/Disclosure.tsx",
+      "figmaUrl": "https://www.figma.com/design/C8ymDNFqGISrgIe6iGimHX/Hito-DS?node-id=8801-87"
+    },
+    {
+      "name": "Menu",
+      "nodeId": "8553:174",
+      "source": "packages/design-system/src/components/Menu/Menu.tsx",
+      "figmaUrl": "https://www.figma.com/design/C8ymDNFqGISrgIe6iGimHX/Hito-DS?node-id=8553-174"
+    },
+    {
+      "name": "Popover",
+      "nodeId": "8574:3",
+      "source": "packages/design-system/src/components/Popover/Popover.tsx",
+      "figmaUrl": "https://www.figma.com/design/C8ymDNFqGISrgIe6iGimHX/Hito-DS?node-id=8574-3"
+    },
+    {
+      "name": "Tooltip",
+      "nodeId": "8798:3",
+      "source": "packages/design-system/src/components/Tooltip/Tooltip.tsx",
+      "figmaUrl": "https://www.figma.com/design/C8ymDNFqGISrgIe6iGimHX/Hito-DS?node-id=8798-3"
+    },
+    {
+      "name": "Alert",
+      "nodeId": "9009:103",
+      "source": "packages/design-system/src/components/Alert/Alert.tsx",
+      "figmaUrl": "https://www.figma.com/design/C8ymDNFqGISrgIe6iGimHX/Hito-DS?node-id=9009-103"
+    },
+    {
+      "name": "InlineMessage",
+      "nodeId": "8710:50",
+      "source": "packages/design-system/src/components/InlineMessage/InlineMessage.tsx",
+      "figmaUrl": "https://www.figma.com/design/C8ymDNFqGISrgIe6iGimHX/Hito-DS?node-id=8710-50"
+    },
+    {
+      "name": "ProgressBar",
+      "nodeId": "8988:62",
+      "source": "packages/design-system/src/components/ProgressBar/ProgressBar.tsx",
+      "figmaUrl": "https://www.figma.com/design/C8ymDNFqGISrgIe6iGimHX/Hito-DS?node-id=8988-62"
+    },
+    {
+      "name": "Skeleton",
+      "nodeId": "9020:5",
+      "source": "packages/design-system/src/components/Skeleton/Skeleton.tsx",
+      "figmaUrl": "https://www.figma.com/design/C8ymDNFqGISrgIe6iGimHX/Hito-DS?node-id=9020-5"
+    },
+    {
+      "name": "Spinner",
+      "nodeId": "8659:3",
+      "source": "packages/design-system/src/components/Spinner/Spinner.tsx",
+      "figmaUrl": "https://www.figma.com/design/C8ymDNFqGISrgIe6iGimHX/Hito-DS?node-id=8659-3"
+    },
+    {
+      "name": "StatePanel",
+      "nodeId": "9033:24",
+      "source": "packages/design-system/src/components/StatePanel/StatePanel.tsx",
+      "figmaUrl": "https://www.figma.com/design/C8ymDNFqGISrgIe6iGimHX/Hito-DS?node-id=9033-24"
+    },
+    {
+      "name": "StatusBadge",
+      "nodeId": "8919:15214",
+      "source": "packages/design-system/src/components/StatusBadge/StatusBadge.tsx",
+      "figmaUrl": "https://www.figma.com/design/C8ymDNFqGISrgIe6iGimHX/Hito-DS?node-id=8919-15214"
+    },
+    {
+      "name": "Avatar",
+      "nodeId": "8917:51",
+      "source": "packages/design-system/src/components/Avatar/Avatar.tsx",
+      "figmaUrl": "https://www.figma.com/design/C8ymDNFqGISrgIe6iGimHX/Hito-DS?node-id=8917-51"
+    },
+    {
+      "name": "Card",
+      "nodeId": "8815:178",
+      "source": "packages/design-system/src/components/Card/Card.tsx",
+      "figmaUrl": "https://www.figma.com/design/C8ymDNFqGISrgIe6iGimHX/Hito-DS?node-id=8815-178"
+    },
+    {
+      "name": "DescriptionList",
+      "nodeId": "8996:49",
+      "source": "packages/design-system/src/components/DescriptionList/DescriptionList.tsx",
+      "figmaUrl": "https://www.figma.com/design/C8ymDNFqGISrgIe6iGimHX/Hito-DS?node-id=8996-49"
+    },
+    {
+      "name": "List",
+      "nodeId": "8832:3",
+      "source": "packages/design-system/src/components/List/List.tsx",
+      "figmaUrl": "https://www.figma.com/design/C8ymDNFqGISrgIe6iGimHX/Hito-DS?node-id=8832-3"
+    },
+    {
+      "name": "ListItem",
+      "nodeId": "8837:133",
+      "source": "packages/design-system/src/components/ListItem/ListItem.tsx",
+      "figmaUrl": "https://www.figma.com/design/C8ymDNFqGISrgIe6iGimHX/Hito-DS?node-id=8837-133"
+    },
+    {
+      "name": "Table",
+      "nodeId": "8876:128",
+      "source": "packages/design-system/src/components/Table/Table.tsx",
+      "figmaUrl": "https://www.figma.com/design/C8ymDNFqGISrgIe6iGimHX/Hito-DS?node-id=8876-128"
+    },
+    {
+      "name": "FilterBar",
+      "nodeId": "8940:2312",
+      "source": "packages/design-system/src/patterns/FilterBar/FilterBar.tsx",
+      "figmaUrl": "https://www.figma.com/design/C8ymDNFqGISrgIe6iGimHX/Hito-DS?node-id=8940-2312"
+    },
+    {
+      "name": "Tag",
+      "nodeId": "8919:11",
+      "source": "packages/design-system/src/components/Tag/Tag.tsx",
+      "figmaUrl": "https://www.figma.com/design/C8ymDNFqGISrgIe6iGimHX/Hito-DS?node-id=8919-11"
+    },
+    {
+      "name": "ValuePicker",
+      "nodeId": "9149:23463",
+      "source": "packages/design-system/src/components/ValuePicker/ValuePicker.tsx",
+      "figmaUrl": "https://www.figma.com/design/C8ymDNFqGISrgIe6iGimHX/Hito-DS?node-id=9149-23463"
+    },
+    {
+      "name": "NavigationSheet",
+      "nodeId": "9300:26507",
+      "source": "packages/design-system/src/patterns/NavigationSheet/NavigationSheet.tsx",
+      "figmaUrl": "https://www.figma.com/design/C8ymDNFqGISrgIe6iGimHX/Hito-DS?node-id=9300-26507"
+    },
+    {
+      "name": "SignInPrompt",
+      "nodeId": "9451:71",
+      "source": "packages/design-system/src/patterns/SignInPrompt/SignInPrompt.tsx",
+      "figmaUrl": "https://www.figma.com/design/C8ymDNFqGISrgIe6iGimHX/Hito-DS?node-id=9451-71"
+    },
+    {
+      "name": "WeekdaySelector",
+      "nodeId": "9475:3",
+      "source": "packages/design-system/src/patterns/WeekdaySelector/WeekdaySelector.tsx",
+      "figmaUrl": "https://www.figma.com/design/C8ymDNFqGISrgIe6iGimHX/Hito-DS?node-id=9475-3"
+    },
+    {
+      "name": "AppShell",
+      "nodeId": "9626:261",
+      "source": "packages/design-system/src/components/AppShell/AppShell.tsx",
+      "figmaUrl": "https://www.figma.com/design/C8ymDNFqGISrgIe6iGimHX/Hito-DS?node-id=9626-261"
+    }
+  ]
+}

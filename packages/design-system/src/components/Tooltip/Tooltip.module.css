@@ -1,0 +1,11 @@
+@layer hito.components {
+  .panel {
+    max-inline-size: min(calc(var(--layout-space-fixed-2xl) * 8), var(--anchored-available-inline-size, calc(100vw - var(--layout-space-fixed-md) * 2)));
+    padding: var(--ui-space-xs) var(--ui-space-md);
+    border-radius: var(--radius-ui-sm);
+    color: var(--color-foreground-on-neutral-strong);
+    background: var(--color-surface-neutral-strong-default);
+  }
+  .copy { color: inherit; }
+  @media (forced-colors: active) { .panel { color: CanvasText; background: Canvas; } }
+}

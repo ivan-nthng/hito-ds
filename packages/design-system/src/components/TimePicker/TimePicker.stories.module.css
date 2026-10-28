@@ -1,0 +1,4 @@
+.page { display: grid; align-content: start; gap: var(--layout-space-fixed-xl); padding: var(--layout-space-fixed-md); min-inline-size: 0; }
+.measure { inline-size: 100%; max-inline-size: 22.5rem; display: grid; gap: var(--layout-space-fixed-md); }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr)); align-items: start; gap: var(--layout-space-fixed-xl); }
+.secondary { color: var(--color-text-secondary); }

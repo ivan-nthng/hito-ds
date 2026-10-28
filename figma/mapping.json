@@ -1,0 +1,498 @@
+{
+  "fileKey": "C8ymDNFqGISrgIe6iGimHX",
+  "communityUrl": null,
+  "status": "linked-awaiting-publication",
+  "nodes": [
+    {
+      "path": "packages/design-system/src/patterns/FilterBar/FilterBar.stories.tsx",
+      "nodeId": "8940:2312"
+    },
+    {
+      "path": "packages/design-system/src/patterns/FilterBar/FilterBar.stories.tsx",
+      "nodeId": "9648:483"
+    },
+    {
+      "path": "packages/design-system/src/patterns/FilterBar/FilterBar.stories.tsx",
+      "nodeId": "9665:1472"
+    },
+    {
+      "path": "packages/design-system/src/patterns/FilterBar/FilterBar.stories.tsx",
+      "nodeId": "8941:2311"
+    },
+    {
+      "path": "packages/design-system/src/patterns/FilterBar/FilterBar.stories.tsx",
+      "nodeId": "8941:2685"
+    },
+    {
+      "path": "packages/design-system/src/patterns/FilterBar/FilterBar.stories.tsx",
+      "nodeId": "8941:2996"
+    },
+    {
+      "path": "packages/design-system/src/patterns/FilterBar/FilterBar.stories.tsx",
+      "nodeId": "8941:3581"
+    },
+    {
+      "path": "packages/design-system/src/patterns/FilterBar/FilterBar.stories.tsx",
+      "nodeId": "8941:3371"
+    },
+    {
+      "path": "packages/design-system/src/patterns/FilterBar/FilterBar.stories.tsx",
+      "nodeId": "8952:6420"
+    },
+    {
+      "path": "packages/design-system/src/patterns/WeekdaySelector/WeekdaySelector.stories.tsx",
+      "nodeId": "9475:3"
+    },
+    {
+      "path": "packages/design-system/src/patterns/WeekdaySelector/WeekdaySelector.stories.tsx",
+      "nodeId": "9477:23"
+    },
+    {
+      "path": "packages/design-system/src/patterns/NavigationSheet/NavigationSheet.stories.tsx",
+      "nodeId": "9300:26507"
+    },
+    {
+      "path": "packages/design-system/src/components/Disclosure/Disclosure.stories.tsx",
+      "nodeId": "8801:87"
+    },
+    {
+      "path": "packages/design-system/src/components/Tabs/Tabs.stories.tsx",
+      "nodeId": "8535:33"
+    },
+    {
+      "path": "packages/design-system/src/components/KeyboardShortcut/KeyboardShortcut.stories.tsx",
+      "nodeId": "8849:551"
+    },
+    {
+      "path": "packages/design-system/src/components/CalendarGrid/CalendarGrid.stories.tsx",
+      "nodeId": "9080:653"
+    },
+    {
+      "path": "packages/design-system/src/components/Tooltip/Tooltip.stories.tsx",
+      "nodeId": "8798:3"
+    },
+    {
+      "path": "packages/design-system/src/components/Radio/Radio.stories.tsx",
+      "nodeId": "8438:2"
+    },
+    {
+      "path": "packages/design-system/src/components/Card/Card.stories.tsx",
+      "nodeId": "8815:178"
+    },
+    {
+      "path": "packages/design-system/src/components/Card/Card.stories.tsx",
+      "nodeId": "9228:446"
+    },
+    {
+      "path": "packages/design-system/src/components/Card/Card.stories.tsx",
+      "nodeId": "9228:446"
+    },
+    {
+      "path": "packages/design-system/src/components/Alert/Alert.stories.tsx",
+      "nodeId": "9009:103"
+    },
+    {
+      "path": "packages/design-system/src/components/Alert/Alert.stories.tsx",
+      "nodeId": "9012:35"
+    },
+    {
+      "path": "packages/design-system/src/components/Alert/Alert.stories.tsx",
+      "nodeId": "9012:218"
+    },
+    {
+      "path": "packages/design-system/src/components/Alert/Alert.stories.tsx",
+      "nodeId": "9012:37"
+    },
+    {
+      "path": "packages/design-system/src/components/Alert/Alert.stories.tsx",
+      "nodeId": "9012:199"
+    },
+    {
+      "path": "packages/design-system/src/components/Alert/Alert.stories.tsx",
+      "nodeId": "9012:199"
+    },
+    {
+      "path": "packages/design-system/src/components/Alert/Alert.stories.tsx",
+      "nodeId": "9012:361"
+    },
+    {
+      "path": "packages/design-system/src/components/Alert/Alert.stories.tsx",
+      "nodeId": "9012:35"
+    },
+    {
+      "path": "packages/design-system/src/components/Skeleton/Skeleton.stories.tsx",
+      "nodeId": "9020:5"
+    },
+    {
+      "path": "packages/design-system/src/components/Skeleton/Skeleton.stories.tsx",
+      "nodeId": "9021:5"
+    },
+    {
+      "path": "packages/design-system/src/components/Skeleton/Skeleton.stories.tsx",
+      "nodeId": "9021:33"
+    },
+    {
+      "path": "packages/design-system/src/components/Skeleton/Skeleton.stories.tsx",
+      "nodeId": "9021:61"
+    },
+    {
+      "path": "packages/design-system/src/components/Skeleton/Skeleton.stories.tsx",
+      "nodeId": "9021:88"
+    },
+    {
+      "path": "packages/design-system/src/components/Skeleton/Skeleton.stories.tsx",
+      "nodeId": "9021:8"
+    },
+    {
+      "path": "packages/design-system/src/components/Skeleton/Skeleton.stories.tsx",
+      "nodeId": "9021:5"
+    },
+    {
+      "path": "packages/design-system/src/components/Separator/Separator.stories.tsx",
+      "nodeId": "8235:2"
+    },
+    {
+      "path": "packages/design-system/src/components/TextInput/TextInput.stories.tsx",
+      "nodeId": "8374:14"
+    },
+    {
+      "path": "packages/design-system/src/components/Chip/Chip.stories.tsx",
+      "nodeId": "8921:117"
+    },
+    {
+      "path": "packages/design-system/src/components/Chip/Chip.stories.tsx",
+      "nodeId": "8921:244"
+    },
+    {
+      "path": "packages/design-system/src/components/Chip/Chip.stories.tsx",
+      "nodeId": "8921:257"
+    },
+    {
+      "path": "packages/design-system/src/components/DescriptionList/DescriptionList.stories.tsx",
+      "nodeId": "8996:49"
+    },
+    {
+      "path": "packages/design-system/src/components/DescriptionList/DescriptionList.stories.tsx",
+      "nodeId": "8998:66"
+    },
+    {
+      "path": "packages/design-system/src/components/DescriptionList/DescriptionList.stories.tsx",
+      "nodeId": "9000:271"
+    },
+    {
+      "path": "packages/design-system/src/components/DescriptionList/DescriptionList.stories.tsx",
+      "nodeId": "8998:66"
+    },
+    {
+      "path": "packages/design-system/src/components/DescriptionList/DescriptionList.stories.tsx",
+      "nodeId": "9000:431"
+    },
+    {
+      "path": "packages/design-system/src/components/Checkbox/Checkbox.stories.tsx",
+      "nodeId": "8424:7"
+    },
+    {
+      "path": "packages/design-system/src/components/Surface/Surface.stories.tsx",
+      "nodeId": "8228:3"
+    },
+    {
+      "path": "packages/design-system/src/components/Spinner/Spinner.stories.tsx",
+      "nodeId": "8659:3"
+    },
+    {
+      "path": "packages/design-system/src/components/ProgressBar/ProgressBar.stories.tsx",
+      "nodeId": "8988:62"
+    },
+    {
+      "path": "packages/design-system/src/components/ProgressBar/ProgressBar.stories.tsx",
+      "nodeId": "8988:62"
+    },
+    {
+      "path": "packages/design-system/src/components/ProgressBar/ProgressBar.stories.tsx",
+      "nodeId": "8985:6"
+    },
+    {
+      "path": "packages/design-system/src/components/ProgressBar/ProgressBar.stories.tsx",
+      "nodeId": "8985:6"
+    },
+    {
+      "path": "packages/design-system/src/components/Field/Field.stories.tsx",
+      "nodeId": "8371:3"
+    },
+    {
+      "path": "packages/design-system/src/components/InlineEdit/InlineEdit.stories.tsx",
+      "nodeId": "8769:34"
+    },
+    {
+      "path": "packages/design-system/src/components/Combobox/Combobox.stories.tsx",
+      "nodeId": "8497:231"
+    },
+    {
+      "path": "packages/design-system/src/components/ListItem/ListItem.stories.tsx",
+      "nodeId": "8837:133"
+    },
+    {
+      "path": "packages/design-system/src/components/Dialog/Dialog.stories.tsx",
+      "nodeId": "9316:909"
+    },
+    {
+      "path": "packages/design-system/src/components/Dialog/Dialog.stories.tsx",
+      "nodeId": "8560:11"
+    },
+    {
+      "path": "packages/design-system/src/components/Popover/Popover.stories.tsx",
+      "nodeId": "8574:3"
+    },
+    {
+      "path": "packages/design-system/src/components/DateRangePicker/DateRangePicker.stories.tsx",
+      "nodeId": "9080:653"
+    },
+    {
+      "path": "packages/design-system/src/components/DateRangePicker/DateRangePicker.stories.tsx",
+      "nodeId": "9082:739"
+    },
+    {
+      "path": "packages/design-system/src/components/DateRangePicker/DateRangePicker.stories.tsx",
+      "nodeId": "9082:1311"
+    },
+    {
+      "path": "packages/design-system/src/components/DateRangePicker/DateRangePicker.stories.tsx",
+      "nodeId": "9084:1825"
+    },
+    {
+      "path": "packages/design-system/src/components/DateRangePicker/DateRangePicker.stories.tsx",
+      "nodeId": "9084:1584"
+    },
+    {
+      "path": "packages/design-system/src/components/DateRangePicker/DateRangePicker.stories.tsx",
+      "nodeId": "9084:2587"
+    },
+    {
+      "path": "packages/design-system/src/components/DateRangePicker/DateRangePicker.stories.tsx",
+      "nodeId": "9084:1316"
+    },
+    {
+      "path": "packages/design-system/src/components/InlineMessage/InlineMessage.stories.tsx",
+      "nodeId": "8710:50"
+    },
+    {
+      "path": "packages/design-system/src/components/EditableValue/EditableValue.stories.tsx",
+      "nodeId": "9315:300"
+    },
+    {
+      "path": "packages/design-system/src/components/EditableValue/EditableValue.stories.tsx",
+      "nodeId": "8752:66"
+    },
+    {
+      "path": "packages/design-system/src/components/Textarea/Textarea.stories.tsx",
+      "nodeId": "8409:63"
+    },
+    {
+      "path": "packages/design-system/src/components/Button/Button.stories.tsx",
+      "nodeId": "8249:85"
+    },
+    {
+      "path": "packages/design-system/src/components/Button/Button.stories.tsx",
+      "nodeId": "8738:432"
+    },
+    {
+      "path": "packages/design-system/src/components/Button/Button.stories.tsx",
+      "nodeId": "8899:622"
+    },
+    {
+      "path": "packages/design-system/src/components/Link/Link.stories.tsx",
+      "nodeId": "8360:6"
+    },
+    {
+      "path": "packages/design-system/src/components/Link/Link.stories.tsx",
+      "nodeId": "8360:15"
+    },
+    {
+      "path": "packages/design-system/src/components/Table/Table.stories.tsx",
+      "nodeId": "8940:2230"
+    },
+    {
+      "path": "packages/design-system/src/components/Table/Table.stories.tsx",
+      "nodeId": "8941:18213"
+    },
+    {
+      "path": "packages/design-system/src/components/Table/Table.stories.tsx",
+      "nodeId": "8876:128"
+    },
+    {
+      "path": "packages/design-system/src/components/Table/Table.stories.tsx",
+      "nodeId": "8941:18651"
+    },
+    {
+      "path": "packages/design-system/src/components/Table/Table.stories.tsx",
+      "nodeId": "8941:2685"
+    },
+    {
+      "path": "packages/design-system/src/components/Table/Table.stories.tsx",
+      "nodeId": "8886:222"
+    },
+    {
+      "path": "packages/design-system/src/components/Table/Table.stories.tsx",
+      "nodeId": "8988:62"
+    },
+    {
+      "path": "packages/design-system/src/components/Table/Table.stories.tsx",
+      "nodeId": "9569:3"
+    },
+    {
+      "path": "packages/design-system/src/components/Table/Table.stories.tsx",
+      "nodeId": "8886:222"
+    },
+    {
+      "path": "packages/design-system/src/components/Table/Table.stories.tsx",
+      "nodeId": "8923:1818"
+    },
+    {
+      "path": "packages/design-system/src/components/Table/Table.stories.tsx",
+      "nodeId": "8941:19084"
+    },
+    {
+      "path": "packages/design-system/src/components/Table/Table.stories.tsx",
+      "nodeId": "8941:19224"
+    },
+    {
+      "path": "packages/design-system/src/components/Table/Table.stories.tsx",
+      "nodeId": "8941:19360"
+    },
+    {
+      "path": "packages/design-system/src/components/Table/Table.stories.tsx",
+      "nodeId": "8941:19505"
+    },
+    {
+      "path": "packages/design-system/src/components/Table/Table.stories.tsx",
+      "nodeId": "8941:19937"
+    },
+    {
+      "path": "packages/design-system/src/components/List/List.stories.tsx",
+      "nodeId": "8832:3"
+    },
+    {
+      "path": "packages/design-system/src/components/Menu/Menu.stories.tsx",
+      "nodeId": "8553:174"
+    },
+    {
+      "path": "packages/design-system/src/components/BottomSheet/BottomSheet.stories.tsx",
+      "nodeId": "8580:5"
+    },
+    {
+      "path": "packages/design-system/src/components/Avatar/Avatar.stories.tsx",
+      "nodeId": "8917:51"
+    },
+    {
+      "path": "packages/design-system/src/components/Avatar/Avatar.stories.tsx",
+      "nodeId": "8917:211"
+    },
+    {
+      "path": "packages/design-system/src/components/SearchField/SearchField.stories.tsx",
+      "nodeId": "8388:129"
+    },
+    {
+      "path": "packages/design-system/src/components/Switch/Switch.stories.tsx",
+      "nodeId": "8445:2"
+    },
+    {
+      "path": "packages/design-system/src/components/ValuePicker/ValuePicker.stories.tsx",
+      "nodeId": "9149:23463"
+    },
+    {
+      "path": "packages/design-system/src/components/Text/Text.stories.tsx",
+      "nodeId": "8213:23"
+    },
+    {
+      "path": "packages/design-system/src/components/Text/Text.component.stories.tsx",
+      "nodeId": "8213:23"
+    },
+    {
+      "path": "packages/design-system/src/components/Select/Select.stories.tsx",
+      "nodeId": "8459:111"
+    },
+    {
+      "path": "packages/design-system/src/components/Icon/Icon.stories.tsx",
+      "nodeId": "8221:5"
+    },
+    {
+      "path": "packages/design-system/src/components/Icon/Icon.stories.tsx",
+      "nodeId": "8221:5"
+    },
+    {
+      "path": "packages/design-system/src/components/Icon/Icon.stories.tsx",
+      "nodeId": "8221:5"
+    },
+    {
+      "path": "packages/design-system/src/components/Icon/Icon.component.stories.tsx",
+      "nodeId": "8221:2"
+    },
+    {
+      "path": "packages/design-system/src/components/ServiceSwitcher/ServiceSwitcher.stories.tsx",
+      "nodeId": "9547:17"
+    },
+    {
+      "path": "packages/design-system/src/components/Breadcrumbs/Breadcrumbs.stories.tsx",
+      "nodeId": "8544:52"
+    },
+    {
+      "path": "packages/design-system/src/components/Tag/Tag.stories.tsx",
+      "nodeId": "8919:11"
+    },
+    {
+      "path": "packages/design-system/src/components/Tag/Tag.stories.tsx",
+      "nodeId": "8919:12"
+    },
+    {
+      "path": "packages/design-system/src/components/StatusBadge/StatusBadge.stories.tsx",
+      "nodeId": "8919:15214"
+    },
+    {
+      "path": "packages/design-system/src/components/StatusBadge/StatusBadge.stories.tsx",
+      "nodeId": "8919:15215"
+    },
+    {
+      "path": "packages/design-system/src/components/NumberField/NumberField.stories.tsx",
+      "nodeId": "8779:120"
+    },
+    {
+      "path": "packages/design-system/src/components/AlertDialog/AlertDialog.stories.tsx",
+      "nodeId": "8569:7"
+    },
+    {
+      "path": "packages/design-system/src/components/StatePanel/StatePanel.stories.tsx",
+      "nodeId": "9033:24"
+    },
+    {
+      "path": "packages/design-system/src/components/StatePanel/StatePanel.stories.tsx",
+      "nodeId": "9034:29"
+    },
+    {
+      "path": "packages/design-system/src/components/StatePanel/StatePanel.stories.tsx",
+      "nodeId": "9034:110"
+    },
+    {
+      "path": "packages/design-system/src/components/StatePanel/StatePanel.stories.tsx",
+      "nodeId": "9033:24"
+    },
+    {
+      "path": "packages/design-system/src/components/StatePanel/StatePanel.stories.tsx",
+      "nodeId": "9034:29"
+    },
+    {
+      "path": "packages/design-system/src/components/StatePanel/StatePanel.stories.tsx",
+      "nodeId": "9034:29"
+    },
+    {
+      "path": "packages/design-system/src/components/StatePanel/StatePanel.stories.tsx",
+      "nodeId": "9034:110"
+    },
+    {
+      "path": "packages/design-system/src/components/StatePanel/StatePanel.stories.tsx",
+      "nodeId": "9034:22"
+    }
+  ],
+  "nodeReferencesChecked": 104,
+  "missingNodeReferences": [],
+  "nativeCodeConnect": "blocked-by-figma-plan"
+}

@@ -1,0 +1,8 @@
+@layer hito.storybook {
+  .example { display: grid; justify-items: start; gap: var(--layout-space-fixed-md); }
+  .dialog { inline-size: calc(var(--layout-space-fixed-2xl) * 18); }
+  .sections { display: grid; gap: var(--layout-space-fixed-xl); }
+  .section { display: grid; gap: var(--ui-space-sm); }
+  .muted { color: var(--color-text-secondary); }
+  .deepContent { block-size: calc(var(--layout-space-fixed-2xl) * 30); }
+}

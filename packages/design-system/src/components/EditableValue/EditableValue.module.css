@@ -1,0 +1,412 @@
+@layer hito.components {
+  .root {
+    --editable-value-height: var(--ui-control-height-md);
+    --editable-value-empty-icon-size: var(--ui-icon-size-md);
+    --editable-value-gap: var(--ui-space-sm);
+    --editable-value-padding-inline: var(--ui-space-2xl);
+    --editable-value-radius: var(--radius-ui-md);
+    --editable-value-action-gap: var(--ui-space-sm);
+    --editable-value-actions-reserve: calc(
+      2 * (var(--editable-value-height) + var(--editable-value-action-gap))
+    );
+    --editable-value-editor-font-size: var(--type-ui-md-font-size);
+    --editable-value-editor-font-weight: var(--type-ui-md-font-weight);
+    --editable-value-editor-letter-spacing: var(--type-ui-md-letter-spacing);
+    --editable-value-editor-line-height: var(--type-ui-md-line-height);
+    --editable-value-editor-padding-inline: var(--ui-space-lg);
+    --editable-value-entry-text-shift: calc(
+      var(--ui-icon-size-md) + var(--ui-space-sm)
+    );
+    --editable-value-hint-offset: calc(
+      var(--ui-icon-size-sm) + var(--editable-value-gap)
+    );
+    --icon-color: currentColor;
+
+    position: relative;
+    display: inline-block;
+    min-inline-size: 0;
+    min-block-size: var(--editable-value-height);
+    max-inline-size: 100%;
+    color: var(--color-text-primary);
+    interpolate-size: allow-keywords;
+    transition-duration: var(--motion-duration-feedback);
+    transition-property: inline-size;
+    transition-timing-function: var(--motion-easing-standard);
+    vertical-align: top;
+  }
+
+  .root[data-width="hug"] {
+    inline-size: fit-content;
+  }
+
+  .root[data-width="hug"]:not([data-phase="rest"]) {
+    inline-size: max-content;
+  }
+
+  .root[data-width="fill"] {
+    inline-size: 100%;
+  }
+
+  .root[data-size="sm"] {
+    --editable-value-empty-icon-size: var(--ui-icon-size-sm);
+    --editable-value-height: var(--ui-control-height-sm);
+    --editable-value-gap: var(--ui-space-xs);
+    --editable-value-padding-inline: var(--ui-space-lg);
+    --editable-value-radius: var(--radius-ui-sm);
+    --editable-value-action-gap: var(--ui-space-xs);
+    --editable-value-editor-font-size: var(--type-ui-sm-font-size);
+    --editable-value-editor-font-weight: var(--type-ui-sm-font-weight);
+    --editable-value-editor-letter-spacing: var(--type-ui-sm-letter-spacing);
+    --editable-value-editor-line-height: var(--type-ui-sm-line-height);
+    --editable-value-editor-padding-inline: var(--ui-space-md);
+    --editable-value-entry-text-shift: calc(
+      var(--ui-icon-size-sm) + var(--ui-space-xs)
+    );
+  }
+
+  .root[data-size="lg"] {
+    --editable-value-empty-icon-size: var(--ui-icon-size-lg);
+    --editable-value-height: var(--ui-control-height-lg);
+    --editable-value-padding-inline: var(--ui-space-3xl);
+    --editable-value-radius: var(--radius-ui-lg);
+    --editable-value-editor-font-size: var(--type-ui-lg-font-size);
+    --editable-value-editor-font-weight: var(--type-ui-lg-font-weight);
+    --editable-value-editor-letter-spacing: var(--type-ui-lg-letter-spacing);
+    --editable-value-editor-line-height: var(--type-ui-lg-line-height);
+    --editable-value-editor-padding-inline: var(--ui-space-xl);
+    --editable-value-entry-text-shift: calc(
+      var(--ui-icon-size-lg) + var(--ui-space-sm) + var(--ui-space-3xs)
+    );
+  }
+
+  .root[data-size="xl"] {
+    --editable-value-empty-icon-size: var(--ui-icon-size-xl);
+    --editable-value-height: var(--ui-control-height-xl);
+    --editable-value-gap: var(--ui-space-md);
+    --editable-value-padding-inline: var(--ui-space-4xl);
+    --editable-value-radius: var(--radius-ui-xl);
+    --editable-value-action-gap: var(--ui-space-md);
+    --editable-value-editor-font-size: var(--type-ui-xl-font-size);
+    --editable-value-editor-font-weight: var(--type-ui-xl-font-weight);
+    --editable-value-editor-letter-spacing: var(--type-ui-xl-letter-spacing);
+    --editable-value-editor-line-height: var(--type-ui-xl-line-height);
+    --editable-value-editor-padding-inline: var(--ui-space-2xl);
+    --editable-value-entry-text-shift: calc(
+      var(--ui-icon-size-xl) + var(--ui-space-sm) + var(--ui-space-2xs)
+    );
+  }
+
+  .surface {
+    position: relative;
+    display: inline-flex;
+    inline-size: fit-content;
+    max-inline-size: 100%;
+    min-block-size: var(--editable-value-height);
+    flex-wrap: wrap;
+    align-content: center;
+    align-items: baseline;
+    gap: var(--editable-value-gap);
+    padding-block: 0;
+    padding-inline: var(--editable-value-padding-inline);
+    border: 0;
+    border-radius: var(--editable-value-radius);
+    appearance: none;
+    background: var(--color-surface-neutral-subtle-default);
+    color: inherit;
+    text-align: start;
+    transition-duration: var(--motion-duration-feedback);
+    transition-property: background-color, color;
+    transition-timing-function: var(--motion-easing-standard);
+  }
+
+  .root[data-width="fill"] .surface {
+    inline-size: 100%;
+  }
+
+  .label {
+    flex: none;
+    color: var(--color-text-muted);
+  }
+
+  .value {
+    min-inline-size: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .restTrigger {
+    cursor: text;
+  }
+
+  .prefix { color: var(--color-text-secondary); margin-inline-end: var(--editable-value-gap); user-select: none; }
+  .editorControl[data-prefix][data-auto-size-text]::before {
+    padding-inline-start: calc(var(--editable-value-editor-padding-inline) + var(--editable-value-gap));
+  }
+
+  .restTrigger::before,
+  .emptyAction::before {
+    position: absolute;
+    inset-block-start: 50%;
+    inset-inline-start: 50%;
+    inline-size: max(100%, var(--ui-interaction-target-min));
+    block-size: max(100%, var(--ui-interaction-target-min));
+    content: "";
+    transform: translate(-50%, -50%);
+  }
+
+  .restTrigger:focus-visible {
+    outline: var(--focus-indicator-width) solid var(--focus-indicator-color);
+    outline-offset: var(--focus-indicator-offset);
+  }
+
+  .emptyAction {
+    --button-hover-translate-y: var(--ref-space-0);
+
+    animation: editable-value-rest-enter var(--motion-duration-feedback)
+      var(--motion-easing-standard) both;
+  }
+
+  /* Full-width Add ink follows the filled label's native surface inset. */
+  .emptyAction[data-width="full"] {
+    justify-content: start;
+    padding-inline-start: calc(
+      var(--editable-value-padding-inline) - var(--border-width-default) -
+        var(--editable-value-empty-icon-size) / 4
+    );
+  }
+
+  .restHint {
+    position: absolute;
+    z-index: 1;
+    inset-block-start: 50%;
+    inset-inline-end: calc(-1 * var(--editable-value-hint-offset));
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-50%);
+    transition-duration: var(--motion-duration-feedback);
+    transition-property: color, opacity;
+    transition-timing-function: var(--motion-easing-standard);
+  }
+
+  .root:has(.restTrigger:focus-visible) .restHint,
+  .root[data-outcome="saved"] .restHint {
+    opacity: 1;
+  }
+
+  .root[data-outcome="saved"] .restHint {
+    color: var(--color-text-success-default);
+  }
+
+  .editorLayout {
+    display: flex;
+    inline-size: fit-content;
+    min-inline-size: 0;
+    min-block-size: var(--editable-value-height);
+    max-inline-size: 100%;
+    flex-wrap: nowrap;
+    align-items: end;
+    gap: var(--editable-value-action-gap);
+    animation: editable-value-editor-enter var(--motion-duration-feedback)
+      var(--motion-easing-standard) both;
+  }
+
+  .root[data-width="fill"] .editorLayout {
+    inline-size: 100%;
+  }
+
+  .editorControl {
+    flex: 1 1 var(--ref-space-52);
+    inline-size: var(--ref-space-52);
+    min-block-size: var(--editable-value-height);
+    max-inline-size: 100%;
+  }
+
+  .editorControl[data-auto-size-text] {
+    display: grid;
+    flex: 0 1 auto;
+    inline-size: max-content;
+    max-inline-size: calc(
+      100% - var(--editable-value-actions-reserve)
+    );
+    min-inline-size: min(
+      var(--ref-space-52), calc(100% - var(--editable-value-actions-reserve))
+    );
+    font: var(--editable-value-editor-font-weight)
+      var(--editable-value-editor-font-size) /
+      var(--editable-value-editor-line-height) var(--type-family-base);
+    letter-spacing: var(--editable-value-editor-letter-spacing);
+  }
+
+  .editorControl[data-auto-size-text]::before,
+  .editorControl[data-auto-size-text] > span {
+    grid-area: 1 / 1;
+  }
+
+  .root[data-commit-mode="change"] .editorControl[data-auto-size-text] {
+    --editable-value-actions-reserve: var(--ref-space-0);
+    max-inline-size: 100%;
+  }
+
+  .autoStatus {
+    display: flex;
+    align-items: center;
+    gap: var(--ui-space-xs);
+    margin-block-start: var(--ui-space-sm);
+    color: var(--color-text-secondary);
+  }
+
+  .editorControl[data-auto-size-text]::before {
+    min-inline-size: 0;
+    padding-inline-start: var(--editable-value-editor-padding-inline);
+    padding-inline-end: var(--editable-text-clear-reserve);
+    border-inline: var(--border-width-default) solid transparent;
+    content: attr(data-auto-size-text) " ";
+    overflow: hidden;
+    visibility: hidden;
+    white-space: pre;
+  }
+
+  .root[data-width="fill"] .editorControl {
+    display: block;
+    flex: 1 1 var(--ref-space-52);
+    inline-size: auto;
+  }
+
+  .editor {
+    min-inline-size: 0;
+    animation: editable-value-text-enter var(--motion-duration-feedback)
+      var(--motion-easing-standard) both;
+  }
+
+  .stationaryAction {
+    --button-hover-translate-y: var(--ref-space-0);
+  }
+
+  .saveAction {
+    flex: none;
+    align-self: end;
+    animation: editable-value-save-enter var(--motion-duration-feedback)
+      var(--motion-easing-standard) both;
+  }
+
+  .actions {
+    display: flex;
+    flex: none;
+    align-items: end;
+    gap: var(--editable-value-action-gap);
+  }
+
+  .error {
+    max-inline-size: var(--ref-space-52);
+    margin-block: var(--ui-space-sm) 0;
+    margin-inline: 0;
+    color: var(--color-text-destructive-default);
+    font: var(--type-ui-sm-font-weight) var(--type-ui-sm-font-size) /
+      var(--type-ui-sm-line-height) var(--type-family-base);
+    letter-spacing: var(--type-ui-sm-letter-spacing);
+  }
+
+  /* Error spacing follows Button's icon/label gap, not the XL action gap. */
+  .root[data-size="sm"] .error {
+    margin-block-start: var(--ui-space-xs);
+  }
+
+  .liveStatus {
+    position: absolute;
+    inline-size: var(--ref-space-px);
+    block-size: var(--ref-space-px);
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  @media (hover: hover) {
+    .root[data-phase="rest"]:not(
+        [data-disabled="true"],
+        [data-read-only="true"]
+      ):hover
+      .surface {
+      background: var(--color-surface-neutral-subtle-hover);
+    }
+
+    .root[data-phase="rest"]:not(
+        [data-disabled="true"],
+        [data-read-only="true"]
+      ):hover
+      .restHint {
+      opacity: 1;
+    }
+  }
+
+  .root[data-disabled="true"] {
+    color: var(--color-text-secondary);
+  }
+
+  @media (hover: none), (pointer: coarse) {
+    .root[data-phase="rest"]:not(
+        [data-disabled="true"],
+        [data-read-only="true"]
+      )
+      .restHint {
+      opacity: 1;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .root {
+      transition-duration: var(--motion-duration-instant);
+    }
+
+    .emptyAction,
+    .editor,
+    .editorLayout,
+    .saveAction {
+      animation: none;
+    }
+
+    .surface,
+    .restHint {
+      transition-duration: var(--motion-duration-instant);
+    }
+  }
+
+  @media (forced-colors: active) {
+    .surface {
+      outline: var(--border-width-default) solid CanvasText;
+      background: Canvas;
+      color: CanvasText;
+    }
+
+    .restTrigger:focus-visible {
+      outline-color: Highlight;
+    }
+  }
+
+  @keyframes editable-value-rest-enter {
+    from {
+      opacity: 0;
+      transform: scale(0.98);
+    }
+  }
+
+  @keyframes editable-value-editor-enter {
+    from {
+      opacity: 0;
+    }
+  }
+
+  @keyframes editable-value-save-enter {
+    from {
+      opacity: 0;
+      transform: translateX(calc(-1 * var(--editable-value-action-gap)));
+    }
+  }
+
+  @keyframes editable-value-text-enter {
+    from {
+      text-indent: var(--editable-value-entry-text-shift);
+    }
+  }
+
+}

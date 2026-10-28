@@ -1,0 +1,17 @@
+.page {
+  display: grid;
+  justify-items: start;
+  gap: var(--layout-space-responsive-lg);
+  min-inline-size: 0;
+  padding: var(--layout-space-responsive-xl);
+}
+
+.measure,
+.narrow {
+  inline-size: 100%;
+  max-inline-size: calc(var(--ui-interaction-target-min) * 8);
+}
+
+.secondary {
+  color: var(--color-text-secondary);
+}

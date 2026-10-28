@@ -1,0 +1,1 @@
+.example { min-inline-size: 0; display: grid; gap: var(--layout-space-fixed-sm); overflow-wrap: anywhere; }

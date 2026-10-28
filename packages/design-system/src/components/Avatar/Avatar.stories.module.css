@@ -1,0 +1,2 @@
+.example { display: flex; flex-wrap: wrap; align-items: center; gap: var(--layout-space-fixed-lg); }
+.status { flex-basis: 100%; }

@@ -1,0 +1,56 @@
+.canvas {
+  min-block-size: 100vh;
+  display: grid;
+  place-items: center;
+  padding: var(--layout-space-responsive-lg);
+  background: var(--color-surface-canvas);
+  color: var(--color-text-primary);
+}
+
+.panel {
+  display: grid;
+  inline-size: min(100%, 60ch);
+  gap: var(--layout-space-fixed-md);
+  padding: var(--layout-space-responsive-xl);
+  border: var(--border-width-default) solid var(--color-border-subtle);
+  border-radius: var(--radius-layout-responsive-outer);
+  background: var(--color-surface-base);
+  box-shadow: var(--elevation-raised);
+}
+
+.eyebrow {
+  margin: 0;
+  color: var(--color-text-primary);
+  font-family: var(--type-family-display);
+  font-size: var(--type-label-eyebrow-font-size);
+  font-weight: var(--type-label-eyebrow-font-weight);
+  letter-spacing: var(--type-label-eyebrow-letter-spacing);
+  line-height: var(--type-label-eyebrow-line-height);
+  text-transform: uppercase;
+}
+
+.title {
+  margin: 0;
+  font-family: var(--type-family-display);
+  font-size: var(--type-heading-lg-font-size);
+  font-weight: var(--type-heading-lg-font-weight);
+  letter-spacing: var(--type-heading-lg-letter-spacing);
+  line-height: var(--type-heading-lg-line-height);
+}
+
+.body {
+  margin: 0;
+  font-family: var(--type-family-base);
+  font-size: var(--type-body-base-font-size);
+  font-weight: var(--type-body-base-font-weight);
+  letter-spacing: var(--type-body-base-letter-spacing);
+  line-height: var(--type-body-base-line-height);
+}
+
+.code {
+  font-family: var(--type-family-mono);
+  font-size: var(--type-data-sm-font-size);
+  font-weight: var(--type-data-sm-font-weight);
+  letter-spacing: var(--type-data-sm-letter-spacing);
+  line-height: var(--type-data-sm-line-height);
+}

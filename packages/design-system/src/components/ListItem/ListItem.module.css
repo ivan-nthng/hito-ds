@@ -1,0 +1,169 @@
+@layer hito.components {
+  .root {
+    display: grid;
+    min-inline-size: 0;
+    gap: var(--ui-space-2xs);
+    padding-block: var(--layout-space-fixed-md);
+    padding-inline: var(--layout-space-fixed-lg);
+  }
+}
+
+@layer hito.components {
+  .structured {
+    --list-item-height: var(--ui-control-height-md);
+    --list-item-line: calc(
+      var(--type-ui-md-font-size) * var(--type-ui-md-line-height)
+    );
+    --list-item-icon: var(--ui-icon-size-md);
+    --list-item-inline: var(--ui-space-lg);
+    --list-item-block: var(--ui-space-sm);
+    --list-item-radius: var(--radius-ui-md);
+    grid-template-columns: minmax(0, 1fr) max-content;
+    align-items: start;
+    min-block-size: var(--list-item-height);
+    padding: var(--list-item-block) var(--list-item-inline);
+    border-radius: var(--list-item-radius);
+    gap: var(--ui-space-sm);
+    color: var(--color-text-primary);
+  }
+  .structured[data-size="sm"] {
+    --list-item-height: var(--ui-control-height-sm);
+    --list-item-line: calc(
+      var(--type-ui-sm-font-size) * var(--type-ui-sm-line-height)
+    );
+    --list-item-icon: var(--ui-icon-size-sm);
+    --list-item-inline: var(--ui-space-md);
+    --list-item-block: var(--ui-space-xs);
+    --list-item-radius: var(--radius-ui-sm);
+  }
+  .structured[data-size="lg"] {
+    --list-item-height: var(--ui-control-height-lg);
+    --list-item-line: calc(
+      var(--type-ui-lg-font-size) * var(--type-ui-lg-line-height)
+    );
+    --list-item-icon: var(--ui-icon-size-lg);
+    --list-item-inline: var(--ui-space-2xl);
+    --list-item-block: var(--ui-space-md);
+    --list-item-radius: var(--radius-ui-lg);
+  }
+  .structured[data-has-leading="true"] {
+    grid-template-columns: var(--list-item-icon) minmax(0, 1fr) max-content;
+  }
+  .structured:is(
+    [role="button"],
+    [role="link"],
+    [role="menuitem"],
+    [role="menuitemcheckbox"],
+    [role="menuitemradio"],
+    [role="option"]
+  ):not([aria-disabled="true"], [data-selected="true"]):hover {
+    background: var(--color-surface-neutral-subtle-hover);
+  }
+  .structured:has(a[href]:not([aria-disabled="true"])):not([aria-disabled="true"], [data-selected="true"]):hover {
+    background: var(--color-surface-neutral-subtle-hover);
+  }
+  .structured[aria-expanded="true"]:not([aria-disabled="true"], [data-selected="true"]) {
+    background: var(--color-surface-neutral-subtle-pressed);
+  }
+  .structured[data-selected="true"] {
+    background: var(--color-surface-accent-subtle-default);
+  }
+  .structured[data-selected="true"]:not([data-has-selection-mark="true"]) {
+    position: relative;
+  }
+  .structured[data-selected="true"]:not([data-has-selection-mark="true"])::before {
+    content: "";
+    position: absolute;
+    inset-block: var(--ui-space-2xs);
+    inset-inline-start: 0;
+    inline-size: var(--border-width-strong);
+    border-radius: var(--radius-ui-sm);
+    background: var(--color-border-accent-default);
+    pointer-events: none;
+  }
+  .leading,
+  .mark {
+    display: grid;
+    inline-size: var(--list-item-icon);
+    block-size: var(--list-item-icon);
+    place-items: center;
+  }
+  .artwork {
+    display: block;
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: contain;
+  }
+  .copy {
+    display: grid;
+    min-inline-size: 0;
+    gap: var(--ui-space-2xs);
+    overflow-wrap: anywhere;
+  }
+  .description,
+  .annotation {
+    color: var(--color-text-secondary);
+  }
+  .annotation {
+    min-inline-size: 0;
+    overflow-wrap: anywhere;
+  }
+  .trailing {
+    display: flex;
+    align-items: center;
+    min-inline-size: 0;
+    max-inline-size: 100%;
+    gap: var(--ui-space-sm);
+  }
+  @media (forced-colors: active) {
+    .structured[aria-expanded="true"]:not([aria-disabled="true"]) {
+      outline: var(--border-width-default) solid Highlight;
+      outline-offset: calc(var(--border-width-default) * -1);
+    }
+    .icon {
+      forced-color-adjust: none;
+      color: CanvasText;
+      background-color: CanvasText;
+    }
+    .structured[data-selected="true"] {
+      background: Canvas;
+      color: CanvasText;
+    }
+    .structured[data-selected="true"]:not([data-has-selection-mark="true"])::before {
+      background: Highlight;
+      forced-color-adjust: none;
+    }
+  }
+}
+
+@layer hito.components {
+  .structured[data-has-checkbox="true"] {
+    --list-item-choice-offset: calc(
+      (var(--ui-interaction-target-min) - var(--list-item-line)) / 2
+    );
+    min-block-size: var(--ui-interaction-target-min);
+    padding-block: 0;
+    padding-inline: max(
+      var(--list-item-inline),
+      calc((var(--ui-interaction-target-min) - var(--list-item-icon)) / 2)
+    );
+  }
+  .structured[data-has-checkbox="true"] .leading {
+    block-size: var(--ui-interaction-target-min);
+  }
+  .structured[data-has-checkbox="true"] .copy {
+    padding-block: var(--list-item-choice-offset);
+  }
+  .structured[data-has-checkbox="true"] .trailing {
+    padding-block-start: var(--list-item-choice-offset);
+  }
+}
+
+@layer hito.components {
+  .structured[data-has-trailing-icon="true"] {
+    padding-inline-end: var(--list-item-block);
+  }
+  .structured[data-has-checkbox="true"][data-has-trailing-icon="true"] {
+    padding-inline-end: var(--list-item-choice-offset);
+  }
+}

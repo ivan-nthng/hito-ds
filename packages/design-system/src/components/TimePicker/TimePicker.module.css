@@ -1,0 +1,18 @@
+@layer hito.components {
+  .root { min-inline-size: 0; }
+  .frame { position: relative; cursor: pointer; }
+  .trigger { text-align: start; cursor: inherit; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .trigger::after { content: ""; position: absolute; inset: 0; }
+  .trigger[data-placeholder="true"] { color: var(--color-text-muted); }
+  .native { position: absolute; inline-size: 1px; block-size: 1px; padding: 0; border: 0; clip-path: inset(50%); overflow: hidden; white-space: nowrap; }
+  .popover { inline-size: 21rem; max-inline-size: calc(100vw - 2 * var(--layout-space-fixed-md)); border: var(--border-width-default) solid transparent; }
+  .content, .column { display: grid; gap: var(--ui-space-xs); min-inline-size: 0; }
+  .columns { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--ui-space-xs); }
+  .secondary { color: var(--color-text-secondary); }
+  /* Four native SM rows plus the following-row peek; the sheet itself hugs its contents. */
+  .viewport { position: relative; block-size: calc(4 * (var(--ui-control-height-sm) + var(--ui-space-xs)) + var(--ui-space-sm)); overflow-y: auto; overscroll-behavior: contain; }
+  .options { gap: var(--ui-space-xs); }
+  .options > [role="option"] + [role="option"] { border-block-start: 0; }
+  /* Keep the native focus contour visible inside each independently clipped column. */
+  .options:focus-visible > [data-active="true"] { outline-offset: calc(-1 * var(--focus-indicator-width)); }
+}

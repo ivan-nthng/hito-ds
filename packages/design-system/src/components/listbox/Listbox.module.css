@@ -1,0 +1,41 @@
+@layer hito.components {
+  .list:focus {
+    outline: none;
+  }
+  .disabledCopy {
+    color: var(--color-text-disabled);
+  }
+  .trailingText {
+    color: var(--color-text-primary);
+  }
+  .option {
+    cursor: pointer;
+  }
+  .option[data-active="true"] {
+    background: var(--color-surface-neutral-subtle-default);
+  }
+  .list:focus-visible .option[data-active="true"] {
+    outline: var(--focus-indicator-width) solid var(--focus-indicator-color);
+    outline-offset: var(--focus-indicator-offset);
+  }
+  .option[data-selected="true"] {
+    background: var(--color-surface-accent-subtle-default);
+  }
+  .option[aria-disabled="true"] {
+    color: var(--color-text-disabled);
+    cursor: not-allowed;
+    background: transparent;
+  }
+  @media (forced-colors: active) {
+    .disabledCopy {
+      color: GrayText;
+    }
+    .option[data-active="true"] {
+      outline: var(--focus-indicator-width) solid Highlight;
+      outline-offset: var(--focus-indicator-offset);
+    }
+    .option[aria-disabled="true"] {
+      color: GrayText;
+    }
+  }
+}

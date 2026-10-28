@@ -1,0 +1,53 @@
+@layer hito.components {
+  .container {
+    min-inline-size: 0;
+    container: hito-description-list / inline-size;
+  }
+
+  .list {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+    align-items: first baseline;
+    column-gap: var(--layout-space-fixed-xl);
+    row-gap: var(--layout-space-fixed-lg);
+    margin: 0;
+    padding: 0;
+  }
+
+  .pair {
+    display: contents;
+  }
+
+  .pair dt,
+  .pair dd {
+    margin: 0;
+    min-inline-size: 0;
+    overflow-wrap: anywhere;
+  }
+
+  /* Cells share a stable text origin; pair gaps contain the vertical touch envelope. */
+  .value {
+    display: grid;
+    align-items: center;
+    min-inline-size: 0;
+    min-block-size: var(--ui-control-height-sm);
+  }
+
+  .term {
+    color: var(--color-text-muted);
+  }
+
+  /* Existing 40rem responsive boundary, evaluated against the available container. */
+  @container hito-description-list (max-width: 40rem) {
+    .list {
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--layout-space-fixed-lg);
+    }
+
+    .pair {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--ui-space-sm);
+    }
+  }
+}

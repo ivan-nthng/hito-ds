@@ -1,0 +1,14 @@
+.row,
+.column {
+  display: flex;
+  gap: var(--layout-space-fixed-md);
+}
+
+.row {
+  align-items: center;
+}
+
+.column {
+  inline-size: min(100%, 24rem);
+  flex-direction: column;
+}

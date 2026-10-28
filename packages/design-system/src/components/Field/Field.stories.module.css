@@ -1,0 +1,22 @@
+.page {
+  display: grid;
+  gap: var(--layout-space-responsive-2xl);
+  min-inline-size: 0;
+  padding: var(--layout-space-responsive-xl);
+  overflow-wrap: anywhere;
+}
+
+.intro,
+.examples {
+  display: grid;
+  gap: var(--layout-space-fixed-md);
+}
+
+.examples {
+  inline-size: 100%;
+  max-inline-size: var(--ref-space-96);
+}
+
+.secondary {
+  color: var(--color-text-secondary);
+}

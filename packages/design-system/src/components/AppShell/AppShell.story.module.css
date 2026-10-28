@@ -1,0 +1,2 @@
+.content { flex: 1; min-inline-size: 0; display: flex; flex-direction: column; align-items: flex-start; gap: var(--layout-space-fixed-lg); }
+@media (max-width: 63.999rem) { .content { min-block-size: 0; overflow-y: auto; } }

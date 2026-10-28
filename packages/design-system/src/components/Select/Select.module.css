@@ -1,0 +1,31 @@
+@layer hito.components {
+  .frame {
+    position: relative;
+    cursor: pointer;
+  }
+  .trigger {
+    text-align: start;
+    cursor: inherit;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .trigger::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+  }
+  .trigger[data-placeholder="true"] {
+    color: var(--color-text-muted);
+  }
+  .native {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    padding: 0;
+    border: 0;
+    clip-path: inset(50%);
+    overflow: hidden;
+    white-space: nowrap;
+  }
+}

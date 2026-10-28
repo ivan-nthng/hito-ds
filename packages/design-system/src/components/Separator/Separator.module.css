@@ -1,0 +1,24 @@
+@layer hito.components {
+  .root {
+    flex: none;
+    border: 0;
+    background: var(--color-border-subtle);
+  }
+
+  .horizontal {
+    inline-size: 100%;
+    block-size: var(--border-width-default);
+  }
+
+  .vertical {
+    align-self: stretch;
+    inline-size: var(--border-width-default);
+    min-block-size: var(--ui-control-height-sm);
+  }
+
+  @media (forced-colors: active) {
+    .root {
+      background: CanvasText;
+    }
+  }
+}

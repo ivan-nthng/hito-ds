@@ -1,0 +1,5 @@
+.example { display: grid; min-inline-size: 0; gap: var(--layout-space-fixed-sm); }
+.example > button:not([data-chip]) { justify-self: start; }
+.values { display: flex; flex-wrap: wrap; gap: var(--ui-space-sm); list-style: none; margin: 0; padding: 0; }
+.values > li { min-inline-size: 0; max-inline-size: 100%; display: flex; }
+.fullValues { display: grid; gap: var(--layout-space-fixed-xs); overflow-wrap: anywhere; }

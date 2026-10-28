@@ -1,0 +1,248 @@
+@layer hito.components {
+  .root {
+    --choice-size: var(--ui-icon-size-md);
+    --choice-radius: var(--radius-ui-md);
+    --choice-mark: var(--ui-space-lg);
+    --choice-dot: var(--ui-space-sm);
+    --switch-width: var(--ui-control-height-sm);
+    --switch-thumb: var(--ui-space-lg);
+    --switch-pressed: var(--ui-space-xl);
+    display: grid;
+    grid-template-columns: max-content minmax(0, 1fr);
+    align-items: center;
+    gap: var(--ui-space-sm);
+    min-inline-size: 0;
+    min-block-size: var(--ui-interaction-target-min);
+    color: var(--color-text-primary);
+    cursor: pointer;
+  }
+  .root:not([data-has-copy="true"]) {
+    grid-template-columns: max-content;
+    gap: 0;
+  }
+  .root[data-size="sm"] {
+    --choice-size: var(--ui-icon-size-sm);
+    --choice-radius: var(--radius-ui-sm);
+    --choice-mark: var(--ui-space-md);
+    --choice-dot: var(--ui-space-xs);
+    --switch-width: var(--ui-space-4xl);
+    --switch-thumb: var(--ui-space-md);
+    --switch-pressed: var(--ui-space-lg);
+  }
+  .target {
+    position: relative;
+    display: grid;
+    place-items: center;
+    inline-size: var(--ui-interaction-target-min);
+    block-size: var(--ui-interaction-target-min);
+  }
+  .input {
+    position: absolute;
+    inset: 0;
+    inline-size: 100%;
+    block-size: 100%;
+    margin: 0;
+    opacity: 0;
+    cursor: inherit;
+  }
+  .copy {
+    display: grid;
+    gap: var(--ui-space-2xs);
+    min-inline-size: 0;
+    overflow-wrap: anywhere;
+  }
+  .description {
+    color: var(--color-text-secondary);
+  }
+  .indicator {
+    box-sizing: border-box;
+    position: relative;
+    display: grid;
+    place-items: center;
+    inline-size: var(--choice-size);
+    block-size: var(--choice-size);
+    border: var(--border-width-default) solid var(--color-border-default);
+    border-radius: var(--choice-radius);
+    background: var(--color-surface-base);
+    pointer-events: none;
+    transition:
+      background-color var(--motion-duration-feedback)
+        var(--motion-easing-standard),
+      border-color var(--motion-duration-feedback) var(--motion-easing-standard);
+  }
+  .mark {
+    display: none;
+    inline-size: var(--choice-mark);
+    block-size: var(--choice-mark);
+    background: var(--color-foreground-on-accent-strong);
+    mask: url("../Icon/assets/general/check.svg") center / contain no-repeat;
+  }
+  .input:checked + .indicator .mark {
+    display: block;
+  }
+  .input:indeterminate + .indicator .mark {
+    display: block;
+    mask: none;
+    block-size: var(--border-width-strong);
+    border-radius: var(--radius-shape-round);
+  }
+  .input:is(:checked, :indeterminate) + .indicator {
+    border-color: var(--color-surface-accent-strong-default);
+    background: var(--color-surface-accent-strong-default);
+  }
+  .root:hover .input:not(:disabled):is(:checked, :indeterminate) + .indicator {
+    border-color: var(--color-surface-accent-strong-hover);
+    background: var(--color-surface-accent-strong-hover);
+  }
+  .root:active .input:not(:disabled):is(:checked, :indeterminate) + .indicator {
+    border-color: var(--color-surface-accent-strong-pressed);
+    background: var(--color-surface-accent-strong-pressed);
+  }
+  .root[data-kind="radio"] .indicator {
+    border-radius: var(--radius-shape-round);
+    background: var(--color-surface-base);
+  }
+  .root[data-kind="radio"] .input:checked + .indicator {
+    border-color: var(--color-border-accent-default);
+  }
+  .root[data-kind="radio"]:is(:hover, :active)
+    .input:not(:disabled)
+    + .indicator {
+    background: var(--color-surface-base);
+    border-color: var(--color-border-accent-hover);
+  }
+  .dot {
+    display: none;
+    inline-size: var(--choice-dot);
+    block-size: var(--choice-dot);
+    border-radius: var(--radius-shape-round);
+    background: var(--color-surface-accent-strong-default);
+  }
+  .input:checked + .indicator .dot {
+    display: block;
+  }
+  .root[data-kind="switch"] .indicator {
+    inline-size: var(--switch-width);
+  }
+  @media (forced-colors: none) {
+    .root[data-kind="switch"]:not(:hover):not(:active)
+      .input:not(:checked):not(:indeterminate):not(:disabled) + .indicator {
+      border-color: var(--color-border-subtle);
+    }
+  }
+  .thumbPosition {
+    position: absolute;
+    inset-block-start: calc((100% - var(--switch-thumb)) / 2);
+    inset-inline-start: var(--ui-space-3xs);
+    inline-size: var(--switch-thumb);
+    block-size: var(--switch-thumb);
+    transition: inset-inline-start var(--motion-duration-transition)
+      var(--motion-easing-standard);
+  }
+  .input:checked + .indicator .thumbPosition {
+    inset-inline-start: calc(100% - var(--ui-space-3xs) - var(--switch-thumb));
+  }
+  .thumb {
+    position: absolute;
+    inset: 0;
+    border-radius: var(--switch-thumb-radius);
+    background: var(--color-icon-default);
+    transition:
+      inset var(--motion-duration-feedback) var(--motion-easing-standard),
+      background-color var(--motion-duration-feedback)
+        var(--motion-easing-standard);
+  }
+  .input:checked + .indicator .thumb {
+    background: var(--color-foreground-on-accent-strong);
+  }
+  .root:active .input:not(:disabled) + .indicator .thumb {
+    inset: calc((var(--switch-thumb) - var(--switch-pressed)) / 2);
+  }
+  .root[data-kind="checkbox"] .input[aria-invalid="true"] + .indicator {
+    border-color: var(--color-border-destructive-default);
+  }
+  .input:focus-visible + .indicator {
+    outline: var(--focus-indicator-width) solid var(--focus-indicator-color);
+    outline-offset: var(--focus-indicator-offset);
+  }
+  .root:has(.input:disabled) {
+    cursor: not-allowed;
+    color: var(--color-text-disabled);
+  }
+  .root:has(.input:disabled) .description {
+    color: var(--color-text-disabled);
+  }
+  .root .input:disabled + .indicator {
+    background: var(--color-surface-neutral-subtle-default);
+    border-color: var(--color-border-disabled);
+  }
+  .root .input:disabled:is(:checked, :indeterminate) + .indicator {
+    background: var(--color-surface-neutral-subtle-hover);
+  }
+  .root .input:disabled + .indicator :is(.mark, .dot, .thumb) {
+    background: var(--color-icon-disabled);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .indicator,
+    .thumbPosition,
+    .thumb {
+      transition-duration: var(--motion-reduced-spatial-duration);
+    }
+  }
+  @media (forced-colors: active) {
+    .root .indicator {
+      forced-color-adjust: none;
+      border-color: CanvasText;
+      background: Canvas;
+    }
+    .root .input:is(:checked, :indeterminate) + .indicator {
+      border-color: Highlight;
+      background: Highlight;
+    }
+    .root .input + .indicator :is(.mark, .dot, .thumb) {
+      background: CanvasText;
+    }
+    .root
+      .input:is(:checked, :indeterminate)
+      + .indicator
+      :is(.mark, .dot, .thumb) {
+      background: HighlightText;
+    }
+    .root .input:disabled + .indicator {
+      border-color: GrayText;
+      background: Canvas;
+    }
+    .root .input:disabled + .indicator :is(.mark, .dot, .thumb) {
+      background: GrayText;
+    }
+    /* Match the ordinary Radio state selectors, including hover, in forced colors. */
+    .root[data-kind="radio"] .input + .indicator,
+    .root[data-kind="radio"]:is(:hover, :active)
+      .input:not(:disabled)
+      + .indicator {
+      background: Canvas;
+      border-color: CanvasText;
+    }
+    .root[data-kind="radio"] .input:checked + .indicator,
+    .root[data-kind="radio"]:is(:hover, :active)
+      .input:not(:disabled):checked
+      + .indicator {
+      background: Canvas;
+      border-color: Highlight;
+    }
+    .root[data-kind="radio"] .input:checked + .indicator .dot {
+      background: Highlight;
+    }
+    .root[data-kind="radio"] .input:disabled + .indicator {
+      background: Canvas;
+      border-color: GrayText;
+    }
+    .root[data-kind="radio"] .input:disabled:checked + .indicator .dot {
+      background: GrayText;
+    }
+    .input:focus-visible + .indicator {
+      outline-color: Highlight;
+    }
+  }
+
+}

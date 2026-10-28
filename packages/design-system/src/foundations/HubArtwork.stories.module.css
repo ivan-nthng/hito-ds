@@ -1,0 +1,7 @@
+.artwork {
+  display: block;
+  /* Existing fixed 2XL layout role is 32px; two units give the approved 64px artwork target. */
+  inline-size: calc(2 * var(--layout-space-fixed-2xl));
+  block-size: calc(2 * var(--layout-space-fixed-2xl));
+  object-fit: contain;
+}

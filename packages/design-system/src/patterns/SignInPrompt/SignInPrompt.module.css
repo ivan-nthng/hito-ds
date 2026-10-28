@@ -1,0 +1,7 @@
+@layer hito.patterns {
+  .panel { inline-size: calc(var(--layout-space-fixed-2xl) * 10); }
+  .content { display: grid; gap: var(--layout-space-fixed-md); min-inline-size: 0; }
+  .introduction { display: flex; align-items: center; gap: var(--layout-space-fixed-md); }
+  .description { flex: 1; min-inline-size: 0; color: var(--color-text-secondary); }
+  .artwork { flex: none; inline-size: calc(var(--layout-space-fixed-2xl) * 2); block-size: calc(var(--layout-space-fixed-2xl) * 2); object-fit: contain; }
+}

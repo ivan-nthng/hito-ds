@@ -1,0 +1,10 @@
+@layer hito.components {
+  .trigger { inline-size: fit-content; justify-self: start; align-self: start; }
+  .summary { min-inline-size: 0; overflow-wrap: anywhere; text-align: start; }
+  .label { color: var(--color-text-muted); }
+  .value { color: var(--color-text-primary); }
+
+  @media (forced-colors: active) {
+    .label, .value { color: ButtonText; }
+  }
+}

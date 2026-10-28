@@ -1,0 +1,4 @@
+.page { display: grid; gap: var(--layout-space-responsive-xl); min-inline-size: 0; padding: var(--layout-space-responsive-xl); }
+.measure { inline-size: 100%; max-inline-size: calc(var(--ref-space-96) * 2); }
+.form { display: grid; justify-items: start; gap: var(--layout-space-fixed-md); inline-size: 100%; }
+.secondary { color: var(--color-text-secondary); }

@@ -1,0 +1,126 @@
+.root {
+  display: grid;
+  min-inline-size: 0;
+  gap: var(--ui-space-lg);
+}
+
+.strip {
+  min-inline-size: 0;
+  overflow-x: auto;
+  /* Reserve only the existing focus-ring clearance inside the scroll viewport. */
+  padding: calc(var(--focus-indicator-width) + var(--focus-indicator-offset));
+  overscroll-behavior-inline: contain;
+}
+
+.root {
+  --tabs-underline-gap: var(--ui-space-lg);
+  --tabs-radius: var(--radius-ui-md);
+  --tabs-inset: var(--ui-space-2xs);
+  --tabs-outer-radius: var(--tabs-segmented-outer-radius-md);
+}
+
+.root[data-size="sm"] {
+  --tabs-underline-gap: var(--ui-space-xs);
+  --tabs-radius: var(--radius-ui-sm);
+  --tabs-outer-radius: var(--tabs-segmented-outer-radius-sm);
+}
+
+.rail {
+  position: relative;
+  display: flex;
+  inline-size: max-content;
+  gap: var(--ui-space-xs);
+  padding-block-end: calc(var(--tabs-underline-gap) + var(--border-width-strong));
+}
+
+.tab {
+  z-index: 1;
+  flex: 0 0 auto;
+  max-inline-size: none;
+  white-space: nowrap;
+  --button-hover-translate-y: 0;
+  --button-context-foreground: var(--color-text-secondary);
+}
+
+.tab[aria-selected="true"] {
+  --button-context-foreground: var(--color-text-primary);
+}
+
+.root[data-appearance="underline"] .tab[aria-selected="true"]::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  inset-block-end: calc(-1 * (var(--tabs-underline-gap) + var(--border-width-strong) + var(--border-width-default)));
+  block-size: var(--border-width-strong);
+  background: currentColor;
+}
+
+.root[data-appearance="segmented"] .rail {
+  gap: 0;
+  padding: var(--tabs-inset);
+  border: 0;
+  border-radius: var(--tabs-outer-radius);
+  background: var(--color-surface-neutral-subtle-default);
+  color: var(--color-text-primary);
+}
+
+.indicator {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  border-radius: var(--tabs-radius);
+  background: var(--color-surface-raised);
+}
+
+.indicator[data-moving="true"] {
+  transition: transform var(--motion-duration-transition) var(--motion-easing-standard),
+    width var(--motion-duration-transition) var(--motion-easing-standard);
+}
+
+.root[data-appearance="segmented"] .tab[aria-selected="true"] {
+  background: transparent;
+}
+
+.root[data-appearance="segmented"] .rail:not(:has(.indicator[data-ready="true"])) .tab[aria-selected="true"] {
+  background: var(--color-surface-raised);
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+  .indicator[data-moving="true"] {
+    transition-duration: var(--motion-reduced-spatial-duration);
+  }
+}
+
+.tabCopy {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--button-gap);
+}
+
+.count {
+  color: var(--color-text-muted);
+}
+
+.tab:disabled .count {
+  color: inherit;
+}
+
+.panel {
+  min-inline-size: 0;
+}
+
+@media (forced-colors: active) {
+  .indicator {
+    background: Canvas;
+    outline: var(--border-width-strong) solid Highlight;
+    outline-offset: calc(-1 * var(--border-width-strong));
+  }
+
+  .tab[aria-selected="true"] {
+    border-color: Highlight;
+    color: Highlight;
+    text-decoration: underline;
+  }
+}

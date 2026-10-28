@@ -1,0 +1,143 @@
+.page {
+  display: grid;
+  inline-size: min(100%, 72rem);
+  gap: var(--layout-space-responsive-xl);
+  margin-inline: auto;
+  padding: var(--layout-space-responsive-lg);
+  background: var(--color-surface-canvas);
+}
+
+.intro,
+.contexts,
+.colorRows,
+.intentRows,
+.colorIdentity,
+.intentState,
+.canvasContext,
+.baseContext {
+  display: grid;
+}
+
+.intro {
+  gap: var(--layout-space-fixed-sm);
+  max-inline-size: 60rem;
+}
+
+.contexts {
+  gap: var(--layout-space-fixed-xl);
+}
+
+.canvasContext,
+.baseContext {
+  gap: var(--layout-space-fixed-md);
+  padding-block: var(--layout-space-fixed-lg);
+}
+
+.canvasContext {
+  background: var(--color-surface-canvas);
+}
+
+.baseContext {
+  padding-inline: var(--layout-space-fixed-lg);
+  background: var(--color-surface-base);
+}
+
+.colorRows,
+.intentRows {
+  border-block-start: var(--border-width-default) solid
+    var(--color-border-subtle);
+}
+
+.colorRow {
+  display: grid;
+  grid-template-columns: minmax(10rem, 1fr) minmax(16rem, 2fr) auto;
+  align-items: baseline;
+  gap: var(--layout-space-fixed-lg);
+  padding-block: var(--layout-space-fixed-md);
+  border-block-end: var(--border-width-default) solid var(--color-border-subtle);
+}
+
+.colorIdentity,
+.intentState {
+  gap: var(--layout-space-fixed-xs);
+}
+
+.intentHeader,
+.intentRow {
+  display: grid;
+  grid-template-columns: minmax(8rem, 1fr) repeat(2, minmax(10rem, 1fr));
+  align-items: start;
+  gap: var(--layout-space-fixed-lg);
+  padding-block: var(--layout-space-fixed-md);
+  border-block-end: var(--border-width-default) solid var(--color-border-subtle);
+}
+
+.primary {
+  color: var(--color-text-primary);
+}
+
+.secondary {
+  color: var(--color-text-secondary);
+}
+
+.muted {
+  color: var(--color-text-muted);
+}
+
+.disabled {
+  color: var(--color-text-disabled);
+}
+
+.disabledControl {
+  display: inline-flex;
+  inline-size: fit-content;
+  padding: 0;
+  border: 0;
+  color: inherit;
+  background: transparent;
+  cursor: not-allowed;
+  opacity: 1;
+}
+
+.darkOnly {
+  display: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  .lightOnly {
+    display: none;
+  }
+
+  .darkOnly {
+    display: inline;
+  }
+}
+
+:global([data-hito-color-scheme="light"]) .lightOnly {
+  display: inline;
+}
+
+:global([data-hito-color-scheme="light"]) .darkOnly {
+  display: none;
+}
+
+:global([data-hito-color-scheme="dark"]) .lightOnly {
+  display: none;
+}
+
+:global([data-hito-color-scheme="dark"]) .darkOnly {
+  display: inline;
+}
+
+@media (max-width: 40rem) {
+  .colorRow,
+  .intentHeader,
+  .intentRow {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--layout-space-fixed-sm);
+  }
+
+  .intentHeader {
+    display: none;
+  }
+}

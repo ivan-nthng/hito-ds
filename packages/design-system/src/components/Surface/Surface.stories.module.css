@@ -1,0 +1,6 @@
+.surface {
+  display: grid;
+  inline-size: min(100%, 32rem);
+  gap: var(--layout-space-fixed-md);
+  padding: var(--layout-space-responsive-lg);
+}

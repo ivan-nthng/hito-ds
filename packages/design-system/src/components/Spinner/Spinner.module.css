@@ -1,0 +1,52 @@
+@layer hito.components {
+  .spinner {
+    position: relative;
+    display: inline-block;
+    flex: none;
+    inline-size: var(--ui-icon-size-md);
+    block-size: var(--ui-icon-size-md);
+    border-radius: var(--radius-shape-round);
+    color: inherit;
+  }
+
+  .spinner[data-size="sm"] { inline-size: var(--ui-icon-size-sm); block-size: var(--ui-icon-size-sm); }
+  .spinner[data-size="lg"] { inline-size: var(--ui-icon-size-lg); block-size: var(--ui-icon-size-lg); }
+  .spinner[data-size="xl"] { inline-size: var(--ui-icon-size-xl); block-size: var(--ui-icon-size-xl); }
+
+  .spinner::before,
+  .spinner::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    box-sizing: border-box;
+    border: var(--spinner-stroke-width) solid currentColor;
+    border-radius: inherit;
+  }
+
+  .spinner::before { opacity: var(--spinner-track-opacity); }
+
+  .spinner::after {
+    /* The mask changes alpha only; the border supplies the governed circular stroke. */
+    mask-image: conic-gradient(
+      color-mix(in srgb, currentColor calc(100% * var(--spinner-arc-tail-opacity)), transparent) 0deg 60deg,
+      color-mix(in srgb, currentColor calc(100% * var(--spinner-arc-head-opacity)), transparent) 300deg 360deg
+    );
+    animation: spinner-rotate var(--button-loading-cycle-duration) var(--motion-easing-linear) infinite;
+  }
+
+  @keyframes spinner-rotate { to { transform: rotate(1turn); } }
+
+  @media (forced-colors: active) {
+    .spinner::before { display: none; }
+    .spinner::after {
+      forced-color-adjust: none;
+      border-color: CanvasText;
+      border-inline-end-color: transparent;
+      mask-image: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .spinner::after { animation: none; }
+  }
+}

@@ -1,0 +1,9 @@
+@layer hito.storybook {
+  .lines { display: grid; gap: var(--ui-space-sm); inline-size: 100%; }
+  .row { display: flex; align-items: center; gap: var(--ui-space-lg); }
+  .copy { display: grid; flex: 1; gap: var(--ui-space-sm); }
+  /* Relative widths/aspect ratio belong to these synthetic content fixtures, not Skeleton API. */
+  .medium { inline-size: 72%; }
+  .short { inline-size: 44%; }
+  .media { aspect-ratio: 16 / 9; block-size: auto; }
+}

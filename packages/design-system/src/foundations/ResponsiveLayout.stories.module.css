@@ -1,0 +1,176 @@
+.secondary {
+  color: var(--color-text-secondary);
+}
+
+.modeGrid,
+.mode,
+.valueTable,
+.valueHeader,
+.valueRow,
+.valueCell,
+.radiusGrid,
+.radiusExample {
+  display: grid;
+}
+
+.modeGrid,
+.radiusGrid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--layout-space-responsive-xl);
+}
+
+.mode {
+  grid-template-columns: var(--ref-space-1) minmax(0, 1fr);
+  column-gap: var(--layout-space-fixed-sm);
+  row-gap: var(--layout-space-fixed-xs);
+}
+
+.mode::before {
+  grid-row: 1 / span 2;
+  align-self: start;
+  inline-size: var(--ref-space-1);
+  block-size: var(--ref-space-1);
+  margin-block-start: var(--ui-space-sm);
+  border-radius: var(--ref-radius-full);
+  background: var(--color-border-default);
+  content: "";
+}
+
+.mode > * {
+  grid-column: 2;
+}
+
+.valueTable {
+  gap: var(--layout-space-fixed-xl);
+}
+
+.valueHeader,
+.valueRow {
+  grid-template-columns: minmax(var(--ref-space-44), 1.5fr) repeat(
+      4,
+      minmax(var(--ref-space-20), 1fr)
+    );
+  align-items: center;
+  gap: var(--layout-space-fixed-lg);
+}
+
+.valueCell {
+  align-content: center;
+  gap: var(--layout-space-fixed-xs);
+  padding: var(--layout-space-fixed-xs);
+  border-radius: var(--radius-ui-sm);
+}
+
+.valueCell > span {
+  inline-size: var(--responsive-value);
+  max-inline-size: 100%;
+  block-size: var(--ref-space-1);
+  border-radius: var(--ref-radius-full);
+  background: var(--color-icon-accent-default);
+}
+
+.valueCell[data-layout-mode="sm"] {
+  background: var(--color-surface-subtle);
+}
+
+.mode[data-layout-mode="sm"]::before {
+  background: var(--color-icon-accent-default);
+}
+
+@media (min-width: 40rem) {
+  .valueCell[data-layout-mode="sm"] {
+    background: transparent;
+  }
+
+  .valueCell[data-layout-mode="md"] {
+    background: var(--color-surface-subtle);
+  }
+
+  .mode[data-layout-mode="sm"]::before {
+    background: var(--color-border-default);
+  }
+
+  .mode[data-layout-mode="md"]::before {
+    background: var(--color-icon-accent-default);
+  }
+}
+
+@media (min-width: 64rem) {
+  .valueCell[data-layout-mode="md"] {
+    background: transparent;
+  }
+
+  .valueCell[data-layout-mode="lg"] {
+    background: var(--color-surface-subtle);
+  }
+
+  .mode[data-layout-mode="md"]::before {
+    background: var(--color-border-default);
+  }
+
+  .mode[data-layout-mode="lg"]::before {
+    background: var(--color-icon-accent-default);
+  }
+}
+
+@media (min-width: 80rem) {
+  .valueCell[data-layout-mode="lg"] {
+    background: transparent;
+  }
+
+  .valueCell[data-layout-mode="xl"] {
+    background: var(--color-surface-subtle);
+  }
+
+  .mode[data-layout-mode="lg"]::before {
+    background: var(--color-border-default);
+  }
+
+  .mode[data-layout-mode="xl"]::before {
+    background: var(--color-icon-accent-default);
+  }
+}
+
+.radiusExample {
+  min-inline-size: 0;
+  align-content: start;
+  gap: var(--layout-space-fixed-xs);
+}
+
+.radiusExample > div {
+  block-size: var(--ref-space-20);
+  border-radius: var(--responsive-value);
+  background: var(--color-surface-info-subtle-default);
+}
+
+@media (max-width: 64rem) {
+  .modeGrid,
+  .radiusGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .valueHeader,
+  .valueRow {
+    grid-template-columns: minmax(var(--ref-space-32), 1fr) repeat(
+        4,
+        minmax(var(--ref-space-16), 1fr)
+      );
+  }
+}
+
+@media (max-width: 40rem) {
+  .modeGrid,
+  .radiusGrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .valueTable {
+    overflow-x: auto;
+    padding-block-end: var(--layout-space-fixed-sm);
+  }
+
+  .valueHeader,
+  .valueRow {
+    min-inline-size: 44rem;
+  }
+}

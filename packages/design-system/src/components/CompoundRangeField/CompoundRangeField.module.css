@@ -1,0 +1,67 @@
+@layer hito.components {
+  .root {
+    container-type: inline-size;
+  }
+  .content {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    min-inline-size: 0;
+    gap: var(--layout-space-fixed-xl);
+  }
+  .range {
+    min-inline-size: 0;
+  }
+  .editors {
+    display: flex;
+    flex-wrap: wrap;
+    inline-size: calc(2 * var(--ref-space-40) + var(--layout-space-fixed-md));
+    max-inline-size: 100%;
+    min-inline-size: 0;
+    gap: var(--layout-space-fixed-md);
+  }
+  .editor {
+    display: grid;
+    grid-template-rows: 1fr auto;
+    flex: 1 1 var(--ref-space-40);
+    min-inline-size: 0;
+    gap: var(--ui-space-xs);
+  }
+
+  /* Reuse the admitted md layout boundary; shared rows align the visible rail
+     and numeric frames even when endpoint labels wrap. */
+  @container (width >= 40rem) {
+    .content {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) calc(
+          2 * var(--ref-space-40) + var(--layout-space-fixed-md)
+        );
+      grid-template-rows: auto auto auto;
+      row-gap: var(--ui-space-xs);
+      align-items: stretch;
+    }
+    .range {
+      display: grid;
+      grid-template-rows: subgrid;
+      grid-column: 1;
+      grid-row: 2 / span 2;
+    }
+    .rangeControl {
+      grid-template-rows: subgrid;
+      grid-row: span 2;
+    }
+    .editors {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-rows: subgrid;
+      grid-column: 2;
+      grid-row: 1 / span 2;
+    }
+    .editor {
+      grid-template-rows: subgrid;
+      grid-row: span 2;
+    }
+    .editor > :last-child {
+      align-self: center;
+    }
+  }
+}

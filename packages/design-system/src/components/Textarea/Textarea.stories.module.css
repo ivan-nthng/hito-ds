@@ -1,0 +1,51 @@
+.page,
+.section,
+.stack {
+  display: grid;
+}
+
+.page {
+  gap: var(--layout-space-responsive-2xl);
+  padding: var(--layout-space-responsive-xl);
+}
+
+.section,
+.stack {
+  gap: var(--layout-space-fixed-md);
+}
+
+.section,
+.measure {
+  inline-size: 100%;
+  max-inline-size: var(--ref-space-96);
+}
+
+.secondary,
+.counter {
+  color: var(--color-text-secondary);
+}
+
+.row {
+  display: grid;
+  gap: var(--layout-space-fixed-lg);
+}
+
+.counter {
+  font: var(--type-label-sm-font-weight) var(--type-label-sm-font-size) /
+    var(--type-label-sm-line-height) var(--type-family-display);
+  letter-spacing: var(--type-label-sm-letter-spacing);
+}
+
+/* Keep the three controls adjacent where they fit, and compare their relative insets on narrow screens. */
+.comparison {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: start;
+  gap: var(--layout-space-fixed-md);
+}
+
+@media (max-width: 40rem) {
+  .comparison {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

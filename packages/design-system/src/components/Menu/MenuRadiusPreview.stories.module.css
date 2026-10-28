@@ -1,0 +1,9 @@
+@layer hito.storybook {
+  .stage {
+    display: flex;
+    align-items: start;
+    min-block-size: calc(var(--layout-space-fixed-2xl) * 7);
+    padding: var(--layout-space-fixed-lg);
+    background: var(--color-surface-canvas);
+  }
+}

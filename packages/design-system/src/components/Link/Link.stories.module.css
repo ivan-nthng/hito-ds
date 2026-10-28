@@ -1,0 +1,22 @@
+.page {
+  display: grid;
+  gap: var(--layout-space-responsive-2xl);
+  padding: var(--layout-space-responsive-xl);
+}
+
+.intro,
+.section {
+  display: grid;
+  gap: var(--layout-space-fixed-md);
+}
+
+.secondary {
+  color: var(--color-text-secondary);
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--layout-space-fixed-lg);
+  align-items: center;
+}

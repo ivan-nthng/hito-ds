@@ -1,0 +1,416 @@
+@layer hito.components {
+  .affix {
+    flex: none;
+    color: var(--color-text-secondary);
+    font: var(--input-frame-font-weight) var(--input-frame-font-size) /
+      var(--input-frame-line-height) var(--type-family-base);
+    letter-spacing: var(--input-frame-letter-spacing);
+    user-select: none;
+  }
+  .leadingArtwork {
+    display: block;
+    flex: none;
+    inline-size: var(--input-frame-artwork-size);
+    block-size: var(--input-frame-artwork-size);
+    object-fit: contain;
+    pointer-events: none;
+    user-select: none;
+  }
+  @media (forced-colors: active) { .affix { color: FieldText; } }
+  .surface,
+  .metrics {
+    --input-frame-height: var(--ui-control-height-md);
+    --input-frame-gap: var(--ui-space-sm);
+    --input-frame-padding-inline: var(--ui-space-lg);
+    --input-frame-radius: var(--radius-ui-md);
+    --input-frame-font-size: var(--type-ui-md-font-size);
+    --input-frame-line-height: var(--type-ui-md-line-height);
+    --input-frame-letter-spacing: var(--type-ui-md-letter-spacing);
+    --input-frame-font-weight: var(--type-ui-md-font-weight);
+    --input-frame-line-size: calc(
+      var(--input-frame-font-size) * var(--input-frame-line-height)
+    );
+    --input-frame-padding-block: calc(
+      (var(--input-frame-height) - var(--input-frame-line-size)) / 2 -
+        var(--border-width-default)
+    );
+    --input-frame-loading-size: var(--ui-icon-size-md);
+    --input-frame-artwork-size: var(--ui-icon-size-md);
+    --input-frame-active-border-color: var(--editable-text-editing-border);
+    --input-frame-loading-cycle-duration: calc(
+      var(--motion-duration-emphasis) + var(--motion-duration-emphasis)
+    );
+    --icon-color: currentColor;
+  }
+
+  .surface {
+    box-sizing: border-box;
+    inline-size: 100%;
+    min-inline-size: 0;
+    margin: 0;
+    border: var(--border-width-default) solid var(--color-border-subtle);
+    outline: var(--border-width-default) solid transparent;
+    outline-offset: var(--ref-space-0);
+    border-radius: var(--input-frame-radius);
+    appearance: none;
+    background: var(--color-surface-neutral-subtle-default);
+    color: var(--color-text-primary);
+    caret-color: currentColor;
+    cursor: text;
+    font: var(--input-frame-font-weight) var(--input-frame-font-size) /
+      var(--input-frame-line-height) var(--type-family-base);
+    letter-spacing: var(--input-frame-letter-spacing);
+    transition-duration: var(--motion-duration-feedback);
+    transition-property: background-color, border-color, color, outline-color;
+    transition-timing-function: var(--motion-easing-standard);
+  }
+
+  .surface[data-size="sm"],
+  .metrics[data-size="sm"] {
+    --input-frame-height: var(--ui-control-height-sm);
+    --input-frame-gap: var(--ui-space-xs);
+    --input-frame-padding-inline: var(--ui-space-md);
+    --input-frame-radius: var(--radius-ui-sm);
+    --input-frame-font-size: var(--type-ui-sm-font-size);
+    --input-frame-line-height: var(--type-ui-sm-line-height);
+    --input-frame-letter-spacing: var(--type-ui-sm-letter-spacing);
+    --input-frame-font-weight: var(--type-ui-sm-font-weight);
+    --input-frame-loading-size: var(--ui-icon-size-sm);
+    --input-frame-artwork-size: var(--ui-icon-size-sm);
+  }
+
+  .surface[data-size="lg"],
+  .metrics[data-size="lg"] {
+    --input-frame-height: var(--ui-control-height-lg);
+    --input-frame-gap: var(--ui-space-sm);
+    --input-frame-padding-inline: var(--ui-space-xl);
+    --input-frame-radius: var(--radius-ui-lg);
+    --input-frame-font-size: var(--type-ui-lg-font-size);
+    --input-frame-line-height: var(--type-ui-lg-line-height);
+    --input-frame-letter-spacing: var(--type-ui-lg-letter-spacing);
+    --input-frame-font-weight: var(--type-ui-lg-font-weight);
+    --input-frame-loading-size: var(--ui-icon-size-lg);
+    --input-frame-artwork-size: var(--ui-icon-size-lg);
+  }
+
+  .surface[data-size="xl"],
+  .metrics[data-size="xl"] {
+    --input-frame-height: var(--ui-control-height-xl);
+    --input-frame-gap: var(--ui-space-md);
+    --input-frame-padding-inline: var(--ui-space-2xl);
+    --input-frame-radius: var(--radius-ui-xl);
+    --input-frame-font-size: var(--type-ui-xl-font-size);
+    --input-frame-line-height: var(--type-ui-xl-line-height);
+    --input-frame-letter-spacing: var(--type-ui-xl-letter-spacing);
+    --input-frame-font-weight: var(--type-ui-xl-font-weight);
+    --input-frame-loading-size: var(--ui-icon-size-xl);
+    --input-frame-artwork-size: var(--ui-icon-size-xl);
+  }
+
+  .surface[data-appearance="soft"] {
+    border-color: transparent;
+  }
+
+  .surface[data-appearance="ghost"] {
+    border-color: transparent;
+    background: transparent;
+  }
+
+  @media (hover: hover) {
+    .surface:hover:not([data-disabled="true"], [data-read-only="true"]) {
+      border-color: var(--color-border-default);
+      background: var(--color-surface-neutral-subtle-hover);
+    }
+
+    .surface:is([data-appearance="soft"], [data-appearance="ghost"]):hover:not(
+        [data-disabled="true"],
+        [data-read-only="true"]
+      ) {
+      border-color: transparent;
+    }
+  }
+
+  .surface:active:not([data-disabled="true"], [data-read-only="true"]) {
+    background: var(--color-surface-neutral-subtle-pressed);
+  }
+
+  .surface[data-invalid="true"] {
+    --input-frame-active-border-color: var(--color-border-destructive-hover);
+
+    border-color: var(--color-border-destructive-default);
+  }
+
+  .surface[data-invalid="true"]:hover:not(
+      [data-disabled="true"],
+      [data-read-only="true"]
+    ) {
+    border-color: var(--color-border-destructive-hover);
+  }
+
+  .surface[data-validation-state="success"] {
+    --input-frame-active-border-color: var(--color-border-success-hover);
+
+    border-color: var(--color-border-success-default);
+  }
+
+  .surface[data-validation-state="success"]:hover:not(
+      [data-disabled="true"],
+      [data-read-only="true"]
+    ) {
+    border-color: var(--color-border-success-hover);
+  }
+
+  .surface:where(:focus, :has(.input:focus)):not([data-read-only="true"]) {
+    border-color: var(--input-frame-active-border-color);
+    outline-color: var(--input-frame-active-border-color);
+    background: var(--color-surface-neutral-subtle-pressed);
+  }
+
+  .surface:has(.input[aria-expanded="true"]):not(
+      [data-disabled="true"],
+      [data-read-only="true"],
+      [data-loading="true"]
+    ) {
+    background: var(--color-surface-neutral-subtle-pressed);
+  }
+
+  .surface[data-read-only="true"]:where(
+      :focus-visible,
+      :has(.input:focus-visible)
+    ) {
+    outline: var(--focus-indicator-width) solid var(--focus-indicator-color);
+    outline-offset: var(--focus-indicator-offset);
+  }
+
+  .surface[data-disabled="true"] {
+    border-color: var(--color-border-disabled);
+    background: transparent;
+    color: var(--color-text-disabled);
+    cursor: not-allowed;
+    opacity: 1;
+  }
+
+  .surface[data-appearance="soft"][data-disabled="true"],
+  .surface[data-read-only="true"] {
+    background: var(--color-surface-neutral-subtle-default);
+  }
+
+  .surface[data-appearance="ghost"][data-read-only="true"] {
+    background: transparent;
+  }
+
+  .surface[data-read-only="true"] {
+    cursor: default;
+  }
+
+  .surface[data-loading="true"],
+  .surface[data-loading="true"] .input {
+    cursor: progress;
+  }
+
+  .root {
+    display: inline-flex;
+    min-block-size: var(--input-frame-height);
+    align-items: center;
+    gap: var(--input-frame-gap);
+    padding-inline: var(--input-frame-padding-inline);
+  }
+
+  .input {
+    inline-size: 100%;
+    min-inline-size: 0;
+    padding: 0;
+    border: 0;
+    appearance: none;
+    background: transparent;
+    color: inherit;
+    caret-color: currentColor;
+    font: inherit;
+    letter-spacing: inherit;
+    outline: none;
+  }
+
+  .input::placeholder {
+    color: var(--color-text-muted);
+    opacity: 1;
+  }
+
+  .surface[data-disabled="true"] .input {
+    cursor: not-allowed;
+  }
+
+  .loadingIndicator {
+    position: relative;
+    flex: none;
+    inline-size: var(--input-frame-loading-size);
+    block-size: var(--input-frame-loading-size);
+    border-radius: var(--radius-shape-round);
+  }
+
+  .loadingIndicator::before,
+  .loadingIndicator::after {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    content: "";
+    mask: radial-gradient(
+      farthest-side,
+      transparent calc(100% - var(--border-width-strong)),
+      currentcolor calc(100% - var(--border-width-strong))
+    );
+  }
+
+  .loadingIndicator::before {
+    background: rgb(from currentcolor r g b / var(--ref-opacity-12));
+  }
+
+  .loadingIndicator::after {
+    animation: input-frame-loading var(--input-frame-loading-cycle-duration)
+      var(--motion-easing-linear) infinite;
+    background: conic-gradient(
+      from 0turn,
+      rgb(from currentcolor r g b / var(--ref-opacity-0)),
+      rgb(from currentcolor r g b / var(--ref-opacity-24)),
+      currentcolor
+    );
+  }
+
+  .clearAction {
+    --icon-color: currentColor;
+
+    position: relative;
+    display: inline-grid;
+    flex: none;
+    place-items: center;
+    padding: 0;
+    border: 0;
+    appearance: none;
+    background: transparent;
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    transition-duration: var(--motion-duration-feedback);
+    transition-property: color;
+    transition-timing-function: var(--motion-easing-standard);
+  }
+
+  .clearAction::before {
+    position: absolute;
+    inset-block-start: 50%;
+    inset-inline-start: 50%;
+    inline-size: max(100%, var(--ui-interaction-target-min));
+    block-size: max(100%, var(--ui-interaction-target-min));
+    content: "";
+    transform: translate(-50%, -50%);
+  }
+
+  @media (hover: hover) {
+    .clearAction:hover:not(:disabled) {
+      color: var(--color-text-primary);
+    }
+  }
+
+  .clearAction:focus {
+    outline: none;
+  }
+
+  .clearAction:focus-visible {
+    border-radius: var(--radius-ui-xs);
+    outline: var(--focus-indicator-width) solid var(--focus-indicator-color);
+    outline-offset: calc(var(--focus-indicator-width) * -1);
+  }
+
+  .clearAction:disabled {
+    color: var(--color-text-disabled);
+    cursor: progress;
+  }
+
+  .surface:has(.clearAction:focus) {
+    border-color: var(--input-frame-active-border-color);
+    outline-color: var(--input-frame-active-border-color);
+    background: var(--color-surface-neutral-subtle-pressed);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .surface,
+    .clearAction {
+      transition-duration: var(--motion-duration-instant);
+    }
+
+    .loadingIndicator::after {
+      animation: none;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .surface,
+    .surface[data-appearance] {
+      border-color: CanvasText;
+      background: Field;
+      color: FieldText;
+    }
+
+    .surface[data-disabled="true"] {
+      border-color: GrayText;
+      color: GrayText;
+    }
+
+    .surface:where(:focus, :has(.input:focus)):not([data-read-only="true"]),
+    .surface[data-read-only="true"]:where(
+        :focus-visible,
+        :has(.input:focus-visible)
+      ),
+    .surface:has(.clearAction:focus),
+    .clearAction:focus-visible {
+      border-color: Highlight;
+      outline-color: Highlight;
+    }
+
+    .surface:has(.input[aria-expanded="true"]):not(
+        [data-disabled="true"],
+        [data-read-only="true"],
+        [data-loading="true"]
+      ) {
+      border-color: Highlight;
+    }
+
+    .clearAction {
+      color: ButtonText;
+    }
+
+    .loadingIndicator::before {
+      background: GrayText;
+    }
+
+    .loadingIndicator::after {
+      background: Highlight;
+    }
+  }
+
+  @keyframes input-frame-loading {
+    to {
+      transform: rotate(1turn);
+    }
+  }
+}
+
+@layer hito.components {
+  .surface[data-width="hug"] {
+    inline-size: fit-content;
+    max-inline-size: 100%;
+    justify-self: start;
+    flex: 0 1 auto;
+  }
+  .root[data-width="hug"] > .input {
+    inline-size: auto;
+    field-sizing: content;
+    min-inline-size: 1ch;
+    max-inline-size: 100%;
+    flex: 0 1 auto;
+  }
+  textarea.surface[data-width="hug"] {
+    field-sizing: content;
+    inline-size: auto;
+    min-inline-size: 1ch;
+  }
+
+}

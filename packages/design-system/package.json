@@ -1,0 +1,83 @@
+{
+  "name": "@hito-ds/react",
+  "version": "0.1.0",
+  "private": false,
+  "type": "module",
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "scripts": {
+    "typecheck": "tsc --noEmit --pretty false -p tsconfig.json",
+    "validate:colors": "node tokens/validate-color-registry.mjs",
+    "validate:content-colors": "node tokens/validate-semantic-content-colors.mjs",
+    "validate:focus-colors": "node tokens/validate-semantic-focus-colors.mjs",
+    "validate:geometry-effects-motion": "node tokens/validate-geometry-effects-motion.mjs",
+    "validate:icons": "node tokens/validate-icon-catalog.mjs",
+    "validate:registry": "node tokens/validate-integrated-registry.mjs",
+    "validate:surfaces": "node tokens/validate-semantic-surfaces.mjs",
+    "validate:text-colors": "node tokens/validate-semantic-text-colors.mjs",
+    "validate:tokens": "npm run validate:colors && npm run validate:surfaces && npm run validate:text-colors && npm run validate:content-colors && npm run validate:focus-colors && npm run validate:typography && npm run validate:geometry-effects-motion && npm run validate:registry && npm run validate:web-adapter",
+    "validate:web-adapter": "node --test tokens/web-adapter-validation.test.mjs && node tokens/validate-web-adapter.mjs",
+    "validate:typography": "node tokens/validate-typography-registry.mjs"
+  },
+  "exports": {
+    ".": "./src/index.ts",
+    "./components": "./src/components/index.ts",
+    "./patterns": "./src/patterns/index.ts",
+    "./tokens": "./tokens/registry.mjs",
+    "./tokens/border-focus": "./tokens/border-focus.mjs",
+    "./tokens/elevation": "./tokens/elevation.mjs",
+    "./tokens/fixed-layout-spacing": "./tokens/fixed-layout-spacing.mjs",
+    "./tokens/fixed-ui-spacing": "./tokens/fixed-ui-spacing.mjs",
+    "./tokens/fixed-ui-sizing": "./tokens/fixed-ui-sizing.mjs",
+    "./tokens/reference-colors": "./tokens/reference-colors.mjs",
+    "./tokens/reference-font-weights": "./tokens/reference-font-weights.mjs",
+    "./tokens/reference-opacity": "./tokens/reference-opacity.mjs",
+    "./tokens/radius-geometry": "./tokens/radius-geometry.mjs",
+    "./tokens/reference-spacing": "./tokens/reference-spacing.mjs",
+    "./tokens/reference-tracking": "./tokens/reference-tracking.mjs",
+    "./tokens/registry": "./tokens/registry.mjs",
+    "./tokens/responsive-layout-spacing": "./tokens/responsive-layout-spacing.mjs",
+    "./tokens/motion": "./tokens/motion.mjs",
+    "./tokens/semantic-font-families": "./tokens/semantic-font-families.mjs",
+    "./tokens/semantic-border-colors": "./tokens/semantic-border-colors.mjs",
+    "./tokens/semantic-icon-colors": "./tokens/semantic-icon-colors.mjs",
+    "./tokens/semantic-focus-colors": "./tokens/semantic-focus-colors.mjs",
+    "./tokens/semantic-radii": "./tokens/semantic-radii.mjs",
+    "./tokens/semantic-surfaces": "./tokens/semantic-surfaces.mjs",
+    "./tokens/semantic-text-colors": "./tokens/semantic-text-colors.mjs",
+    "./tokens/semantic-typography": "./tokens/semantic-typography.mjs",
+    "./tokens/types": {
+      "types": "./tokens/types.d.ts"
+    },
+    "./tokens.css": "./src/tokens.css",
+    "./base.css": "./src/base.css",
+    "./assets/hito-mark.svg": "./assets/hito-mark.svg",
+    "./assets/hub-soft-3d/png-64/*.png": "./assets/hub-soft-3d/png-64/*.png",
+    "./assets/hub-soft-3d/png-160/*.png": "./assets/hub-soft-3d/png-160/*.png",
+    "./assets/hub-soft-3d/png-320/*.png": "./assets/hub-soft-3d/png-320/*.png",
+    "./assets/hub-soft-3d/png-640/*.png": "./assets/hub-soft-3d/png-640/*.png",
+    "./assets/hub-soft-3d/manifest.json": "./assets/hub-soft-3d/manifest.json",
+    "./assets/hub-soft-3d/hub-navigation-manifest.json": "./assets/hub-soft-3d/hub-navigation-manifest.json"
+  },
+  "peerDependencies": {
+    "react": "19.2.8"
+  },
+  "devDependencies": {
+    "@types/react": "19.2.18",
+    "react": "19.2.8",
+    "typescript": "5.9.3"
+  },
+  "description": "Hito DS: React components, semantic design tokens and Storybook, aligned with Figma.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ivan-nthng/hito-ds.git",
+    "directory": "packages/design-system"
+  },
+  "files": [
+    "src",
+    "tokens",
+    "assets"
+  ]
+}

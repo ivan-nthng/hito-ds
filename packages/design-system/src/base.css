@@ -1,0 +1,45 @@
+@layer hito.reset, hito.base, hito.tokens, hito.components, hito.utilities;
+
+@layer hito.reset {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    text-size-adjust: 100%;
+  }
+
+  body {
+    margin: 0;
+  }
+}
+
+@layer hito.base {
+  body {
+    min-block-size: 100svh;
+    background: var(--color-surface-canvas);
+    color: var(--color-text-primary);
+    font-family: var(--type-family-base);
+    font-size: var(--type-body-base-font-size);
+    font-weight: var(--type-body-base-font-weight);
+    letter-spacing: var(--type-body-base-letter-spacing);
+    line-height: var(--type-body-base-line-height);
+  }
+
+  :focus-visible {
+    outline: var(--focus-indicator-width) solid var(--focus-indicator-color);
+    outline-offset: var(--focus-indicator-offset);
+  }
+
+  :where([data-hito-input-frame] input, [data-hito-input-frame] textarea):focus-visible {
+    outline: none;
+  }
+
+  @media (forced-colors: active) {
+    :focus-visible {
+      outline-color: Highlight;
+    }
+  }
+}

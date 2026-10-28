@@ -1,0 +1,49 @@
+.page,
+.intro,
+.stack {
+  display: grid;
+}
+
+.page {
+  gap: var(--layout-space-responsive-2xl);
+  padding: var(--layout-space-responsive-xl);
+}
+
+.intro,
+.stack {
+  gap: var(--layout-space-fixed-md);
+}
+
+.measure,
+.stack {
+  inline-size: 100%;
+  max-inline-size: var(--ref-space-96);
+}
+
+.stateExamples {
+  display: grid;
+  inline-size: 100%;
+  max-inline-size: var(--ref-space-96);
+  align-items: start;
+  gap: var(--ui-space-sm);
+}
+
+.stateLabel {
+  color: var(--color-text-muted);
+}
+
+.stateLabel:not(:first-child) {
+  margin-block-start: var(--layout-space-fixed-md);
+}
+
+.layoutRegression {
+  display: grid;
+  inline-size: 100%;
+  max-inline-size: var(--ref-space-64);
+  min-inline-size: 0;
+  gap: var(--layout-space-responsive-xl);
+}
+
+.secondary {
+  color: var(--color-text-secondary);
+}

@@ -1,0 +1,122 @@
+@layer hito.components {
+  .root {
+    --inline-trigger-height: var(--ui-control-height-lg);
+    --inline-trigger-padding-inline: var(--ui-space-xl);
+    --inline-trigger-radius: var(--radius-ui-lg);
+
+    position: relative;
+    display: inline-flex;
+    box-sizing: border-box;
+    min-inline-size: 0;
+    max-inline-size: 100%;
+    min-block-size: var(--inline-trigger-height);
+    align-items: center;
+    justify-content: flex-start;
+    gap: var(--ui-space-sm);
+    padding: 0;
+    border: 0;
+    appearance: none;
+    background: transparent;
+    color: var(--color-text-primary);
+    cursor: pointer;
+    isolation: isolate;
+    text-align: start;
+    touch-action: manipulation;
+  }
+
+  .root[data-heading-size="lg"] {
+    --inline-trigger-height: var(--ui-control-height-xl);
+    --inline-trigger-padding-inline: var(--ui-space-2xl);
+    --inline-trigger-radius: var(--radius-ui-xl);
+  }
+
+  .root[data-width="hug"] {
+    inline-size: fit-content;
+  }
+
+  .root[data-width="fill"] {
+    inline-size: 100%;
+  }
+
+  .root::before {
+    position: absolute;
+    z-index: -1;
+    inset-block: 0;
+    inset-inline: calc(-1 * var(--inline-trigger-padding-inline));
+    border: var(--border-width-default) solid transparent;
+    border-radius: var(--inline-trigger-radius);
+    background: transparent;
+    content: "";
+    transition-duration: var(--motion-duration-feedback);
+    transition-property: background-color;
+    transition-timing-function: var(--motion-easing-standard);
+  }
+
+  .root[data-width="fill"]::before {
+    inset-inline-end: 0;
+  }
+
+  .label {
+    min-inline-size: 0;
+    overflow: hidden;
+    color: inherit;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .root[data-width="fill"] .label {
+    flex: 1 1 auto;
+  }
+
+  .root [data-icon-name] {
+    --icon-color: currentColor;
+  }
+
+  @media (hover: hover) {
+    .root:not(:disabled):not([aria-disabled="true"]):hover::before {
+      background: var(--color-surface-neutral-subtle-hover);
+    }
+  }
+
+  .root:not(:disabled):not([aria-disabled="true"]):is(
+      :active,
+      [aria-expanded="true"]
+    )::before {
+    background: var(--color-surface-neutral-subtle-pressed);
+  }
+
+  .root:focus-visible {
+    outline: none;
+  }
+
+  .root:focus-visible::before {
+    outline: var(--focus-indicator-width) solid var(--focus-indicator-color);
+    outline-offset: var(--focus-indicator-offset);
+  }
+
+  .root:is(:disabled, [aria-disabled="true"]) {
+    color: var(--color-text-disabled);
+    cursor: not-allowed;
+  }
+
+  .root:is(:disabled, [aria-disabled="true"])::before {
+    background: transparent;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .root::before {
+      transition-duration: var(--motion-duration-instant);
+    }
+  }
+
+  @media (forced-colors: active) {
+    .root {
+      color: ButtonText;
+    }
+
+    .root:is(:disabled, [aria-disabled="true"]) {
+      color: GrayText;
+    }
+  }
+
+}

@@ -1,0 +1,38 @@
+@layer hito.components {
+  .root[data-size] {
+    --chip-inset: var(--ui-space-lg);
+    --chip-text-inset: var(--ui-space-2xl);
+    --chip-gap: var(--ui-space-xs);
+    --button-context-foreground: var(--color-text-primary);
+    --button-hover-translate-y: 0;
+    block-size: var(--button-height);
+    inline-size: fit-content;
+    max-inline-size: 100%;
+    min-inline-size: 0;
+    align-self: start;
+    justify-self: start;
+    flex: none;
+    padding-inline: calc(var(--chip-text-inset) - var(--border-width-default)) calc(var(--chip-inset) - var(--border-width-default));
+  }
+  .root[data-size="sm"] {
+    --chip-inset: var(--ui-space-md);
+    --chip-text-inset: var(--ui-space-lg);
+    --chip-gap: var(--ui-space-2xs);
+  }
+  .root:has(.content[data-leading-icon="true"]) {
+    padding-inline-start: calc(var(--chip-inset) - var(--border-width-default));
+  }
+  .root[data-behavior="selectable"] {
+    border-radius: var(--radius-shape-round);
+  }
+  .root[data-behavior="removable"] { border-color: var(--color-border-subtle); }
+  .root[data-elevation="raised"]:not(:disabled) { box-shadow: var(--elevation-raised); }
+  .root > span { min-inline-size: 0; max-inline-size: 100%; }
+  .content { display: flex; align-items: center; gap: var(--chip-gap); min-inline-size: 0; }
+  .label { display: block; min-inline-size: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-align: start; }
+  .actionIcon { display: inline-flex; flex: none; }
+  @media (forced-colors: active) {
+    .root[data-elevation] { box-shadow: none; }
+    .root[aria-pressed="true"]:not(:disabled) { background: Highlight; color: HighlightText; --icon-color: HighlightText; }
+  }
+}

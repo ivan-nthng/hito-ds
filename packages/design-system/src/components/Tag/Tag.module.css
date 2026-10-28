@@ -1,0 +1,46 @@
+@layer hito.components {
+  .root {
+    --tag-height: var(--ui-control-height-md);
+    --tag-icon: var(--ui-icon-size-md);
+    --tag-inline: var(--ui-space-2xl);
+    --tag-occupied: var(--ui-space-lg);
+    --tag-gap: var(--ui-space-xs);
+    --icon-color: currentColor;
+    display: inline-flex;
+    align-items: center;
+    align-self: start;
+    justify-self: start;
+    flex: none;
+    inline-size: fit-content;
+    max-inline-size: 100%;
+    min-inline-size: 0;
+    block-size: var(--tag-height);
+    box-sizing: border-box;
+    gap: var(--tag-gap);
+    padding: calc((var(--tag-height) - var(--tag-icon)) / 2) var(--tag-inline);
+    border-radius: var(--radius-shape-round);
+    background: var(--color-surface-neutral-subtle-default);
+    color: var(--color-text-secondary);
+    font-family: var(--type-family-base);
+    font-size: var(--type-ui-md-font-size);
+    line-height: var(--type-ui-md-line-height);
+    font-weight: var(--type-ui-md-font-weight);
+    letter-spacing: var(--type-ui-md-letter-spacing);
+  }
+  .root[data-size="sm"] {
+    --tag-height: var(--ui-control-height-sm);
+    --tag-icon: var(--ui-icon-size-sm);
+    --tag-inline: var(--ui-space-lg);
+    --tag-occupied: var(--ui-space-md);
+    --tag-gap: var(--ui-space-2xs);
+    font-size: var(--type-ui-sm-font-size);
+    line-height: var(--type-ui-sm-line-height);
+    font-weight: var(--type-ui-sm-font-weight);
+    letter-spacing: var(--type-ui-sm-letter-spacing);
+  }
+  .root[data-icon="true"] { padding-inline-start: var(--tag-occupied); }
+  .label { display: block; min-inline-size: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  @media (forced-colors: active) {
+    .root { background: Canvas; color: CanvasText; outline: var(--border-width-default) solid CanvasText; }
+  }
+}

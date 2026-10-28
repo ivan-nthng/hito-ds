@@ -1,0 +1,431 @@
+{
+  "generator": "built-in image_gen",
+  "style": "style.json",
+  "inventory": "apps/web/src/components/hub/service-presentation.ts",
+  "sizes": [
+    640,
+    320,
+    160,
+    64
+  ],
+  "format": "RGBA PNG",
+  "resize_method": "Lanczos in premultiplied alpha; no cropping or upscaling",
+  "icons": [
+    {
+      "service_id": "landing",
+      "name": "Hito DS",
+      "symbol": "a welcoming simple house with a broad peaked roof, a solid door opening and one small rounded window; a single sculpted cream emblem",
+      "original": {
+        "path": "originals/hub-landing.png",
+        "width": 1254,
+        "height": 1254,
+        "bytes": 1325297,
+        "sha256": "643af6b81ecc42b51544b4e268e45a8fb99f7d6bb77ccc55520fd668c00f918d",
+        "transparent_fraction": 0.3677,
+        "alpha_zero_corners": true
+      },
+      "exports": [
+        {
+          "path": "png-640/hub-landing.png",
+          "width": 640,
+          "height": 640,
+          "bytes": 293963,
+          "sha256": "452df9b079aeb64d01c24736fe2f206ef9fadd114d20c7fb9d930c2b6958925e",
+          "transparent_fraction": 0.3669,
+          "alpha_zero_corners": true
+        },
+        {
+          "path": "png-320/hub-landing.png",
+          "width": 320,
+          "height": 320,
+          "bytes": 79088,
+          "sha256": "dd68b5b726f262686ae2f2f4e444e71257045ea98a298dcbbaaf4cb3ff363e2a",
+          "transparent_fraction": 0.3631,
+          "alpha_zero_corners": true
+        },
+        {
+          "path": "png-160/hub-landing.png",
+          "width": 160,
+          "height": 160,
+          "bytes": 25293,
+          "sha256": "d06611e552fe40083c99902b7150672b2eaa731de6031bea00be01c251027a69",
+          "transparent_fraction": 0.3536,
+          "alpha_zero_corners": true
+        },
+        {
+          "path": "png-64/hub-landing.png",
+          "width": 64,
+          "height": 64,
+          "bytes": 5964,
+          "sha256": "fb2048807d3cd5b38a5c34291a6fdf1a73238a8137bcf7e590312a2e4aca2cbe",
+          "transparent_fraction": 0.3237,
+          "alpha_zero_corners": true
+        }
+      ]
+    },
+    {
+      "service_id": "client",
+      "name": "Customer",
+      "symbol": "a shopping basket with a broad curved handle and two clean vertical slots; a single chunky cream relief emblem, no products poking out",
+      "original": {
+        "path": "originals/hub-client.png",
+        "width": 1254,
+        "height": 1254,
+        "bytes": 1266669,
+        "sha256": "dc80a608c7ec30b187d7a1335be1178a6305e2f8aabead9741d29ddd04050995",
+        "transparent_fraction": 0.3624,
+        "alpha_zero_corners": true
+      },
+      "exports": [
+        {
+          "path": "png-640/hub-client.png",
+          "width": 640,
+          "height": 640,
+          "bytes": 287794,
+          "sha256": "336eb19202e3455845c81e8daa761b01e3104e553a0b1d8b1e8feb83e7ba5bac",
+          "transparent_fraction": 0.3621,
+          "alpha_zero_corners": true
+        },
+        {
+          "path": "png-320/hub-client.png",
+          "width": 320,
+          "height": 320,
+          "bytes": 79391,
+          "sha256": "ed53b916cb155e5a13a421a0d4b1edf0d0059674e7d474d5bff1fe8a517e813a",
+          "transparent_fraction": 0.3588,
+          "alpha_zero_corners": true
+        },
+        {
+          "path": "png-160/hub-client.png",
+          "width": 160,
+          "height": 160,
+          "bytes": 25312,
+          "sha256": "e81c8065e727a54a83713123748ecc10a1c4a2e2469d867d89d677656e5d8fde",
+          "transparent_fraction": 0.3491,
+          "alpha_zero_corners": true
+        },
+        {
+          "path": "png-64/hub-client.png",
+          "width": 64,
+          "height": 64,
+          "bytes": 5953,
+          "sha256": "236c771873fff82f1952a9b9196a3ae889016e4025284be6bf52f4ecc2fc765b",
+          "transparent_fraction": 0.322,
+          "alpha_zero_corners": true
+        }
+      ]
+    },
+    {
+      "service_id": "design-system",
+      "name": "Design System",
+      "symbol": "three geometric building blocks arranged in a clear composition: a circle, a rounded square and a rounded triangle, all cream; design primitives, not a dashboard",
+      "original": {
+        "path": "originals/hub-design-system.png",
+        "width": 1254,
+        "height": 1254,
+        "bytes": 1273228,
+        "sha256": "edf4081f7edba886f55efa6a5b43a6abe8c7ec0e322a764fb982699eb3f00c88",
+        "transparent_fraction": 0.3661,
+        "alpha_zero_corners": true
+      },
+      "exports": [
+        {
+          "path": "png-640/hub-design-system.png",
+          "width": 640,
+          "height": 640,
+          "bytes": 284167,
+          "sha256": "aef5bd91d0682bd3d3123af9f3fb7e28701262e8a19bf00ec99766ab0a21774d",
+          "transparent_fraction": 0.3662,
+          "alpha_zero_corners": true
+        },
+        {
+          "path": "png-320/hub-design-system.png",
+          "width": 320,
+          "height": 320,
+          "bytes": 76463,
+          "sha256": "d904f6b6eb277e4b64059f273ecb43ee27a4f9dc5317b272bb19aff35d2a3400",
+          "transparent_fraction": 0.3639,
+          "alpha_zero_corners": true
+        },
+        {
+          "path": "png-160/hub-design-system.png",
+          "width": 160,
+          "height": 160,
+          "bytes": 24059,
+          "sha256": "d723ccf947f266bf1dcf2e716538470693e043cf4c7c3bf29bf153c26604da7e",
+          "transparent_fraction": 0.354,
+          "alpha_zero_corners": true
+        },
+        {
+          "path": "png-64/hub-design-system.png",
+          "width": 64,
+          "height": 64,
+          "bytes": 5541,
+          "sha256": "67af701b6c57224ebea899eae782d1db59430177a83049e260ad4b618802664c",
+          "transparent_fraction": 0.3281,
+          "alpha_zero_corners": true
+        }
+      ]
+    },
+    {
+      "service_id": "admin",
+      "name": "Platform Admin",
+      "symbol": "a compact management dashboard of three cream rounded panels: one tall panel on the left and two shorter panels stacked on the right, with one simple recessed slider in the tall panel",
+      "original": {
+        "path": "originals/hub-admin.png",
+        "width": 1254,
+        "height": 1254,
+        "bytes": 1269962,
+        "sha256": "d8dfd1539bb0253de2c52197e1532ab233f1fbc50a93c7e1fef9503f875fe077",
+        "transparent_fraction": 0.3681,
+        "alpha_zero_corners": true
+      },
+      "exports": [
+        {
+          "path": "png-640/hub-admin.png",
+          "width": 640,
+          "height": 640,
+          "bytes": 282984,
+          "sha256": "5ebc4637696a3ea1530ccba37761761b2a6ef9f987242e195cc13c51c930c6e1",
+          "transparent_fraction": 0.3673,
+          "alpha_zero_corners": true
+        },
+        {
+          "path": "png-320/hub-admin.png",
+          "width": 320,
+          "height": 320,
+          "bytes": 75993,
+          "sha256": "5780a16d43a6293a1c7684442e1bc47efc8fe278125420c4b956a3d1761cd873",
+          "transparent_fraction": 0.3635,
+          "alpha_zero_corners": true
+        },
+        {
+          "path": "png-160/hub-admin.png",
+          "width": 160,
+          "height": 160,
+          "bytes": 23826,
+          "sha256": "f2aeaad991fde34cb34ab5efc61b9f237d4c858dabb8cac46e65f8a61706710a",
+          "transparent_fraction": 0.3541,
+          "alpha_zero_corners": true
+        },
+        {
+          "path": "png-64/hub-admin.png",
+          "width": 64,
+          "height": 64,
+          "bytes": 5510,
+          "sha256": "adea00cfd92de7e5eb084ba4e982ff0b7e58eed19759bd018824cf27db13e267",
+          "transparent_fraction": 0.3267,
+          "alpha_zero_corners": true
+        }
+      ]
+    },
+    {
+      "service_id": "kitchen",
+      "name": "Kitchen",
+      "symbol": "a friendly sculpted chef hat with three broad rounded lobes and a solid short folded band; one recognizable cream emblem",
+      "original": {
+        "path": "originals/hub-kitchen.png",
+        "width": 1254,
+        "height": 1254,
+        "bytes": 1299215,
+        "sha256": "de5548132e8cf961bc43961b87ecaa93c59fe29711c0a2b3b2f1d2a661581d30",
+        "transparent_fraction": 0.3675,
+        "alpha_zero_corners": true
+      },
+      "exports": [
+        {
+          "path": "png-640/hub-kitchen.png",
+          "width": 640,
+          "height": 640,
+          "bytes": 288950,
+          "sha256": "705d52d99aa8514b1ea53fe62878fc98cbd6811e35feb0c4120511a7e7cfce8e",
+          "transparent_fraction": 0.368,
+          "alpha_zero_corners": true
+        },
+        {
+          "path": "png-320/hub-kitchen.png",
+          "width": 320,
+          "height": 320,
+          "bytes": 77323,
+          "sha256": "878156f5187627945819e817f5f4523174b84ffd61a1e7543f852648d8945ebc",
+          "transparent_fraction": 0.3658,
+          "alpha_zero_corners": true
+        },
+        {
+          "path": "png-160/hub-kitchen.png",
+          "width": 160,
+          "height": 160,
+          "bytes": 24165,
+          "sha256": "d58d1576552a807e3c5ff720eb6c7b07bcbbb4d15a6aa213dabfb9996accad1a",
+          "transparent_fraction": 0.3561,
+          "alpha_zero_corners": true
+        },
+        {
+          "path": "png-64/hub-kitchen.png",
+          "width": 64,
+          "height": 64,
+          "bytes": 5641,
+          "sha256": "dceaf65c393fc53117ccc09c4c40dc3dbdc0d853bf5cba23b586f10f0ece5cfe",
+          "transparent_fraction": 0.3267,
+          "alpha_zero_corners": true
+        }
+      ]
+    },
+    {
+      "service_id": "delivery",
+      "name": "Delivery",
+      "symbol": "a compact side-view delivery scooter with two round wheels and a small delivery box mounted behind the seat; a single connected cream relief with clear wheel openings, pointing to the right",
+      "original": {
+        "path": "originals/hub-delivery.png",
+        "width": 1254,
+        "height": 1254,
+        "bytes": 1329885,
+        "sha256": "94d47708911f99a63368379580317d537979c2ed24401eea1ebb8ee33d235eb2",
+        "transparent_fraction": 0.3628,
+        "alpha_zero_corners": true
+      },
+      "exports": [
+        {
+          "path": "png-640/hub-delivery.png",
+          "width": 640,
+          "height": 640,
+          "bytes": 304875,
+          "sha256": "383ac66712577f4b9a606e399fa7fc92e805efc121ff65d8dd41ca2ce9b4869c",
+          "transparent_fraction": 0.3623,
+          "alpha_zero_corners": true
+        },
+        {
+          "path": "png-320/hub-delivery.png",
+          "width": 320,
+          "height": 320,
+          "bytes": 83478,
+          "sha256": "4092e00523b5f795724587a32609df664f6a8b0d9fe5594478c2fbe55877ea2e",
+          "transparent_fraction": 0.3589,
+          "alpha_zero_corners": true
+        },
+        {
+          "path": "png-160/hub-delivery.png",
+          "width": 160,
+          "height": 160,
+          "bytes": 26672,
+          "sha256": "6f354e97d8f15df4cd1460ba3feb2da7105776c8f3f3d5c6b70a381be0148cae",
+          "transparent_fraction": 0.3497,
+          "alpha_zero_corners": true
+        },
+        {
+          "path": "png-64/hub-delivery.png",
+          "width": 64,
+          "height": 64,
+          "bytes": 6165,
+          "sha256": "4b9e2ad9d3aa6d56fe08449745dac9c04b185df8d0914698ab57673126bcee71",
+          "transparent_fraction": 0.3235,
+          "alpha_zero_corners": true
+        }
+      ]
+    },
+    {
+      "service_id": "storybook",
+      "name": "Storybook",
+      "symbol": "an open book with two thick rounded pages and a small raised component square on the right page; cream relief with a clear central book crease, no letters",
+      "original": {
+        "path": "originals/hub-storybook.png",
+        "width": 1254,
+        "height": 1254,
+        "bytes": 1269301,
+        "sha256": "e1a75f32acce70756907b6b15e24c452036bd1797dde1d767ebcf10ea07fddf3",
+        "transparent_fraction": 0.3658,
+        "alpha_zero_corners": true
+      },
+      "exports": [
+        {
+          "path": "png-640/hub-storybook.png",
+          "width": 640,
+          "height": 640,
+          "bytes": 279797,
+          "sha256": "bff488432381ab30c7c5db8f4fb6097a4c7a21ed641afd3784028efb5e2afb00",
+          "transparent_fraction": 0.3658,
+          "alpha_zero_corners": true
+        },
+        {
+          "path": "png-320/hub-storybook.png",
+          "width": 320,
+          "height": 320,
+          "bytes": 74454,
+          "sha256": "538e244e774b2f0fd3cb6d9e9c42ddb3dfcd4f5604cc5c71e05f7d4fde925fe6",
+          "transparent_fraction": 0.3638,
+          "alpha_zero_corners": true
+        },
+        {
+          "path": "png-160/hub-storybook.png",
+          "width": 160,
+          "height": 160,
+          "bytes": 22995,
+          "sha256": "984d02a16b86bec7e32e3b5cf97a10822108057d8d6528daac752e53b80ab5d8",
+          "transparent_fraction": 0.3545,
+          "alpha_zero_corners": true
+        },
+        {
+          "path": "png-64/hub-storybook.png",
+          "width": 64,
+          "height": 64,
+          "bytes": 5245,
+          "sha256": "9150873f6031e5893ebbac9f4a0c4e3f71a3c50ab4add2079aa378fb0c613d00",
+          "transparent_fraction": 0.3259,
+          "alpha_zero_corners": true
+        }
+      ]
+    },
+    {
+      "service_id": "staging",
+      "name": "Staging",
+      "symbol": "a laboratory conical flask with a short wide neck and a simple orange recessed liquid line inside the solid cream body; two small round recessed bubbles, representing a test environment",
+      "original": {
+        "path": "originals/hub-staging.png",
+        "width": 1254,
+        "height": 1254,
+        "bytes": 1276096,
+        "sha256": "bd793c692856e6d12ad6b91333a3275ad9c4f0c8a9ca89b8cf040b7e91c0d92f",
+        "transparent_fraction": 0.3692,
+        "alpha_zero_corners": true
+      },
+      "exports": [
+        {
+          "path": "png-640/hub-staging.png",
+          "width": 640,
+          "height": 640,
+          "bytes": 291029,
+          "sha256": "f4bd365099d9e6e618b8152cf63ef2b1ab04f270f3dfa05f20e2ee5a77e0b858",
+          "transparent_fraction": 0.369,
+          "alpha_zero_corners": true
+        },
+        {
+          "path": "png-320/hub-staging.png",
+          "width": 320,
+          "height": 320,
+          "bytes": 79655,
+          "sha256": "3aa44a74444215e63283132d49cb14ab75537bda90f4f00b6783080ce9bc9002",
+          "transparent_fraction": 0.3663,
+          "alpha_zero_corners": true
+        },
+        {
+          "path": "png-160/hub-staging.png",
+          "width": 160,
+          "height": 160,
+          "bytes": 25197,
+          "sha256": "affdca5e92ba59614c63f68db54579ccab265c4509987d8486b4c92ed451b9e8",
+          "transparent_fraction": 0.3571,
+          "alpha_zero_corners": true
+        },
+        {
+          "path": "png-64/hub-staging.png",
+          "width": 64,
+          "height": 64,
+          "bytes": 5822,
+          "sha256": "f70c4290a75455f384d55d8098c100f3ace76c1bb90957071bea786d3c5643ed",
+          "transparent_fraction": 0.3303,
+          "alpha_zero_corners": true
+        }
+      ]
+    }
+  ]
+}

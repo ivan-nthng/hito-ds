@@ -1,0 +1,67 @@
+.page {
+  display: grid;
+  gap: var(--layout-space-responsive-2xl);
+  padding: var(--layout-space-responsive-xl);
+}
+
+.intro,
+.section {
+  display: grid;
+  gap: var(--layout-space-fixed-md);
+}
+
+.secondary {
+  color: var(--color-text-secondary);
+}
+
+.matrix {
+  display: grid;
+  gap: var(--layout-space-fixed-lg);
+}
+
+.cornerTheme {
+  display: grid;
+  gap: var(--layout-space-fixed-md);
+  padding: var(--layout-space-fixed-lg);
+  background: var(--color-surface-canvas);
+  color: var(--color-text-primary);
+}
+
+.treatment {
+  display: grid;
+  gap: var(--layout-space-fixed-sm);
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--layout-space-fixed-lg);
+  align-items: center;
+}
+
+.intentPair {
+  display: flex;
+  align-items: center;
+  gap: var(--layout-space-fixed-sm);
+}
+
+.targetExample {
+  display: grid;
+  justify-items: start;
+  gap: var(--layout-space-fixed-lg);
+  padding: var(--layout-space-fixed-lg);
+}
+
+.targetSlot {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-inline-size: var(--ui-interaction-target-min);
+  min-block-size: var(--ui-interaction-target-min);
+}
+
+.scrimPhoto { position: relative; inline-size: 12rem; block-size: 10rem; overflow: hidden; background: var(--color-foreground-on-scrim); }
+.scrimPhoto[data-background="black"] { background: black; }
+.scrimPhoto img { inline-size: 100%; block-size: 100%; object-fit: cover; }
+.scrimTargets { position: absolute; inset-block-start: var(--layout-space-fixed-sm); inset-inline-end: var(--layout-space-fixed-sm); display: flex; gap: var(--layout-space-fixed-lg); }
+.scrimBackdrop { display: inline-flex; background: var(--color-surface-scrim); border-radius: var(--radius-ui-sm); }

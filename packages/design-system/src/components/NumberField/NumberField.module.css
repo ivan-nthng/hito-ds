@@ -1,0 +1,42 @@
+@layer hito.components {
+  .root {
+    display: inline-flex;
+    inline-size: 100%;
+    min-inline-size: 0;
+    align-items: flex-start;
+    gap: var(--ui-space-xs);
+  }
+
+  .root > .frame {
+    flex: 1 1 auto;
+    inline-size: auto;
+    min-inline-size: 0;
+  }
+
+  .input {
+    font-variant-numeric: tabular-nums;
+  }
+
+  .frame[data-has-suffix="true"]:has(.input[data-editable-text-editor="true"])
+    .input {
+    padding-inline-end: 0;
+  }
+
+  .frame[data-has-suffix="true"]:has(.input[data-editable-text-editor="true"])
+    [data-position="trailing"] {
+    margin-inline-end: var(--editable-text-clear-reserve);
+  }
+
+  .stepper {
+    flex: none;
+  }
+
+}
+
+@layer hito.components {
+  .root[data-width="hug"] {
+    inline-size: fit-content;
+    max-inline-size: 100%;
+    justify-self: start;
+  }
+}

@@ -1,0 +1,19 @@
+@layer hito.components {
+  .root {
+    --surface-background: var(--color-surface-base);
+    --surface-radius: var(--radius-layout-fixed-md);
+
+    min-inline-size: 0;
+    border: 0;
+    border-radius: var(--surface-radius);
+    background: var(--surface-background);
+    color: var(--color-text-primary);
+  }
+
+  @media (forced-colors: active) {
+    .root {
+      border: var(--border-width-default) solid CanvasText;
+    }
+  }
+
+}

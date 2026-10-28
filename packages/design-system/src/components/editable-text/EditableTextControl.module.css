@@ -1,0 +1,34 @@
+@layer hito.components {
+  .root {
+    --editable-text-clear-icon-size: var(--ui-icon-size-sm);
+    --editable-text-clear-inset: var(--ui-space-sm);
+    --editable-text-clear-gap: var(--ui-space-sm);
+    --editable-text-clear-reserve: calc(
+      var(--editable-text-clear-icon-size) + var(--editable-text-clear-inset) +
+        var(--editable-text-clear-gap)
+    );
+
+    position: relative;
+    min-inline-size: 0;
+  }
+
+  .root > span {
+    block-size: 100%;
+    padding-inline-end: var(--ref-space-0);
+  }
+
+  .root :where(input, textarea)[data-editable-text-editor="true"] {
+    padding-inline-end: var(--editable-text-clear-reserve);
+  }
+
+  .root > .clearAction {
+    position: absolute;
+    z-index: 2;
+    inset-block-start: var(--editable-text-clear-block-position, 50%);
+    inset-inline-end: var(--editable-text-clear-inset);
+    inline-size: var(--editable-text-clear-icon-size);
+    block-size: var(--editable-text-clear-icon-size);
+    color: inherit;
+    transform: translateY(-50%);
+  }
+}

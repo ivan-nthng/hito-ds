@@ -1,0 +1,9 @@
+/* Synthetic parent constraints; these do not define component sizing. */
+.narrow {
+  inline-size: 320px;
+  max-inline-size: 100%;
+}
+.reflow {
+  inline-size: 160px;
+  max-inline-size: 100%;
+}

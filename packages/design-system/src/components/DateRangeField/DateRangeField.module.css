@@ -1,0 +1,24 @@
+@layer hito.components {
+  .root {
+    container-type: inline-size;
+  }
+
+  .fields {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--layout-space-fixed-md);
+    min-inline-size: 0;
+  }
+
+  @container (width >= 40rem) {
+    .fields {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @container (width >= 19rem) {
+    .root[data-endpoint-layout="columns"] .fields {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+}

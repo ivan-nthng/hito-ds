@@ -1,0 +1,368 @@
+@layer hito.components {
+  .root {
+    --button-height: var(--ui-control-height-md);
+    --button-padding-block: var(--ui-space-xs);
+    --button-padding-inline: var(--ui-space-2xl);
+    --button-padding-inline-occupied: var(--ui-space-lg);
+    --button-radius: var(--radius-ui-md);
+    --button-gap: var(--ui-space-sm);
+    --button-font-size: var(--type-ui-md-font-size);
+    --button-line-height: var(--type-ui-md-line-height);
+    --button-letter-spacing: var(--type-ui-md-letter-spacing);
+    --button-font-weight: var(--type-ui-md-font-weight);
+    --button-strong-default: var(--color-surface-neutral-strong-default);
+    --button-strong-hover: var(--color-surface-neutral-strong-hover);
+    --button-strong-pressed: var(--color-surface-neutral-strong-pressed);
+    --button-subtle-default: var(--color-surface-neutral-subtle-default);
+    --button-subtle-hover: var(--color-surface-neutral-subtle-hover);
+    --button-subtle-pressed: var(--color-surface-neutral-subtle-pressed);
+    --button-foreground: var(--color-text-primary);
+    --button-foreground-hover: var(--color-text-primary);
+    --button-soft-foreground: var(--color-text-secondary);
+    --button-soft-foreground-hover: var(--color-text-secondary);
+    --button-on-strong: var(--color-foreground-on-neutral-strong);
+    --button-border: var(--button-secondary-neutral-border);
+    --button-hover-translate-y: calc(-1 * var(--ui-space-3xs));
+    --icon-color: currentColor;
+
+    position: relative;
+    display: inline-flex;
+    min-block-size: var(--button-height);
+    max-inline-size: 100%;
+    align-items: center;
+    justify-content: center;
+    gap: var(--button-gap);
+    padding-block: var(--button-padding-block);
+    padding-inline: var(--button-padding-inline);
+    border: var(--border-width-default) solid transparent;
+    border-radius: var(--button-radius);
+    appearance: none;
+    background: transparent;
+    color: var(--button-foreground);
+    cursor: pointer;
+    font: var(--button-font-weight) var(--button-font-size) / var(--button-line-height) var(--type-family-base);
+    letter-spacing: var(--button-letter-spacing);
+    text-align: center;
+    touch-action: manipulation;
+    transition-duration: var(--motion-duration-feedback);
+    transition-property: background-color, border-color, color, transform;
+    transition-timing-function: var(--motion-easing-standard);
+  }
+
+  .root[data-hit-area="minimum"]::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    inline-size: max(100%, var(--ui-interaction-target-min));
+    block-size: max(100%, var(--ui-interaction-target-min));
+    margin-top: 0;
+    transform: translate(-50%, -50%);
+    transition-property: margin-top;
+    transition-duration: inherit;
+    transition-timing-function: inherit;
+    transition-delay: inherit;
+  }
+
+  .root[data-size="sm"] {
+    --button-height: var(--ui-control-height-sm);
+    --button-padding-block: var(--ui-space-2xs);
+    --button-padding-inline: var(--ui-space-lg);
+    --button-padding-inline-occupied: var(--ui-space-md);
+    --button-radius: var(--radius-ui-sm);
+    --button-gap: var(--ui-space-xs);
+    --button-font-size: var(--type-ui-sm-font-size);
+    --button-line-height: var(--type-ui-sm-line-height);
+    --button-letter-spacing: var(--type-ui-sm-letter-spacing);
+    --button-font-weight: var(--type-ui-sm-font-weight);
+  }
+
+  .root[data-size="lg"] {
+    --button-height: var(--ui-control-height-lg);
+    --button-padding-block: var(--ui-space-sm);
+    --button-padding-inline: var(--ui-space-3xl);
+    --button-padding-inline-occupied: var(--ui-space-2xl);
+    --button-radius: var(--radius-ui-lg);
+    --button-font-size: var(--type-ui-lg-font-size);
+    --button-line-height: var(--type-ui-lg-line-height);
+    --button-letter-spacing: var(--type-ui-lg-letter-spacing);
+    --button-font-weight: var(--type-ui-lg-font-weight);
+  }
+
+  .root[data-size="xl"] {
+    --button-height: var(--ui-control-height-xl);
+    --button-padding-block: var(--ui-space-md);
+    --button-padding-inline: var(--ui-space-4xl);
+    --button-padding-inline-occupied: var(--ui-space-3xl);
+    --button-radius: var(--radius-ui-xl);
+    --button-font-size: var(--type-ui-xl-font-size);
+    --button-line-height: var(--type-ui-xl-line-height);
+    --button-letter-spacing: var(--type-ui-xl-letter-spacing);
+    --button-font-weight: var(--type-ui-xl-font-weight);
+  }
+
+  .root[data-intent="accent"] {
+    --button-strong-default: var(--button-primary-accent-background-default);
+    --button-strong-hover: var(--button-primary-accent-background-hover);
+    --button-strong-pressed: var(--button-primary-accent-background-pressed);
+    --button-subtle-default: var(--color-surface-accent-subtle-default);
+    --button-subtle-hover: var(--color-surface-accent-subtle-hover);
+    --button-subtle-pressed: var(--color-surface-accent-subtle-pressed);
+    --button-foreground: var(--color-text-accent-default);
+    --button-foreground-hover: var(--color-text-accent-hover);
+    --button-soft-foreground: var(--button-foreground);
+    --button-soft-foreground-hover: var(--button-foreground-hover);
+    --button-on-strong: var(--button-primary-accent-foreground);
+    --button-border: var(--button-secondary-accent-border);
+  }
+
+  .root[data-intent="info"] {
+    --button-strong-default: var(--button-primary-info-background-default);
+    --button-strong-hover: var(--button-primary-info-background-hover);
+    --button-strong-pressed: var(--button-primary-info-background-pressed);
+    --button-subtle-default: var(--color-surface-info-subtle-default);
+    --button-subtle-hover: var(--color-surface-info-subtle-hover);
+    --button-subtle-pressed: var(--color-surface-info-subtle-pressed);
+    --button-foreground: var(--button-info-foreground-default);
+    --button-foreground-hover: var(--button-info-foreground-hover);
+    --button-soft-foreground: var(--button-foreground);
+    --button-soft-foreground-hover: var(--button-foreground-hover);
+    --button-on-strong: var(--button-primary-info-foreground);
+    --button-border: var(--button-secondary-info-border);
+  }
+
+  .root[data-intent="warning"] {
+    --button-strong-default: var(--button-primary-warning-background-default);
+    --button-strong-hover: var(--button-primary-warning-background-hover);
+    --button-strong-pressed: var(--button-primary-warning-background-pressed);
+    --button-subtle-default: var(--color-surface-warning-subtle-default);
+    --button-subtle-hover: var(--color-surface-warning-subtle-hover);
+    --button-subtle-pressed: var(--color-surface-warning-subtle-pressed);
+    --button-foreground: var(--button-warning-foreground-default);
+    --button-foreground-hover: var(--button-warning-foreground-hover);
+    --button-soft-foreground: var(--button-foreground);
+    --button-soft-foreground-hover: var(--button-foreground-hover);
+    --button-on-strong: var(--button-primary-warning-foreground);
+    --button-border: var(--button-secondary-warning-border);
+  }
+
+  .root[data-intent="success"] {
+    --button-strong-default: var(--button-primary-success-background-default);
+    --button-strong-hover: var(--button-primary-success-background-hover);
+    --button-strong-pressed: var(--button-primary-success-background-pressed);
+    --button-subtle-default: var(--color-surface-success-subtle-default);
+    --button-subtle-hover: var(--color-surface-success-subtle-hover);
+    --button-subtle-pressed: var(--color-surface-success-subtle-pressed);
+    --button-foreground: var(--color-text-success-default);
+    --button-foreground-hover: var(--color-text-success-hover);
+    --button-soft-foreground: var(--button-foreground);
+    --button-soft-foreground-hover: var(--button-foreground-hover);
+    --button-on-strong: var(--button-primary-success-foreground);
+    --button-border: var(--button-secondary-success-border);
+  }
+
+  .root[data-intent="destructive"] {
+    --button-strong-default: var(--button-primary-destructive-background-default);
+    --button-strong-hover: var(--button-primary-destructive-background-hover);
+    --button-strong-pressed: var(--button-primary-destructive-background-pressed);
+    --button-subtle-default: var(--color-surface-destructive-subtle-default);
+    --button-subtle-hover: var(--color-surface-destructive-subtle-hover);
+    --button-subtle-pressed: var(--color-surface-destructive-subtle-pressed);
+    --button-foreground: var(--button-destructive-foreground-default);
+    --button-foreground-hover: var(--button-destructive-foreground-hover);
+    --button-soft-foreground: var(--button-foreground);
+    --button-soft-foreground-hover: var(--button-foreground-hover);
+    --button-on-strong: var(--button-primary-destructive-foreground);
+    --button-border: var(--button-secondary-destructive-border);
+  }
+
+  .root[data-variant="primary"] {
+    border-color: transparent;
+    background: var(--button-strong-default);
+    color: var(--button-on-strong);
+  }
+
+  .root[data-variant="secondary"] {
+    border-color: var(--button-border);
+    color: var(--button-context-foreground, var(--button-foreground));
+  }
+
+  .root[data-variant="soft"] {
+    background: var(--button-subtle-default);
+    color: var(--button-context-foreground, var(--button-soft-foreground));
+  }
+
+  .root[data-variant="ghost"] {
+    color: var(--button-context-foreground, var(--button-foreground));
+  }
+
+  .root[data-context="on-scrim"] {
+    --button-context-foreground: var(--color-foreground-on-scrim);
+  }
+
+  .root[data-context="on-scrim"]:focus-visible {
+    outline-color: var(--color-foreground-on-scrim);
+    outline-offset: calc(-1 * (var(--focus-indicator-width) + var(--focus-indicator-offset)));
+  }
+
+  .root[data-width="full"] {
+    inline-size: 100%;
+  }
+
+  .root[data-icon-position="leading"] {
+    padding-inline-start: var(--button-padding-inline-occupied);
+  }
+
+  .root[data-icon-position="trailing"] {
+    padding-inline-end: var(--button-padding-inline-occupied);
+  }
+
+  .root[data-icon-position="both"] {
+    padding-inline: var(--button-padding-inline-occupied);
+  }
+
+  .root[data-icon-position="only"] {
+    inline-size: var(--button-height);
+    padding: 0;
+  }
+
+  .root > *:not(.loadingIndicator) {
+    min-inline-size: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .root[data-loading="true"] > *:not(.loadingIndicator) {
+    /* Opacity preserves the accessible label even when forced colors replace text colors. */
+    opacity: 0;
+  }
+
+  .loadingIndicator {
+    position: absolute;
+    display: inline-flex;
+  }
+
+  .root[data-icon-position="only"] .loadingIndicator {
+    position: static;
+  }
+
+  @media (hover: hover) {
+    /* Keep the pointer target still while the visible button lifts on hover. */
+    .root[data-hit-area="minimum"]:hover:not(:disabled, [aria-disabled="true"], :active, [aria-expanded="true"], [data-open="true"])::before {
+      margin-top: calc(-1 * var(--button-hover-translate-y));
+    }
+
+    .root:hover:not(:disabled, [aria-disabled="true"]) {
+      transform: translateY(var(--button-hover-translate-y));
+    }
+
+    .root[data-variant="primary"]:hover:not(:disabled, [aria-disabled="true"]) {
+      background: var(--button-strong-hover);
+    }
+
+    .root[data-variant="secondary"]:hover:not(:disabled, [aria-disabled="true"]),
+    .root[data-variant="ghost"]:hover:not(:disabled, [aria-disabled="true"]) {
+      background: var(--button-subtle-hover);
+      color: var(--button-context-foreground, var(--button-foreground-hover));
+    }
+
+    .root[data-variant="soft"]:hover:not(:disabled, [aria-disabled="true"]) {
+      background: var(--button-subtle-hover);
+      color: var(--button-context-foreground, var(--button-soft-foreground-hover));
+    }
+  }
+
+  .root[data-variant="primary"]:active:not(:disabled, [aria-disabled="true"]) {
+    background: var(--button-strong-pressed);
+    transform: translateY(0);
+  }
+
+  .root[data-variant="secondary"]:active:not(:disabled, [aria-disabled="true"]),
+  .root[data-variant="ghost"]:active:not(:disabled, [aria-disabled="true"]) {
+    background: var(--button-subtle-pressed);
+    color: var(--button-context-foreground, var(--button-foreground-hover));
+    transform: translateY(0);
+  }
+
+  .root[data-variant="soft"]:active:not(:disabled, [aria-disabled="true"]) {
+    background: var(--button-subtle-pressed);
+    color: var(--button-context-foreground, var(--button-soft-foreground-hover));
+    transform: translateY(0);
+  }
+
+  /* Keep a disclosure trigger visually engaged while its owned panel is open. */
+  .root[data-variant="primary"]:is([aria-expanded="true"], [data-open="true"]):not(:disabled, [aria-disabled="true"]) {
+    background: var(--button-strong-pressed);
+    transform: translateY(0);
+  }
+
+  .root:is([data-variant="secondary"], [data-variant="ghost"]):is([aria-expanded="true"], [data-open="true"]):not(:disabled, [aria-disabled="true"]) {
+    background: var(--button-subtle-pressed);
+    color: var(--button-context-foreground, var(--button-foreground-hover));
+    transform: translateY(0);
+  }
+
+  .root[data-variant="soft"]:is([aria-expanded="true"], [data-open="true"]):not(:disabled, [aria-disabled="true"]) {
+    background: var(--button-subtle-pressed);
+    color: var(--button-context-foreground, var(--button-soft-foreground-hover));
+    transform: translateY(0);
+  }
+
+  .root:is(:disabled, [aria-disabled="true"]) {
+    border-color: transparent;
+    background: transparent;
+    color: var(--color-text-disabled);
+    cursor: not-allowed;
+  }
+
+  .root[data-variant="primary"]:is(:disabled, [aria-disabled="true"]) {
+    background: var(--color-surface-neutral-subtle-pressed);
+  }
+
+  .root[data-variant="soft"]:is(:disabled, [aria-disabled="true"]) {
+    background: var(--color-surface-neutral-subtle-pressed);
+  }
+
+  .root[data-variant="secondary"]:is(:disabled, [aria-disabled="true"]) {
+    border-color: var(--color-border-disabled);
+  }
+
+  .root[data-loading="true"] {
+    cursor: progress;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .root {
+      transition-duration: var(--motion-duration-instant);
+      transform: none;
+    }
+
+  }
+
+  @media (forced-colors: active) {
+    .root[data-context="on-scrim"]:focus-visible {
+      outline-color: Highlight;
+    }
+    .root,
+    .root[data-variant] {
+      border-color: ButtonText;
+      background: ButtonFace;
+      color: ButtonText;
+    }
+
+    .root:is(:disabled, [aria-disabled="true"]) {
+      border-color: GrayText;
+      color: GrayText;
+    }
+
+    .root:is([aria-expanded="true"], [data-open="true"]):not(:disabled, [aria-disabled="true"]) {
+      border-color: Highlight;
+    }
+  }
+
+
+  @supports (corner-shape: squircle) {
+    .root[data-size="xl"] {
+      corner-shape: squircle;
+    }
+  }
+}
