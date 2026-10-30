@@ -11,12 +11,12 @@ type Story = StoryObj<typeof meta>;
 
 export const Overview: Story = {
   render: () => <main className={styles.page}>
-    <header className={styles.header}><a href="?path=/story/hito-welcome--overview" className={styles.logo}>Hito<span>DS</span></a><span className={styles.version}>OPEN SOURCE · v0.1 ALPHA</span></header>
+    <header className={styles.header}><a href="./?path=/story/hito-welcome--overview" target="_top" className={styles.logo}>Hito<span>DS</span></a><span className={styles.version}>OPEN SOURCE · v0.1 ALPHA</span></header>
     <section className={styles.hero} aria-labelledby="hito-title">
       <p className={styles.eyebrow}>FIGMA / REACT / STORYBOOK</p>
       <h1 id="hito-title">Design it.<br/>Build it.<br/><span>Keep it together.</span></h1>
       <p className={styles.intro}>A shared language for the people who design products and the people who build them. Components, tokens and working examples, in one place.</p>
-      <div className={styles.actions}><a className={styles.primary} href="?path=/story/actions-button--playground">Explore components <span aria-hidden="true">↗</span></a><a className={styles.secondary} href="https://github.com/ivan-nthng/hito-runner">Get the code <span aria-hidden="true">↗</span></a></div>
+      <div className={styles.actions}><a className={styles.primary} href="./?path=/story/actions-button--default" target="_top">Explore components <span aria-hidden="true">↗</span></a><a className={styles.secondary} href="https://github.com/ivan-nthng/hito-runner" target="_blank" rel="noopener noreferrer">Get the code <span aria-hidden="true">↗</span></a></div>
     </section>
     <section className={styles.preview} aria-label="Design system preview">
       <div className={styles.previewTitle}><span>ONE SYSTEM. MANY STATES.</span><span>LIVE COMPONENTS</span></div>
@@ -26,12 +26,12 @@ export const Overview: Story = {
       </div>
     </section>
     <section className={styles.paths} aria-label="Explore the system">
-      <a href="?path=/story/foundations-color-primitives-palettes--neutral"><span>01</span><h2>Foundations</h2><p>Understand the visual language and the rules behind it.</p><strong>Open the library ↗</strong></a>
-      <a href="?path=/story/actions-button--playground"><span>02</span><h2>Components</h2><p>Inspect properties, states, interactions and the code that runs.</p><strong>Try a component ↗</strong></a>
-      <a href="https://github.com/ivan-nthng/hito-runner/blob/main/docs/figma-and-code.md"><span>03</span><h2>Design ↔ code</h2><p>See how Figma, tokens and implementation stay aligned.</p><strong>Read the workflow ↗</strong></a>
+      <a href="./?path=/story/foundations-color-primitives-palettes--neutral" target="_top"><span>01</span><h2>Foundations</h2><p>Understand the visual language and the rules behind it.</p><strong>Open the library ↗</strong></a>
+      <a href="./?path=/story/actions-button--default" target="_top"><span>02</span><h2>Components</h2><p>Inspect properties, states, interactions and the code that runs.</p><strong>Try a component ↗</strong></a>
+      <a href="https://github.com/ivan-nthng/hito-runner/blob/main/docs/figma-and-code.md" target="_blank" rel="noopener noreferrer"><span>03</span><h2>Design ↔ code</h2><p>See how Figma, tokens and implementation stay aligned.</p><strong>Read the workflow ↗</strong></a>
     </section>
-    <section className={styles.service}><div><p className={styles.eyebrow}>FROM LIBRARY TO YOUR PRODUCT</p><h2>Need this in your team?</h2><p>I help teams connect their Figma library, frontend components and Storybook, then put the system to work in a real product.</p></div><a className={styles.primary} href="https://www.upwork.com/freelancers/~011ddc278b4de54094">Discuss an implementation ↗</a></section>
-    <footer className={styles.footer}><span>Built by <a href="https://www.cheremisin.co.uk/">Ivan Cheremisin</a></span><span>Product design × design engineering</span><a href="https://github.com/ivan-nthng/hito-runner/blob/main/LICENSE">MIT license ↗</a></footer>
+    <section className={styles.service}><div><p className={styles.eyebrow}>FROM LIBRARY TO YOUR PRODUCT</p><h2>Need this in your team?</h2><p>I help teams connect their Figma library, frontend components and Storybook, then put the system to work in a real product.</p></div><a className={styles.primary} href="https://www.upwork.com/freelancers/~011ddc278b4de54094" target="_blank" rel="noopener noreferrer">Discuss an implementation ↗</a></section>
+    <footer className={styles.footer}><span>Built by <a href="https://www.cheremisin.co.uk/" target="_blank" rel="noopener noreferrer">Ivan Cheremisin</a></span><span>Product design × design engineering</span><a href="https://github.com/ivan-nthng/hito-runner/blob/main/LICENSE" target="_blank" rel="noopener noreferrer">MIT license ↗</a></footer>
   </main>,
   play: async ({canvas}) => { await expect(canvas.getByRole("heading",{level:1})).toBeVisible(); await expect(canvas.getByRole("button",{name:"Unavailable"})).toBeDisabled(); },
 };
