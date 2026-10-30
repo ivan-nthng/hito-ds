@@ -1,0 +1,167 @@
+{
+  "cssSource": "https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;500;700&family=Instrument+Sans:wght@400..700&family=Poppins:wght@400;500;600;700&display=swap",
+  "files": [
+    {
+      "path": "fira-mono-latin-ext-400.woff2",
+      "family": "Fira Mono",
+      "subset": "latin-ext",
+      "weight": "400",
+      "source": "https://fonts.gstatic.com/s/firamono/v16/N0bX2SlFPv1weGeLZDtgKP7Ss9XZYalI.woff2",
+      "sha256": "550c53511ca4410ce8c45c9fa6924e1816590b67a5bf3cb564ad2319dbc2be78",
+      "bytes": 7392
+    },
+    {
+      "path": "fira-mono-latin-400.woff2",
+      "family": "Fira Mono",
+      "subset": "latin",
+      "weight": "400",
+      "source": "https://fonts.gstatic.com/s/firamono/v16/N0bX2SlFPv1weGeLZDtgJv7Ss9XZYQ.woff2",
+      "sha256": "381d3214b878f132fd33d8af72bdf1f9415aef024aed80309d5052d7da54917e",
+      "bytes": 10756
+    },
+    {
+      "path": "fira-mono-latin-ext-500.woff2",
+      "family": "Fira Mono",
+      "subset": "latin-ext",
+      "weight": "500",
+      "source": "https://fonts.gstatic.com/s/firamono/v16/N0bS2SlFPv1weGeLZDto1d3HkPfUS5NBBASF.woff2",
+      "sha256": "7e5414b7fc4290141e82dfb0ba386d1332a0dc0b5476e2fb2f8a0b8c898cb9b0",
+      "bytes": 7408
+    },
+    {
+      "path": "fira-mono-latin-500.woff2",
+      "family": "Fira Mono",
+      "subset": "latin",
+      "weight": "500",
+      "source": "https://fonts.gstatic.com/s/firamono/v16/N0bS2SlFPv1weGeLZDto1d3HnvfUS5NBBA.woff2",
+      "sha256": "ad82568cba5d68b67e6b0c9481b4cf571b3475d69b8f14306504d9cfe651c29f",
+      "bytes": 10664
+    },
+    {
+      "path": "fira-mono-latin-ext-700.woff2",
+      "family": "Fira Mono",
+      "subset": "latin-ext",
+      "weight": "700",
+      "source": "https://fonts.gstatic.com/s/firamono/v16/N0bS2SlFPv1weGeLZDtondvHkPfUS5NBBASF.woff2",
+      "sha256": "e089cbad23268834fd4922595b238709ce67eeb0436c562a08a2fdcb44eb1243",
+      "bytes": 7352
+    },
+    {
+      "path": "fira-mono-latin-700.woff2",
+      "family": "Fira Mono",
+      "subset": "latin",
+      "weight": "700",
+      "source": "https://fonts.gstatic.com/s/firamono/v16/N0bS2SlFPv1weGeLZDtondvHnvfUS5NBBA.woff2",
+      "sha256": "5afdb884ea57b4d82ae667a4e4cc5769c8945f23e287751b844c6a0d78766355",
+      "bytes": 10612
+    },
+    {
+      "path": "instrument-sans-latin-ext-400-700.woff2",
+      "family": "Instrument Sans",
+      "subset": "latin-ext",
+      "weight": "400 700",
+      "source": "https://fonts.gstatic.com/s/instrumentsans/v4/pxiTypc9vsFDm051Uf6KVwgkfoSxQ0GsQv8ToedPibnr0She1ZuWi3hKpA.woff2",
+      "sha256": "21fac8da552a915e7a9fb84c5afaeb85d35507b2616346d592e78128c1cfe3e0",
+      "bytes": 11092
+    },
+    {
+      "path": "instrument-sans-latin-400-700.woff2",
+      "family": "Instrument Sans",
+      "subset": "latin",
+      "weight": "400 700",
+      "source": "https://fonts.gstatic.com/s/instrumentsans/v4/pxiTypc9vsFDm051Uf6KVwgkfoSxQ0GsQv8ToedPibnr0SZe1ZuWi3g.woff2",
+      "sha256": "6219bc4bfdfc5d9b2201dcdf046218b122a758f932e25ed5f168f929b7ca2311",
+      "bytes": 29904
+    },
+    {
+      "path": "poppins-latin-ext-400.woff2",
+      "family": "Poppins",
+      "subset": "latin-ext",
+      "weight": "400",
+      "source": "https://fonts.gstatic.com/s/poppins/v24/pxiEyp8kv8JHgFVrJJnecnFHGPezSQ.woff2",
+      "sha256": "1fae5e73d2788ee1dea1d76eca3a9f157a0386de6be8c280d076a53a64c358a1",
+      "bytes": 5640
+    },
+    {
+      "path": "poppins-latin-400.woff2",
+      "family": "Poppins",
+      "subset": "latin",
+      "weight": "400",
+      "source": "https://fonts.gstatic.com/s/poppins/v24/pxiEyp8kv8JHgFVrJJfecnFHGPc.woff2",
+      "sha256": "3dc5d0c52428fe1696264907a1054ebbaac07f8cbe45832c105f819c2ae397c0",
+      "bytes": 7900
+    },
+    {
+      "path": "poppins-latin-ext-500.woff2",
+      "family": "Poppins",
+      "subset": "latin-ext",
+      "weight": "500",
+      "source": "https://fonts.gstatic.com/s/poppins/v24/pxiByp8kv8JHgFVrLGT9Z1JlFd2JQEl8qw.woff2",
+      "sha256": "f8f0c28661c88edbcee022a4a80657619e8931af8c2a47c28e230307e2af30e5",
+      "bytes": 5496
+    },
+    {
+      "path": "poppins-latin-500.woff2",
+      "family": "Poppins",
+      "subset": "latin",
+      "weight": "500",
+      "source": "https://fonts.gstatic.com/s/poppins/v24/pxiByp8kv8JHgFVrLGT9Z1xlFd2JQEk.woff2",
+      "sha256": "289e0afc8be731a86822349e54557296f145926496bd2138db1bac0db77f77a2",
+      "bytes": 7740
+    },
+    {
+      "path": "poppins-latin-ext-600.woff2",
+      "family": "Poppins",
+      "subset": "latin-ext",
+      "weight": "600",
+      "source": "https://fonts.gstatic.com/s/poppins/v24/pxiByp8kv8JHgFVrLEj6Z1JlFd2JQEl8qw.woff2",
+      "sha256": "72efc6a32cfd37c557108628cffa01153c480c3d4cde556744406e50b9d8e9f7",
+      "bytes": 5552
+    },
+    {
+      "path": "poppins-latin-600.woff2",
+      "family": "Poppins",
+      "subset": "latin",
+      "weight": "600",
+      "source": "https://fonts.gstatic.com/s/poppins/v24/pxiByp8kv8JHgFVrLEj6Z1xlFd2JQEk.woff2",
+      "sha256": "872e862918591a9e824dc03ed92f05729435ffbb8ebbb10eff7eda26592b1798",
+      "bytes": 7992
+    },
+    {
+      "path": "poppins-latin-ext-700.woff2",
+      "family": "Poppins",
+      "subset": "latin-ext",
+      "weight": "700",
+      "source": "https://fonts.gstatic.com/s/poppins/v24/pxiByp8kv8JHgFVrLCz7Z1JlFd2JQEl8qw.woff2",
+      "sha256": "2477683a4b1200680780a759cc1b93b816410362dc5f4c74ebfeafa212bcb74d",
+      "bytes": 5448
+    },
+    {
+      "path": "poppins-latin-700.woff2",
+      "family": "Poppins",
+      "subset": "latin",
+      "weight": "700",
+      "source": "https://fonts.gstatic.com/s/poppins/v24/pxiByp8kv8JHgFVrLCz7Z1xlFd2JQEk.woff2",
+      "sha256": "197a3cbd7290c242c5c765268cdd69a9a39867fdc80cd13071f243a81c56fb76",
+      "bytes": 7848
+    },
+    {
+      "path": "instrument-sans-OFL.txt",
+      "source": "https://raw.githubusercontent.com/google/fonts/6c1dbe27dcf7d817d4b62cec033ba77fa8e2a5ec/ofl/instrumentsans/OFL.txt",
+      "sha256": "9e27a72ed30eb49a08678f6a5d6ed98ec7ba5368f541637ee0683ec9134ef966",
+      "bytes": 4403
+    },
+    {
+      "path": "poppins-OFL.txt",
+      "source": "https://raw.githubusercontent.com/google/fonts/6c1dbe27dcf7d817d4b62cec033ba77fa8e2a5ec/ofl/poppins/OFL.txt",
+      "sha256": "6be04893d770899a015649c7aa3b582f871b272f8747a92b78b17c3e5c8b2573",
+      "bytes": 4385
+    },
+    {
+      "path": "fira-mono-OFL.txt",
+      "source": "https://raw.githubusercontent.com/google/fonts/6c1dbe27dcf7d817d4b62cec033ba77fa8e2a5ec/ofl/firamono/OFL.txt",
+      "sha256": "d1829ff3455bbf3b9d13dfb0a57758a863107c9108aab48558f26f37f1094180",
+      "bytes": 4371
+    }
+  ]
+}

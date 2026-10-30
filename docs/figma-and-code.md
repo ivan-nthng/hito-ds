@@ -16,7 +16,7 @@ This is an explicit maintenance workflow, not automatic two-way conversion of ar
 
 ## Fonts
 
-Inherited preset: base Instrument Sans, display Poppins, explicit data Fira Mono. Neutral preset: base and display Instrument Sans; explicit data retains Fira Mono. Technical text uses Instrument Sans in both presets. Storybook self-hosts them at build time through `next/font`; consuming applications provide the same families or intentionally override the source font variables. React components do not require a Next.js application.
+Inherited preset: base Instrument Sans, display Poppins, explicit data Fira Mono. Neutral preset: base and display Instrument Sans; explicit data retains Fira Mono. Technical text uses Instrument Sans in both presets. Storybook serves vendored Latin/Latin Extended WOFF2 through its local CSS adapter, with upstream OFL licenses and provenance under `apps/storybook/src/fonts/`; consuming applications provide the same families or intentionally override the source font variables. React components do not require a Next.js application.
 
 ## Themes and content
 

@@ -1,6 +1,6 @@
 import type { CSSProperties } from "react";
 import type { Preview } from "@storybook/nextjs-vite";
-import { Fira_Mono, Instrument_Sans, Poppins } from "next/font/google";
+import "../src/fonts.css";
 import "@hito-ds/react/tokens.css";
 import "@hito-ds/react/base.css";
 import {
@@ -10,32 +10,11 @@ import {
 } from "../../../packages/design-system/src/storybook/story-content";
 import previewStyles from "../src/preview.module.css";
 
-const baseFont = Instrument_Sans({
-  subsets: ["latin", "latin-ext"],
-  variable: "--font-hito-base-source",
-  display: "swap",
-});
-
-const displayFont = Poppins({
-  subsets: ["latin", "latin-ext"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-hito-display-loader",
-  display: "swap",
-  adjustFontFallback: false,
-  preload: false,
-});
-
-const monoFont = Fira_Mono({
-  subsets: ["latin", "latin-ext"],
-  weight: ["400", "500", "700"],
-  variable: "--font-hito-mono-source",
-  display: "swap",
-  preload: false,
-});
-
-const fontVariables = `${baseFont.variable} ${displayFont.variable} ${monoFont.variable}`;
-const displaySourceStyle = {
-  "--font-hito-display-source": displayFont.style.fontFamily.split(",")[0],
+// Explicit local faces bypass next/font's Google CSS/runtime network path in Storybook.
+const fontSourceStyle = {
+  "--font-hito-base-source": '"Instrument Sans"',
+  "--font-hito-display-source": '"Poppins"',
+  "--font-hito-mono-source": '"Fira Mono"',
 } as CSSProperties;
 
 const contentViewports = {
@@ -116,7 +95,7 @@ const preview: Preview = {
             ? ""
             : previewStyles.padded;
       const style = {
-        ...displaySourceStyle,
+        ...fontSourceStyle,
         colorScheme:
           colorScheme === "light" || colorScheme === "dark"
             ? colorScheme
@@ -125,7 +104,7 @@ const preview: Preview = {
 
       return (
         <div
-          className={`${fontVariables} ${previewStyles.canvas} ${
+          className={`${previewStyles.canvas} ${
             context.viewMode === "docs"
               ? previewStyles.docs
               : previewStyles.story

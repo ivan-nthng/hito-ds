@@ -401,7 +401,7 @@ assert(
   semanticFontFamilies.every(
     (family) =>
       family.identityStatus === "active-replaceable-adapter" &&
-      family.source === "google-fonts-via-next-font" &&
+      family.source === "google-fonts-vendored-woff2" &&
       family.webFallbacks.length > 0,
   ),
   "Every active Google Font adapter must retain a fallback chain",
@@ -428,12 +428,12 @@ assert(
 );
 assert(
   semanticFontFamilyPolicy.actualFontFiles ===
-    "next-font-google-build-assets" &&
-    semanticFontFamilyPolicy.licenseEvidence === "google-fonts-upstream" &&
+    "storybook-local-woff2-assets" &&
+    semanticFontFamilyPolicy.licenseEvidence === "vendored-upstream-ofl-1.1" &&
     semanticFontFamilyPolicy.automaticFontFetch ===
-      "next-font-build-time-only" &&
+      "none-vendored-assets" &&
     semanticFontFamilyPolicy.browserExternalRequest === "none",
-  "Google Fonts must remain build-time self-hosted through next/font",
+  "Accepted fonts must use local WOFF2 assets with vendored OFL licenses and no automatic fetch",
 );
 assert(
   semanticTypographyPolicy.emphasisComposition === "independent-from-metrics" &&
@@ -544,18 +544,26 @@ const [css, storybookPreview, textStories] = await Promise.all([
   readFile(TEXT_STORIES_URL, "utf8"),
 ]);
 
-const firaMonoLoader =
-  /const monoFont = Fira_Mono\(\{\s*subsets: \["latin", "latin-ext"\],\s*weight: \["400", "500", "700"\],\s*variable: "--font-hito-mono-source",\s*display: "swap",\s*preload: false,\s*\}\);/u;
-for (const [name, source] of [
-  ["Storybook preview", storybookPreview],
-]) {
-  assert(
-    source.includes("Fira_Mono") && firaMonoLoader.test(source),
-    `${name} must load the accepted Fira Mono adapter`,
-  );
-  assert(!source.includes("Inter("), `${name} retains Inter legacy`);
-  assert(!source.includes("Roboto_Mono"), `${name} retains Roboto Mono legacy`);
+const fontCss = await readFile(new URL("../../../apps/storybook/src/fonts.css", import.meta.url), "utf8");
+assert(storybookPreview.includes('import "../src/fonts.css"') && !storybookPreview.includes("next/font" + "/google"),
+  "Storybook must import the local font adapter instead of a Google font loader");
+assert(!/url\(https?:/u.test(fontCss), "Font CSS must not request external font URLs");
+const localFaces = [...fontCss.matchAll(/@font-face\s*\{([^}]+)\}/gu)];
+assert(localFaces.length === 16, "Expected accepted Latin/Latin Extended faces only");
+for (const [family, weights] of [["Instrument Sans", ["400 700"]], ["Poppins", ["400", "500", "600", "700"]], ["Fira Mono", ["400", "500", "700"]]]) {
+  for (const weight of weights) assert(localFaces.filter(([, face]) => face.includes(`font-family: '${family}';`) && face.includes(`font-weight: ${weight};`)).length === 2,
+    `${family}/${weight} must retain both accepted subsets`);
+  const license = await readFile(new URL(`../../../apps/storybook/src/fonts/${family.toLowerCase().replaceAll(" ", "-")}-OFL.txt`, import.meta.url), "utf8");
+  assert(license.includes("SIL OPEN FONT LICENSE Version 1.1"), `${family} license missing`);
 }
+for (const [, face] of localFaces) {
+  const path = face.match(/src: url\(([^)]+)\)/u)?.[1];
+  assert(path?.startsWith("./fonts/") && !path.includes(".."), "Font URL must resolve inside the local font directory");
+  const bytes = await readFile(new URL(`../../../apps/storybook/src/${path}`, import.meta.url));
+  assert(bytes.subarray(0, 4).toString() === "wOF2", `Invalid local WOFF2: ${path}`);
+}
+assert(!storybookPreview.includes("Inter("), "Storybook retains Inter legacy");
+assert(!storybookPreview.includes("Roboto_Mono"), "Storybook retains Roboto Mono legacy");
 assert(
   textStories.includes('id: "Technical/SM"') &&
     textStories.includes('variant: "technical-sm"') &&
@@ -706,10 +714,10 @@ console.log(
     "technicalLane=INSTRUMENT_SANS_12_16",
     "uiLabelBodyHeadingTechnicalDataDisplayMetrics=ADMITTED",
     "dataFamilySlot=MONO",
-    "fontAdapters=GOOGLE_FONTS_ACTIVE",
-    "webStorybookMonoLoader=FIRA_MONO",
-    "fontFiles=NEXT_FONT_SELF_HOSTED",
-    "fontLicense=GOOGLE_FONTS_UPSTREAM",
+    "fontAdapters=VENDORED_GOOGLE_FONTS",
+    "webStorybookMonoLoader=LOCAL_FIRA_MONO_CSS",
+    "fontFiles=LOCAL_WOFF2_16",
+    "fontLicense=VENDORED_OFL_1_1",
     "browserFontRequests=NONE",
     "displayMetrics=ADMITTED",
     "componentAliases=DEFERRED",
