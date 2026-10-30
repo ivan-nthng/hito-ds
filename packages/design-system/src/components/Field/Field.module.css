@@ -1,0 +1,70 @@
+@layer hito.components {
+  .root {
+    display: grid;
+    min-inline-size: 0;
+    gap: var(--ui-space-2xs);
+    overflow-wrap: anywhere;
+  }
+
+  .labelRow {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--ui-space-xs) var(--ui-space-sm);
+    min-inline-size: 0;
+  }
+
+  .label {
+    display: inline-flex;
+    flex-wrap: nowrap;
+    align-items: baseline;
+    min-inline-size: 0;
+    gap: var(--ui-space-xs);
+    color: var(--color-text-primary);
+    font: var(--type-label-base-font-weight) var(--type-label-base-font-size) /
+      var(--type-label-base-line-height) var(--type-family-display);
+    letter-spacing: var(--type-label-base-letter-spacing);
+  }
+
+  .requirement {
+    flex: none;
+    color: var(--color-text-secondary);
+    font: var(--type-label-sm-font-weight) var(--type-label-sm-font-size) /
+      var(--type-label-sm-line-height) var(--type-family-display);
+    letter-spacing: var(--type-label-sm-letter-spacing);
+  }
+
+  .root[data-label-size="sm"] .label {
+    font: var(--type-label-sm-font-weight) var(--type-label-sm-font-size) /
+      var(--type-label-sm-line-height) var(--type-family-display);
+    letter-spacing: var(--type-label-sm-letter-spacing);
+  }
+
+  .label > span:first-child {
+    min-inline-size: 0;
+  }
+
+  .auxiliary {
+    display: inline-flex;
+    align-items: center;
+    max-inline-size: 100%;
+    margin-inline-start: auto;
+  }
+
+  .hint,
+  .error {
+    margin: 0;
+    font: var(--type-body-sm-font-weight) var(--type-body-sm-font-size) /
+      var(--type-body-sm-line-height) var(--type-family-base);
+    letter-spacing: var(--type-body-sm-letter-spacing);
+  }
+
+  .hint {
+    color: var(--color-text-secondary);
+  }
+
+  .error {
+    color: var(--color-text-error-default);
+  }
+}

@@ -1,0 +1,63 @@
+.page,
+.stack {
+  display: grid;
+  min-inline-size: 0;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.page {
+  gap: var(--layout-space-responsive-2xl);
+  padding: var(--layout-space-responsive-xl);
+}
+
+.stack {
+  gap: var(--layout-space-fixed-md);
+}
+
+.grid {
+  display: grid;
+  inline-size: 100%;
+  max-inline-size: var(--ref-space-96);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+  gap: var(--layout-space-fixed-xl);
+}
+
+.measure {
+  inline-size: 100%;
+  max-inline-size: var(--ref-space-96);
+}
+
+.narrow {
+  inline-size: 17rem;
+  max-inline-size: 100%;
+}
+
+.alignmentRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 12rem;
+  align-items: end;
+  gap: var(--layout-space-fixed-xl);
+}
+
+.alignmentItem {
+  display: grid;
+  min-inline-size: 0;
+  gap: var(--layout-space-fixed-sm);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: start;
+  gap: var(--layout-space-fixed-md);
+}
+
+.secondary {
+  color: var(--color-text-secondary);
+}
+
+@media (width <= 40rem) {
+  .alignmentRow {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

@@ -1,0 +1,7 @@
+@layer hito.storybook {
+  .example { display: grid; justify-items: start; gap: var(--layout-space-fixed-lg); }
+  .stage { display: flex; inline-size: 100%; }
+  .stage[data-edge="end"] { justify-content: end; }
+  .touchHelp { display: none; color: var(--color-text-secondary); }
+  @media (hover: none), (pointer: coarse) { .touchHelp { display: block; } }
+}

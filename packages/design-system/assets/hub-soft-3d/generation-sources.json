@@ -1,0 +1,50 @@
+[
+  {
+    "id": "landing",
+    "name": "Hito DS",
+    "symbol": "a welcoming simple house with a broad peaked roof, a solid door opening and one small rounded window; a single sculpted cream emblem",
+    "source": "source-assets/exec-9b38faf4-d3e9-40e2-906b-137e951ed6c6.png"
+  },
+  {
+    "id": "client",
+    "name": "Customer",
+    "symbol": "a shopping basket with a broad curved handle and two clean vertical slots; a single chunky cream relief emblem, no products poking out",
+    "source": "source-assets/exec-c81a6a4e-c06c-4120-aabe-67830c73cb0a.png"
+  },
+  {
+    "id": "design-system",
+    "name": "Design System",
+    "symbol": "three geometric building blocks arranged in a clear composition: a circle, a rounded square and a rounded triangle, all cream; design primitives, not a dashboard",
+    "source": "source-assets/exec-afcd8196-4a5b-4709-a97a-0e75ab0bc42b.png"
+  },
+  {
+    "id": "admin",
+    "name": "Platform Admin",
+    "symbol": "a compact management dashboard of three cream rounded panels: one tall panel on the left and two shorter panels stacked on the right, with one simple recessed slider in the tall panel",
+    "source": "source-assets/exec-fec0e2ad-09f3-456b-8bb2-65b7fa3597e7.png"
+  },
+  {
+    "id": "kitchen",
+    "name": "Kitchen",
+    "symbol": "a friendly sculpted chef hat with three broad rounded lobes and a solid short folded band; one recognizable cream emblem",
+    "source": "source-assets/exec-75e0c67f-8e43-4a53-a419-94f1e0ea0244.png"
+  },
+  {
+    "id": "delivery",
+    "name": "Delivery",
+    "symbol": "a compact side-view delivery scooter with two round wheels and a small delivery box mounted behind the seat; a single connected cream relief with clear wheel openings, pointing to the right",
+    "source": "source-assets/exec-c11ddc72-5b04-4052-b965-bc751ebf1a84.png"
+  },
+  {
+    "id": "storybook",
+    "name": "Storybook",
+    "symbol": "an open book with two thick rounded pages and a small raised component square on the right page; cream relief with a clear central book crease, no letters",
+    "source": "source-assets/exec-b26d281e-1fa8-4df0-80b1-7522fb20f3e0.png"
+  },
+  {
+    "id": "staging",
+    "name": "Staging",
+    "symbol": "a laboratory conical flask with a short wide neck and a simple orange recessed liquid line inside the solid cream body; two small round recessed bubbles, representing a test environment",
+    "source": "source-assets/exec-68121e0d-869c-4b3a-8383-b6bee8aff3f6.png"
+  }
+]

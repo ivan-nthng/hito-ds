@@ -1,0 +1,11 @@
+@layer hito.components {
+  .panel {
+    --picker-inset: var(--ui-space-xs);
+    padding: var(--picker-inset);
+    border-radius: calc(var(--radius-ui-md) + var(--picker-inset));
+  }
+  .panel[data-size="sm"] {
+    --picker-inset: var(--ui-space-2xs);
+    border-radius: calc(var(--radius-ui-sm) + var(--picker-inset));
+  }
+}

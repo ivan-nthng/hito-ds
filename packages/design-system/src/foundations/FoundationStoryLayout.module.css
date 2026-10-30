@@ -1,0 +1,138 @@
+.page {
+  min-block-size: 100svh;
+  padding: var(--layout-space-responsive-xl);
+  color: var(--color-text-primary);
+  background: var(--color-surface-canvas);
+}
+
+.content {
+  display: grid;
+  gap: var(--layout-space-responsive-2xl);
+  inline-size: 100%;
+  margin-inline: auto;
+}
+
+.standard {
+  max-inline-size: 48rem;
+}
+
+.wide {
+  max-inline-size: 72rem;
+}
+
+.intro,
+.section,
+.sectionHeader,
+.group,
+.groupHeader {
+  display: grid;
+  align-content: start;
+}
+
+.intro {
+  max-inline-size: 48rem;
+  gap: var(--layout-space-fixed-sm);
+}
+
+.description,
+.copy,
+.token,
+.note,
+.specimenDetails {
+  color: var(--color-text-secondary);
+}
+
+.section {
+  gap: var(--layout-space-responsive-xl);
+}
+
+.sectionHeader {
+  max-inline-size: 48rem;
+  gap: var(--layout-space-fixed-sm);
+}
+
+.sectionIdentity,
+.groupIdentity {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--layout-space-fixed-sm);
+}
+
+.group {
+  gap: var(--layout-space-fixed-md);
+}
+
+.groupHeader {
+  gap: var(--layout-space-fixed-xs);
+}
+
+.specimenGrid {
+  --foundation-specimen-min: var(--ref-space-64);
+
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(min(100%, var(--foundation-specimen-min)), 1fr)
+  );
+  gap: var(--layout-space-responsive-xl);
+}
+
+.specimenGrid[data-min-item-width="compact"] {
+  --foundation-specimen-min: var(--ref-space-40);
+}
+
+.specimenGrid[data-min-item-width="wide"] {
+  --foundation-specimen-min: var(--ref-space-96);
+}
+
+.specimenGrid[data-min-item-width="full"] {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.specimen,
+.specimenIdentity,
+.specimenDetails {
+  display: grid;
+  align-content: start;
+}
+
+.specimen {
+  min-inline-size: 0;
+  gap: var(--layout-space-fixed-md);
+}
+
+.specimen[data-specimen-layout="row"] {
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--layout-space-responsive-xl);
+  min-block-size: calc(var(--layout-space-fixed-2xl) * 3);
+}
+
+.specimenIdentity,
+.specimenDetails {
+  gap: var(--layout-space-fixed-xs);
+}
+
+.specimenContent {
+  min-inline-size: 0;
+  inline-size: 100%;
+}
+
+.specimen[data-specimen-layout="row"] .specimenContent {
+  inline-size: auto;
+}
+
+@media (max-width: 40rem) {
+  .page {
+    padding: var(--layout-space-responsive-lg);
+  }
+
+  .specimen[data-specimen-layout="row"] {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .specimen[data-specimen-layout="row"] .specimenContent {
+    inline-size: 100%;
+  }
+}

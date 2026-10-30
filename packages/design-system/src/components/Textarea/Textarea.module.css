@@ -1,0 +1,77 @@
+@layer hito.components {
+  .root {
+    display: block;
+    min-block-size: calc(
+      2 * var(--input-frame-line-size) + 2 * var(--input-frame-padding-block) +
+        2 * var(--border-width-default)
+    );
+    padding-block: var(--input-frame-padding-block);
+    padding-inline: var(--input-frame-padding-inline);
+    overflow-x: hidden;
+    overflow-y: auto;
+    resize: vertical;
+    overflow-wrap: anywhere;
+    white-space: pre-wrap;
+  }
+
+  .root[data-width="hug"] {
+    block-size: calc(
+      var(--textarea-rows) * var(--input-frame-line-size) + 2 *
+        var(--input-frame-padding-block) + 2 * var(--border-width-default)
+    );
+  }
+
+  .root::placeholder {
+    color: var(--color-text-muted);
+    opacity: 1;
+  }
+
+  .root:is(:disabled, [readonly]) {
+    resize: none;
+  }
+
+  .adorned {
+    position: relative;
+    display: block;
+    inline-size: 100%;
+    min-inline-size: 0;
+    color: var(--color-text-primary);
+  }
+
+  .adorned[data-width="hug"] {
+    inline-size: fit-content;
+    max-inline-size: 100%;
+  }
+
+  .root[data-leading-icon="true"] {
+    padding-inline-start: calc(
+      var(--input-frame-padding-inline) + var(--input-frame-loading-size) +
+        var(--input-frame-gap)
+    );
+  }
+
+  .root[data-trailing-icon="true"] {
+    padding-inline-end: calc(
+      var(--input-frame-padding-inline) + var(--input-frame-loading-size) +
+        var(--input-frame-gap)
+    );
+  }
+
+  .leadingIcon,
+  .trailingIcon {
+    position: absolute;
+    inset-block-start: calc(
+      var(--border-width-default) + var(--input-frame-padding-block) +
+        (var(--input-frame-line-size) - var(--input-frame-loading-size)) / 2
+    );
+    pointer-events: none;
+  }
+
+  .leadingIcon {
+    inset-inline-start: calc(var(--border-width-default) + var(--input-frame-padding-inline));
+  }
+
+  .trailingIcon {
+    inset-inline-end: calc(var(--border-width-default) + var(--input-frame-padding-inline));
+  }
+}

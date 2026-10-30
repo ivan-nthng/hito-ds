@@ -1,0 +1,16 @@
+@layer hito.story {
+  .fixture {
+    display: grid;
+    inline-size: min(100%, calc(var(--layout-space-fixed-2xl) * 8));
+    gap: var(--layout-space-responsive-md);
+  }
+
+  .narrow {
+    inline-size: min(100%, calc(var(--layout-space-fixed-2xl) * 4));
+  }
+
+  .comparison {
+    display: grid;
+    gap: var(--layout-space-responsive-lg);
+  }
+}

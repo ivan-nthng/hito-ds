@@ -1,0 +1,13 @@
+.pilot { padding: var(--layout-space-responsive-md); display: grid; gap: var(--layout-space-fixed-md); }
+.stack { display: grid; gap: var(--layout-space-fixed-md); }
+.row { display: flex; flex-wrap: wrap; gap: var(--ui-space-md); align-items: center; }
+.matrix { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 28rem), 1fr)); gap: var(--layout-space-fixed-md); }
+.matrix > section { min-width: 0; background: var(--color-surface-canvas); color: var(--color-text-primary); padding: var(--layout-space-responsive-sm); }
+.secondary { color: var(--color-text-secondary); }
+.muted { color: var(--color-text-muted); }
+.error { color: var(--color-text-error-default); }
+.raised { background: var(--color-surface-raised); padding: var(--ui-space-lg); }
+.subtle { background: var(--color-surface-subtle); padding: var(--ui-space-lg); }
+.accent { background: var(--color-surface-accent-strong-default); color: var(--color-foreground-on-accent-strong); padding: var(--ui-space-lg); }
+.accentSubtle { background: var(--color-surface-accent-subtle-default); padding: var(--ui-space-lg); }
+.onAccent { color: var(--color-foreground-on-accent-strong); }

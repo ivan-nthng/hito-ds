@@ -1,0 +1,6 @@
+@layer hito.storybook {
+  .example { display: grid; justify-items: start; gap: var(--layout-space-fixed-lg); }
+  .stage { display: flex; inline-size: 100%; }
+  .stage[data-edge="end"] { justify-content: end; }
+  .panel { inline-size: calc(var(--layout-space-fixed-2xl) * 9); }
+}

@@ -1,0 +1,16 @@
+.page {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  min-inline-size: 0;
+  gap: var(--layout-space-fixed-xl);
+  padding: var(--layout-space-fixed-xl);
+}
+.narrow {
+  inline-size: 320px;
+  max-inline-size: 100%;
+}
+.options {
+  display: grid;
+  min-inline-size: 0;
+  gap: var(--ui-space-sm);
+}

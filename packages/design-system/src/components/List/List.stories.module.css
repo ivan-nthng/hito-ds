@@ -1,0 +1,4 @@
+.surface {
+  inline-size: min(100%, 34rem);
+  overflow: hidden;
+}

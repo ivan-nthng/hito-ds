@@ -1,0 +1,18 @@
+@layer hito.components {
+  .root {
+    display: grid;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .root > * + * {
+    border-block-start: var(--border-width-default) solid var(--color-border-subtle);
+  }
+
+  @media (forced-colors: active) {
+    .root > * + * {
+      border-block-start-color: CanvasText;
+    }
+  }
+}

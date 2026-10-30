@@ -1,0 +1,95 @@
+@layer hito.components {
+  .root {
+    --link-color: var(--color-text-primary);
+    --link-color-hover: var(--color-text-secondary);
+    --link-font-size: var(--type-ui-md-font-size);
+    --link-line-height: var(--ui-icon-size-md);
+    --link-letter-spacing: var(--type-ui-md-letter-spacing);
+    --link-font-weight: var(--type-ui-md-font-weight);
+    --link-gap: var(--ui-space-sm);
+    --icon-color: currentColor;
+
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--link-gap);
+    color: var(--link-color);
+    font: var(--link-font-weight) var(--link-font-size) / var(--link-line-height) var(--type-family-base);
+    letter-spacing: var(--link-letter-spacing);
+    text-decoration-line: underline;
+    text-decoration-thickness: var(--border-width-default);
+    text-underline-offset: var(--ui-space-3xs);
+    touch-action: manipulation;
+    transition-duration: var(--motion-duration-feedback);
+    transition-property: color, text-decoration-thickness;
+    transition-timing-function: var(--motion-easing-standard);
+  }
+
+  .root::before {
+    position: absolute;
+    inset-block-start: 50%;
+    block-size: var(--ui-interaction-target-min);
+    content: "";
+    transform: translateY(-50%);
+  }
+
+  .root:not([data-icon-position="only"])::before {
+    inset-inline: 0;
+  }
+
+  .root[data-icon-position="only"]::before {
+    inset-inline-start: 50%;
+    inline-size: var(--ui-interaction-target-min);
+    transform: translate(-50%, -50%);
+  }
+
+  .root[data-tone="accent"] {
+    --link-color: var(--color-text-accent-default);
+    --link-color-hover: var(--color-text-accent-hover);
+  }
+
+  .root[data-size="sm"] {
+    --link-font-size: var(--type-ui-sm-font-size);
+    --link-line-height: var(--ui-icon-size-sm);
+    --link-letter-spacing: var(--type-ui-sm-letter-spacing);
+    --link-font-weight: var(--type-ui-sm-font-weight);
+    --link-gap: var(--ui-space-xs);
+  }
+
+  .root[data-size="lg"] {
+    --link-font-size: var(--type-ui-lg-font-size);
+    --link-line-height: var(--ui-icon-size-lg);
+    --link-letter-spacing: var(--type-ui-lg-letter-spacing);
+    --link-font-weight: var(--type-ui-lg-font-weight);
+    --link-gap: var(--ui-space-sm);
+  }
+
+  .root[data-size="xl"] {
+    --link-font-size: var(--type-ui-xl-font-size);
+    --link-line-height: var(--ui-icon-size-xl);
+    --link-letter-spacing: var(--type-ui-xl-letter-spacing);
+    --link-font-weight: var(--type-ui-xl-font-weight);
+    --link-gap: var(--ui-space-sm);
+  }
+
+  .root[data-icon-position="only"] {
+    text-decoration: none;
+  }
+
+  .root:hover {
+    color: var(--link-color-hover);
+    text-decoration-thickness: var(--border-width-strong);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .root {
+      transition-duration: var(--motion-duration-instant);
+    }
+  }
+
+  @media (forced-colors: active) {
+    .root {
+      color: LinkText;
+    }
+  }
+}

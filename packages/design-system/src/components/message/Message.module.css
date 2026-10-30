@@ -1,0 +1,78 @@
+@layer hito.components {
+  .message {
+    --message-icon-size: var(--ui-icon-size-md);
+    --message-surface: var(--color-surface-neutral-subtle-default);
+    --message-border: var(--color-border-subtle);
+    --icon-color: var(--color-icon-secondary);
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+    gap: var(--ui-space-sm);
+    min-inline-size: 0;
+    padding: var(--layout-space-fixed-lg);
+    border: var(--border-width-default) solid var(--message-border);
+    border-radius: var(--radius-layout-fixed-md);
+    background: var(--message-surface);
+    color: var(--color-text-primary);
+    overflow-wrap: anywhere;
+  }
+  .message[data-message-kind="alert"][data-message-size="sm"] {
+    padding: var(--layout-space-fixed-md);
+    border-radius: var(--radius-layout-fixed-sm);
+  }
+  .message[data-message-kind="inline"] {
+    --message-icon-size: var(--ui-icon-size-sm);
+    position: relative;
+    padding: var(--ui-space-sm) var(--ui-space-lg);
+    border-color: transparent;
+    border-radius: var(--radius-layout-fixed-sm);
+  }
+  .message[data-icon="true"] { grid-template-columns: auto minmax(0, 1fr); }
+  .message[data-message-kind="alert"][data-dismiss="true"] { grid-template-columns: minmax(0, 1fr) auto; }
+  .message[data-message-kind="alert"][data-icon="true"][data-dismiss="true"] { grid-template-columns: auto minmax(0, 1fr) auto; }
+  .message[data-message-kind="inline"][data-dismiss="true"] {
+    /* Reserve the dismiss width, its inset and the content gap only when present. */
+    padding-inline-end: calc(var(--ui-control-height-sm) + var(--ui-space-2xs) + var(--ui-space-sm) - var(--border-width-default));
+  }
+  .inlineClose {
+    position: absolute;
+    /* Measure the 4px inset from the outer edge, including the transparent border. */
+    inset-block-start: calc(var(--ui-space-2xs) - var(--border-width-default));
+    inset-inline-end: calc(var(--ui-space-2xs) - var(--border-width-default));
+  }
+  .message[data-intent="info"] {
+    --message-surface: var(--color-surface-info-subtle-default);
+    --message-border: var(--color-border-info-subtle);
+    --icon-color: var(--color-icon-info-default);
+  }
+  .message[data-intent="success"] {
+    --message-surface: var(--color-surface-success-subtle-default);
+    --message-border: var(--color-border-success-subtle);
+    --icon-color: var(--color-icon-success-default);
+  }
+  .message[data-intent="warning"] {
+    --message-surface: var(--color-surface-warning-subtle-default);
+    --message-border: var(--color-border-warning-subtle);
+    --icon-color: var(--color-icon-warning-default);
+  }
+  .message[data-intent="destructive"] {
+    --message-surface: var(--color-surface-destructive-subtle-default);
+    --message-border: var(--color-border-destructive-subtle);
+    --icon-color: var(--color-icon-destructive-default);
+  }
+  .icon { margin-block-start: calc((var(--type-ui-md-font-size) * var(--type-ui-md-line-height) - var(--message-icon-size)) / 2); }
+  .content { display: grid; min-inline-size: 0; gap: var(--ui-space-2xs); }
+  .body { white-space: pre-line; }
+  .actions { display: flex; flex-wrap: wrap; margin-block-start: var(--ui-space-sm); }
+  .close {
+    display: flex;
+    margin-block-start: calc((var(--type-ui-md-font-size) * var(--type-ui-md-line-height) - var(--ui-control-height-sm)) / 2);
+    margin-inline-end: calc((var(--ui-icon-size-md) - var(--ui-control-height-sm)) / 2);
+  }
+  /* Technical screen-reader clipping, not a visual spacing token. */
+  .live { position: absolute; inline-size: 1px; block-size: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  @media (forced-colors: active) {
+    .message { border-color: CanvasText; background: Canvas; color: CanvasText; --icon-color: CanvasText; }
+  }
+
+}

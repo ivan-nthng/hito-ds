@@ -1,0 +1,5 @@
+@layer hito.storybook {
+  .example { display: grid; justify-items: start; gap: var(--layout-space-fixed-md); }
+  .sections { display: grid; gap: var(--layout-space-fixed-xl); }
+  .section { display: grid; gap: var(--ui-space-sm); }
+}

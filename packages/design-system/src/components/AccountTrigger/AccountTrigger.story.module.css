@@ -1,0 +1,4 @@
+@layer hito.storybook {
+  .example { display: grid; gap: var(--layout-space-fixed-md); min-inline-size: 0; padding: var(--layout-space-responsive-xs); background: var(--color-surface-canvas); color: var(--color-text-primary); }
+  .header { display: flex; justify-content: end; min-inline-size: 0; }
+}

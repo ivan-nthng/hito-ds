@@ -1,0 +1,52 @@
+.root {
+  min-inline-size: 0;
+}
+
+.trigger {
+  --button-hover-translate-y: 0;
+  min-block-size: max(var(--button-height), var(--ui-interaction-target-min));
+  justify-content: space-between;
+  text-align: start;
+}
+
+.trigger > :first-child {
+  flex: 1;
+}
+
+.trigger [data-icon-name] {
+  transition: transform var(--motion-duration-feedback) var(--motion-easing-standard);
+}
+
+.trigger[aria-expanded="false"] [data-icon-name] {
+  transform: rotate(-90deg);
+}
+
+.trigger:dir(rtl)[aria-expanded="false"] [data-icon-name] {
+  transform: rotate(90deg);
+}
+
+/* Keep a disabled trigger focusable for an owner-driven collapse of focused content. */
+.trigger[aria-disabled="true"] {
+  color: var(--color-text-disabled);
+  cursor: not-allowed;
+}
+
+.panel {
+  min-inline-size: 0;
+  margin-block-start: var(--ui-space-sm);
+  padding-inline: calc(var(--ui-space-2xl) + var(--border-width-default));
+  overflow-wrap: anywhere;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .trigger [data-icon-name] {
+    transition-duration: var(--motion-duration-instant);
+  }
+}
+
+@media (forced-colors: active) {
+  .trigger[aria-disabled="true"] {
+    color: GrayText;
+    border-color: GrayText;
+  }
+}

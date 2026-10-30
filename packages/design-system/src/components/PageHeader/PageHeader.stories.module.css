@@ -1,0 +1,9 @@
+.canvas {
+  min-block-size: 100vh;
+  padding: var(--layout-space-responsive-xl);
+}
+
+.matrix {
+  display: grid;
+  gap: var(--layout-space-fixed-xl);
+}

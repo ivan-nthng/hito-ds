@@ -1,0 +1,89 @@
+@layer hito.components {
+  .root {
+    /* Local Dialog trial: fixed 12px mobile / 16px desktop inset. */
+    --dialog-inset: var(--layout-space-fixed-md);
+    margin: auto;
+    padding: 0;
+    border: var(--border-width-default) solid
+      light-dark(transparent, rgb(from var(--ref-color-basic-black) r g b / var(--ref-opacity-24)));
+    border-radius: var(--radius-layout-fixed-md);
+    inline-size: fit-content;
+    max-inline-size: calc(100% - var(--layout-space-responsive-lg) * 2 - env(safe-area-inset-left) - env(safe-area-inset-right));
+    max-block-size: calc(100dvh - var(--layout-space-responsive-lg) * 2 - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+    background: var(--color-surface-overlay);
+    color: var(--color-text-primary);
+    box-shadow: var(--elevation-overlay);
+    overflow: hidden;
+  }
+  .root[open] { display: flex; flex-direction: column; }
+  .root::backdrop { background: var(--color-surface-scrim); }
+  .header { display: flex; flex: none; align-items: start; gap: var(--ui-space-sm); padding: var(--dialog-inset) var(--dialog-inset) 0; }
+  .heading { display: grid; flex: 1; min-inline-size: 0; gap: var(--ui-space-xs); overflow-wrap: anywhere; }
+  .titleRow { display: flex; align-items: center; gap: var(--ui-space-sm); min-inline-size: 0; }
+  .description { color: var(--color-text-secondary); }
+  .close { flex: none; }
+  .body { min-block-size: 0; overflow: auto; overscroll-behavior: contain; padding: var(--dialog-inset); }
+  .footer { display: flex; flex: none; justify-content: end; flex-wrap: nowrap; gap: var(--ui-space-sm); padding: 0 var(--dialog-inset) var(--dialog-inset); }
+  .footer > button { flex: none; white-space: nowrap; }
+  @media (min-width: 40rem) {
+    .root {
+      --dialog-inset: var(--layout-space-fixed-lg);
+      border-radius: calc(var(--ref-space-5) * var(--radius-scale));
+    }
+  }
+  .root[data-presentation="side-panel"], .root[data-presentation="fullscreen"] {
+    --dialog-inset: var(--layout-space-fixed-xl);
+    --dialog-edge: var(--layout-space-fixed-md);
+    inset: var(--dialog-edge) var(--dialog-edge) var(--dialog-edge) auto;
+    margin: 0;
+    inline-size: 40rem;
+    block-size: calc(100dvh - 2 * var(--dialog-edge));
+    max-inline-size: calc(100% - 2 * var(--dialog-edge));
+    max-block-size: none;
+    border-radius: var(--radius-layout-fixed-xl);
+    transform: translateX(0);
+    transition: transform var(--motion-duration-reveal) var(--motion-easing-enter);
+  }
+  .root:not([data-presentation="center"]) > .header { align-items: center; padding: var(--dialog-inset); }
+  /* Keep the first control's 1px outer structural outline inside the scroll clip. */
+  .root:not([data-presentation="center"]) > .body { flex: 1; padding-block-start: var(--border-width-default); }
+  .root:not([data-presentation="center"]) > .footer { padding: var(--dialog-inset); }
+  .root:not([data-presentation="center"])::backdrop { opacity: 1; transition: opacity var(--motion-duration-transition) var(--motion-easing-standard); }
+  .root:not([data-presentation="center"])[data-state="closing"] {
+    transform: translateX(calc(100% + var(--dialog-edge)));
+    transition-duration: var(--motion-duration-transition);
+    transition-timing-function: var(--motion-easing-exit);
+  }
+  .root:not([data-presentation="center"])[data-state="closing"]::backdrop { opacity: 0; transition-timing-function: var(--motion-easing-exit); }
+  @starting-style {
+    .root:not([data-presentation="center"])[open] { transform: translateX(calc(100% + var(--dialog-edge))); }
+    .root:not([data-presentation="center"])[open]::backdrop { opacity: 0; }
+  }
+  .root[data-presentation="fullscreen"] {
+    --dialog-inset: var(--layout-space-fixed-lg);
+    --dialog-edge: 0px;
+    inset: 0;
+    inline-size: 100%;
+    max-inline-size: none;
+    border: 0;
+    border-radius: 0;
+  }
+  @media (max-width: 63.999rem) {
+    .root[data-presentation="side-panel"] {
+      --dialog-inset: var(--layout-space-fixed-lg);
+      --dialog-edge: 0px;
+      inset: 0;
+      inline-size: 100%;
+      max-inline-size: none;
+      border: 0;
+      border-radius: 0;
+    }
+    .root:not([data-presentation="center"]) > .header { padding-block: max(var(--ui-space-sm), env(safe-area-inset-top)) var(--ui-space-sm); }
+    .root:not([data-presentation="center"]) > .footer { padding-block-end: max(var(--dialog-inset), env(safe-area-inset-bottom)); }
+    .root:not([data-presentation="center"]) > * { padding-inline: max(var(--dialog-inset), env(safe-area-inset-left)) max(var(--dialog-inset), env(safe-area-inset-right)); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .root:not([data-presentation="center"]), .root:not([data-presentation="center"])::backdrop { transition: none; transform: none; }
+  }
+  @media (forced-colors: active) { .root { border-color: CanvasText; box-shadow: none; } }
+}

@@ -1,0 +1,48 @@
+@layer hito.components {
+  .root {
+    box-sizing: border-box;
+    display: flow-root;
+    inline-size: 100%;
+    min-inline-size: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--color-text-primary);
+    overflow-wrap: anywhere;
+  }
+  .root[data-appearance="card"] {
+    padding: var(--layout-space-responsive-sm);
+    border-radius: var(--radius-layout-fixed-lg);
+    background: var(--color-surface-raised);
+    box-shadow: var(--elevation-raised);
+  }
+  .root[data-appearance="card"][data-size="comfortable"] {
+    padding: var(--layout-space-responsive-lg);
+    border-radius: var(--radius-layout-fixed-xl);
+  }
+  .body {
+    clear: both;
+    display: grid;
+    min-inline-size: 0;
+    gap: var(--ui-space-2xl);
+  }
+  .controls {
+    display: grid;
+    min-inline-size: 0;
+    gap: var(--ui-space-sm);
+  }
+  .description,
+  .error {
+    margin: 0;
+    font: var(--type-body-sm-font-weight) var(--type-body-sm-font-size) /
+      var(--type-body-sm-line-height) var(--type-family-base);
+    letter-spacing: var(--type-body-sm-letter-spacing);
+  }
+  .description {
+    color: var(--color-text-secondary);
+  }
+  .error {
+    color: var(--color-text-error-default);
+  }
+}

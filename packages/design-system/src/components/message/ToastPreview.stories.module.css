@@ -1,0 +1,3 @@
+/* This static specimen is not a Toast export or viewport implementation. */
+.stage { padding: var(--layout-space-responsive-lg); }
+.stage > [data-message-kind] { background: var(--color-surface-raised); box-shadow: var(--elevation-floating); border-color: transparent; }

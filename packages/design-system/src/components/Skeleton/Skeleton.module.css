@@ -1,0 +1,38 @@
+@layer hito.components {
+  .skeleton {
+    display: block;
+    min-inline-size: 0;
+    inline-size: 100%;
+    block-size: var(--ui-space-lg);
+    border-radius: var(--radius-ui-sm);
+    background-color: var(--color-surface-neutral-subtle-default);
+    animation: skeleton-pulse var(--motion-duration-emphasis) var(--motion-easing-standard) infinite alternate;
+  }
+
+  .skeleton[data-shape="block"] {
+    block-size: 100%;
+    min-block-size: var(--ui-control-height-xl);
+    border-radius: var(--radius-layout-fixed-sm);
+  }
+
+  .skeleton[data-shape="circle"] {
+    flex: none;
+    inline-size: var(--ui-control-height-xl);
+    block-size: var(--ui-control-height-xl);
+    border-radius: var(--radius-shape-round);
+  }
+
+  @keyframes skeleton-pulse {
+    from { background-color: var(--color-surface-neutral-subtle-default); }
+    to { background-color: var(--color-surface-neutral-subtle-hover); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .skeleton { animation: none; }
+  }
+
+  @media (forced-colors: active) {
+    .skeleton { animation: none; background-color: GrayText; forced-color-adjust: none; }
+  }
+
+}

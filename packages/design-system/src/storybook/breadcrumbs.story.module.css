@@ -1,0 +1,17 @@
+.example,
+.content {
+  display: grid;
+  min-inline-size: 0;
+  justify-items: start;
+  gap: var(--layout-space-responsive-lg);
+}
+
+.heading {
+  min-inline-size: 0;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.description {
+  color: var(--color-text-secondary);
+}

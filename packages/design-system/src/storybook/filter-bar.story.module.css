@@ -1,0 +1,24 @@
+.page { display: grid; gap: var(--ui-space-lg); padding: var(--layout-space-responsive-lg); color: var(--color-text-primary); min-inline-size: 0; }
+@media (max-width: 39.999rem) {
+  .page { gap: var(--ui-space-md); padding: var(--layout-space-responsive-md); }
+}
+.entity, .editorActions, .sortActions { display: flex; align-items: center; gap: var(--ui-space-sm); min-inline-size: 0; }
+.entity, .date { white-space: nowrap; }
+.muted { color: var(--color-text-muted); }
+.name { min-inline-size: 22ch; }
+.empty { padding-block: var(--ui-space-3xl); }
+.columnButton { min-inline-size: max-content; white-space: nowrap; margin-inline-start: calc(-1 * (var(--button-padding-inline) + var(--border-width-default))); }
+.editor, .sortEditor, .sortRule { display: grid; gap: var(--ui-space-sm); min-inline-size: 0; }
+/* Content measure for the text-rule recipe; SelectionPanel retains its SM geometry. */
+.editor[data-rule-type="name"] { inline-size: min(36ch, calc(100vw - var(--ui-space-sm) * 2)); }
+.conditionRow { display: flex; align-items: center; gap: var(--ui-space-2xs); min-inline-size: 0; padding-inline-start: var(--ui-space-md); }
+.choiceHint { color: var(--color-text-muted); padding-inline: max(var(--ui-space-md), calc((var(--ui-interaction-target-min) - var(--ui-icon-size-sm)) / 2)); }
+.sortEditor { gap: var(--panel-inset); }
+.editorActions { flex-wrap: wrap; justify-content: end; }
+.sortActions { justify-content: end; }
+.moreMenu { inline-size: calc(var(--layout-space-fixed-xl) * 9); }
+.visuallyHidden { position: absolute; inline-size: 1px; block-size: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+/* This lighter presentation belongs to the synthetic composition, not to every Table consumer. */
+.page [data-table-scroll] { border: 0; background: transparent; }
+.page thead { background: transparent; }
+.page tbody > tr:last-child > :is(th, td) { border-block-end: var(--border-width-default) solid var(--color-border-subtle); }

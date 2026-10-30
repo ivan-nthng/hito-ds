@@ -1,0 +1,41 @@
+@layer hito.components {
+  .control {
+    touch-action: pan-y pinch-zoom;
+    cursor: pointer;
+  }
+  [data-read-only="true"] > .control {
+    cursor: default;
+  }
+  [data-disabled="true"] > .control {
+    cursor: not-allowed;
+  }
+  .control .input {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+  .input[data-active="true"] {
+    z-index: 3;
+  }
+  .fill {
+    inset-inline-start: calc(
+      var(--slider-thumb-size) / 2 + (100% - var(--slider-thumb-size)) *
+        var(--range-beginning)
+    );
+    inline-size: calc((100% - var(--slider-thumb-size)) * var(--range-span));
+  }
+  @media (hover: hover) {
+    .input[data-hovered="true"]:not(:disabled, [aria-readonly="true"]) {
+      --slider-thumb-color: var(--button-primary-accent-background-hover);
+    }
+  }
+  .input[data-pressed="true"]:not(:disabled, [aria-readonly="true"]) {
+    --slider-thumb-color: var(--button-primary-accent-background-default);
+  }
+  @media (forced-colors: active) {
+    .input[data-hovered="true"],
+    .input[data-pressed="true"] {
+      --slider-thumb-color: CanvasText;
+    }
+  }
+}

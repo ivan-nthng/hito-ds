@@ -1,0 +1,95 @@
+@layer hito.components {
+  .trigger {
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-end;
+    box-sizing: border-box;
+    inline-size: fit-content;
+    min-inline-size: 0;
+    max-inline-size: 100%;
+    justify-self: start;
+    align-self: start;
+    min-block-size: calc(var(--type-ui-sm-font-size) * var(--type-ui-sm-line-height) + var(--ui-space-3xs) * 2);
+    padding: 0;
+    border: 0;
+    background: transparent;
+    font: var(--type-ui-sm-font-weight) var(--type-ui-sm-font-size) / var(--type-ui-sm-line-height) var(--type-family-base);
+    cursor: pointer;
+  }
+  .visual {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--ui-space-2xs);
+    box-sizing: border-box;
+    min-inline-size: 0;
+    max-inline-size: 100%;
+    min-block-size: calc(var(--type-ui-sm-font-size) * var(--type-ui-sm-line-height) + var(--ui-space-3xs) * 2);
+    padding: var(--ui-space-3xs) var(--ui-space-xs);
+    border-radius: var(--radius-ui-xs);
+    background: var(--color-surface-neutral-subtle-default);
+    color: var(--color-text-secondary);
+  }
+  .trigger[data-source="token"] .visual {
+    background: var(--color-surface-info-subtle-default);
+    color: var(--color-text-info-default);
+  }
+  .trigger[data-source="inferred"] .visual {
+    background: var(--color-surface-info-subtle-default);
+    color: var(--color-text-info-default);
+  }
+  .trigger:not(:disabled):hover .visual {
+    background: var(--color-surface-neutral-subtle-hover);
+  }
+  .trigger[data-source="token"]:not(:disabled):hover .visual {
+    background: var(--color-surface-info-subtle-hover);
+  }
+  .trigger[data-source="inferred"]:not(:disabled):hover .visual {
+    background: var(--color-surface-info-subtle-hover);
+  }
+  .trigger[data-open="true"] .visual,
+  .trigger[data-open="true"]:not(:disabled):hover .visual {
+    background: var(--color-surface-neutral-subtle-pressed);
+  }
+  .trigger[data-source="token"][data-open="true"] .visual,
+  .trigger[data-source="token"][data-open="true"]:not(:disabled):hover .visual {
+    background: var(--color-surface-info-subtle-pressed);
+  }
+  .trigger[data-source="inferred"][data-open="true"] .visual,
+  .trigger[data-source="inferred"][data-open="true"]:not(:disabled):hover .visual {
+    background: var(--color-surface-info-subtle-pressed);
+  }
+  .trigger:disabled {
+    cursor: not-allowed;
+  }
+  .trigger:disabled .visual {
+    background: var(--color-surface-neutral-subtle-default);
+    color: var(--color-text-disabled);
+  }
+  .trigger:focus-visible {
+    border-radius: var(--radius-ui-xs);
+    outline: var(--focus-indicator-width) solid var(--focus-indicator-color);
+    outline-offset: var(--focus-indicator-offset);
+  }
+  .value {
+    min-inline-size: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .optionScroll {
+    max-block-size: calc(var(--ui-control-height-sm) * 8);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+  @media (pointer: coarse) {
+    .trigger {
+      min-inline-size: var(--ui-interaction-target-min);
+      min-block-size: var(--ui-interaction-target-min);
+    }
+  }
+  @media (forced-colors: active) {
+    .trigger { border: var(--border-width-default) solid ButtonText; }
+    .trigger:disabled { color: GrayText; border-color: GrayText; }
+    .trigger:disabled .visual { color: GrayText; }
+  }
+}

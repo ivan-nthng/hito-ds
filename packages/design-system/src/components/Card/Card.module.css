@@ -1,0 +1,72 @@
+@layer hito.components {
+  .root[data-card] {
+    box-sizing: border-box;
+    display: flow-root;
+    min-inline-size: 0;
+    padding: var(--layout-space-responsive-sm);
+    border: 0;
+    border-radius: var(--card-radius-responsive-compact);
+    background: var(--color-surface-base);
+    box-shadow: var(--elevation-none);
+    color: var(--color-text-primary);
+    overflow-wrap: anywhere;
+  }
+
+  .root[data-size="comfortable"] {
+    padding: var(--layout-space-responsive-lg);
+    border-radius: var(--card-radius-responsive-comfortable);
+  }
+
+  .root[data-layout="fixed"] {
+    padding: var(--layout-space-fixed-sm);
+    border-radius: var(--radius-layout-fixed-lg);
+  }
+
+  .root[data-layout="fixed"][data-size="comfortable"] {
+    padding: var(--layout-space-fixed-lg);
+    border-radius: var(--radius-layout-fixed-xl);
+  }
+
+  .root[data-elevation="raised"] {
+    background: var(--color-surface-raised);
+    box-shadow: var(--elevation-raised);
+  }
+
+  .header {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--layout-space-fixed-lg);
+    min-inline-size: 0;
+  }
+
+  .headerGroup {
+    display: flex;
+    flex: 1;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--layout-space-fixed-sm);
+    min-inline-size: 0;
+  }
+
+  .header[data-actions] .headerGroup {
+    min-block-size: var(--ui-control-height-md);
+  }
+
+  .headerTitle {
+    min-inline-size: 0;
+    max-inline-size: 100%;
+    overflow-wrap: anywhere;
+  }
+
+  .headerAction,
+  .headerOverflow {
+    flex: none;
+  }
+
+  @media (forced-colors: active) {
+    .root[data-card] {
+      /* Preserve a boundary without changing padding or clipping child focus. */
+      outline: var(--border-width-default) solid CanvasText;
+    }
+  }
+}

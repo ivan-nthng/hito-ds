@@ -1,0 +1,77 @@
+@layer hito.components {
+  .root {
+    --bottom-sheet-safe-top: env(safe-area-inset-top, 0px);
+    --bottom-sheet-safe-right: env(safe-area-inset-right, 0px);
+    --bottom-sheet-safe-bottom: env(safe-area-inset-bottom, 0px);
+    --bottom-sheet-safe-left: env(safe-area-inset-left, 0px);
+    --sheet-inset: var(--layout-space-fixed-md);
+    --sheet-title-line-size: calc(var(--type-heading-sm-font-size) * var(--type-heading-sm-line-height));
+    position: fixed;
+    inset: auto 0 0;
+    margin: 0;
+    padding: 0 0 var(--bottom-sheet-safe-bottom);
+    border: 0;
+    box-sizing: border-box;
+    border-radius: var(--radius-layout-fixed-lg) var(--radius-layout-fixed-lg) 0 0;
+    inline-size: 100%;
+    max-inline-size: 100%;
+    max-block-size: calc(100dvh - var(--bottom-sheet-safe-top) - var(--sheet-inset));
+    /* Body owns clipping; the curved shell must not clip Header/Footer focus rings. */
+    overflow: visible;
+    background: var(--color-surface-overlay);
+    color: var(--color-text-primary);
+    box-shadow: var(--elevation-overlay);
+  }
+  .root[data-header-variant="compact"] { --sheet-title-line-size: calc(var(--type-label-base-font-size) * var(--type-label-base-line-height)); }
+  .root[open] { display: flex; flex-direction: column; animation: reveal var(--motion-duration-reveal) var(--motion-easing-enter); }
+  .root::backdrop { background: var(--color-surface-scrim); }
+  .header, .body, .footer {
+    padding-inline: max(var(--sheet-inset), var(--bottom-sheet-safe-left)) max(var(--sheet-inset), var(--bottom-sheet-safe-right));
+  }
+  .header { display: flex; flex: none; align-items: start; gap: var(--ui-space-2xl); padding-block-start: var(--sheet-inset); }
+  .heading { display: grid; flex: 1; min-inline-size: 0; gap: var(--ui-space-xs); overflow-wrap: anywhere; }
+  .description { color: var(--color-text-secondary); }
+  .close {
+    flex: none;
+    margin-block-start: calc((var(--sheet-title-line-size) - var(--ui-control-height-sm)) / 2);
+    margin-inline-end: calc((var(--ui-icon-size-sm) - var(--ui-control-height-sm)) / 2);
+  }
+  .close::after {
+    content: "";
+    position: absolute;
+    inset-block-start: 50%;
+    /* Keep the whole touch target inside the safe area beside the smaller icon. */
+    inset-inline-end: calc((var(--ui-icon-size-sm) - var(--ui-control-height-sm)) / 2);
+    inline-size: var(--ui-interaction-target-min);
+    block-size: var(--ui-interaction-target-min);
+    transform: translateY(-50%);
+  }
+  .navigationHeader {
+    --navigation-edge: calc((var(--ui-control-height-sm) + var(--ui-icon-size-sm)) / 2);
+    display: grid;
+    grid-template-columns: var(--navigation-edge) minmax(0, 1fr) var(--navigation-edge);
+    align-items: start;
+    column-gap: var(--ui-space-2xl);
+    padding-inline:
+      max(var(--sheet-inset), calc(var(--bottom-sheet-safe-left) + (var(--ui-interaction-target-min) - var(--navigation-edge)) / 2))
+      max(var(--sheet-inset), calc(var(--bottom-sheet-safe-right) + (var(--ui-interaction-target-min) - var(--navigation-edge)) / 2));
+    padding-block-start: max(var(--sheet-inset), calc((var(--ui-interaction-target-min) - var(--sheet-title-line-size)) / 2));
+  }
+  .navigationHeader .heading { text-align: center; }
+  .navigationEdge {
+    display: grid;
+    place-items: center;
+    inline-size: var(--ui-control-height-sm);
+    min-block-size: var(--ui-control-height-sm);
+    margin-inline: calc((var(--navigation-edge) - var(--ui-control-height-sm)) / 2);
+    margin-block-start: calc((var(--sheet-title-line-size) - var(--ui-control-height-sm)) / 2);
+  }
+  .navigationHeader + .body { padding-block-start: max(var(--ui-space-sm), calc((var(--ui-interaction-target-min) - var(--ui-control-height-sm)) / 2)); }
+  .body { min-block-size: 0; overflow: auto; overscroll-behavior: contain; padding-block: var(--ui-space-sm); }
+  .body:last-child { padding-block-end: var(--sheet-inset); }
+  .footer { display: flex; flex: none; justify-content: end; flex-wrap: wrap; gap: var(--ui-space-sm); padding-block-end: var(--sheet-inset); }
+  .footer > * { flex: 0 1 auto; max-inline-size: 100%; }
+  @keyframes reveal { from { transform: translateY(var(--ui-space-sm)); opacity: 0; } to { transform: none; opacity: 1; } }
+  @media (prefers-reduced-motion: reduce) { .root[open] { animation: none; } }
+  @media (forced-colors: active) { .root { border: var(--border-width-default) solid CanvasText; box-shadow: none; } }
+}

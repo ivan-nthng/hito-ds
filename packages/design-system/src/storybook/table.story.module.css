@@ -1,0 +1,16 @@
+.example, .stack { display: grid; gap: var(--ui-space-sm); min-inline-size: 0; }
+.entity, .actions { display: flex; align-items: center; gap: var(--ui-space-sm); }
+.actions { flex-wrap: wrap; }
+.name { display: grid; gap: var(--ui-space-2xs); min-inline-size: 14ch; }
+.owner { min-inline-size: 12ch; }
+.progressColumn { min-inline-size: 18ch; }
+.commentColumn { inline-size: min(30ch, calc(100cqi - var(--ui-space-4xl) * 2)); }
+.status { display: inline-flex; inline-size: max-content; }
+.commentText { white-space: pre-wrap; overflow-wrap: anywhere; text-align: start; }
+.muted { color: var(--color-text-secondary); }
+.nowrap { white-space: nowrap; }
+.footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: var(--ui-space-sm); }
+.state { display: grid; justify-items: start; gap: var(--ui-space-lg); padding: var(--ui-space-2xl); }
+.srOnly { position: absolute; inline-size: 1px; block-size: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
+.cellActions { display: inline-flex; align-items: center; gap: var(--ui-space-xs); }
+.cellActions { white-space: nowrap; }

@@ -1,0 +1,56 @@
+@layer hito.components {
+  .root {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    padding-block: var(--ui-space-3xs);
+    padding-inline: var(--ui-space-3xs);
+    border-radius: var(--radius-ui-sm);
+    gap: var(--ui-space-3xs);
+    background: var(--color-surface-neutral-subtle-default);
+    color: var(--color-text-secondary);
+    font-family: var(--type-family-mono);
+    font-size: var(--type-data-sm-font-size);
+    font-weight: var(--type-data-sm-font-weight);
+    letter-spacing: var(--type-data-sm-letter-spacing);
+    line-height: var(--type-data-sm-font-size);
+    white-space: nowrap;
+  }
+
+  .root .glyph[data-size="sm"] {
+    inline-size: var(--type-data-sm-font-size);
+    block-size: var(--type-data-sm-font-size);
+    color: inherit;
+  }
+
+  .keyText {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    min-inline-size: var(--type-data-sm-font-size);
+    block-size: var(--type-data-sm-font-size);
+    white-space: nowrap;
+  }
+
+  .screenReaderText {
+    position: absolute;
+    inline-size: var(--border-width-default);
+    block-size: var(--border-width-default);
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  @media (forced-colors: active) {
+    .root {
+      background: Canvas;
+      color: CanvasText;
+      outline: var(--border-width-default) solid CanvasText;
+      outline-offset: calc(-1 * var(--border-width-default));
+    }
+  }
+
+}

@@ -1,0 +1,22 @@
+@layer hito.components {
+  .panel { --menu-inset: var(--ui-space-2xs); padding: var(--menu-inset); border-radius: calc(var(--radius-ui-sm) + var(--menu-inset)); }
+  .panel[data-size="md"] { --menu-inset: var(--ui-space-xs); border-radius: calc(var(--radius-ui-md) + var(--menu-inset)); }
+  .submenuPanel { scroll-margin-top: var(--menu-inset); }
+  .menu { margin: 0; padding: 0; }
+  .heading { padding: var(--menu-inset) var(--ui-space-md); }
+  .panel[data-size="md"] .heading { padding-inline: var(--ui-space-lg); }
+  .menu > * { border: 0; }
+  .item { --menu-command-color: var(--color-text-primary); cursor: pointer; }
+  .itemLabel, .item > [aria-hidden="true"] [data-icon-name] { color: var(--menu-command-color); }
+  .item:focus-visible { outline-offset: calc(var(--focus-indicator-width) * -1); background: var(--color-surface-neutral-subtle-default); }
+  .item[data-destructive] { --menu-command-color: var(--color-text-destructive-default); }
+  .item[aria-disabled="true"] { --menu-command-color: var(--color-text-disabled); --color-text-secondary: var(--menu-command-color); cursor: default; }
+  .item[aria-disabled="true"]:hover { background: transparent; }
+  .item[aria-disabled="true"] [data-status-badge] { color: var(--color-text-disabled); background: var(--color-surface-neutral-subtle-pressed); }
+  .divider { padding-block: var(--menu-inset); margin-inline: calc(var(--menu-inset) * -1); }
+  @media (forced-colors: active) {
+    .item, .item[data-destructive] { --menu-command-color: CanvasText; }
+    .item[aria-disabled="true"] { --menu-command-color: GrayText; }
+    .item[aria-disabled="true"] [data-status-badge] { color: GrayText !important; outline-color: GrayText; }
+  }
+}

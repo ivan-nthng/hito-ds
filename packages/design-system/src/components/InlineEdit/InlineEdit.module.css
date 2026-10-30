@@ -1,0 +1,470 @@
+@layer hito.components {
+  .root {
+    --inline-edit-control-height: var(--ui-control-height-md);
+    --inline-edit-action-gap: var(--ui-space-sm);
+    --inline-edit-content-gap: var(--ui-space-sm);
+    --inline-edit-editor-padding-block: calc(
+      (var(--inline-edit-control-height) - var(--inline-edit-line-box-size)) / 2
+    );
+    --inline-edit-editor-offset: calc(
+      var(--inline-edit-paint-padding-inline) + var(--border-width-default)
+    );
+    --inline-edit-paint-padding-inline: var(--ui-space-lg);
+    --inline-edit-radius: var(--radius-ui-md);
+    --inline-edit-line-box-size: calc(var(--inline-edit-font-size) * var(--inline-edit-line-height));
+    --inline-edit-font-family: var(--type-family-base);
+    --inline-edit-font-size: var(--type-body-base-font-size);
+    --inline-edit-font-weight: var(--type-body-base-font-weight);
+    --inline-edit-letter-spacing: var(--type-body-base-letter-spacing);
+    --inline-edit-line-height: var(--type-body-base-line-height);
+    --inline-edit-rest-icon-size: var(--ui-icon-size-sm);
+
+    position: relative;
+    display: inline-grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    max-inline-size: 100%;
+    align-items: end;
+    column-gap: var(--inline-edit-action-gap);
+    color: var(--color-text-primary);
+  }
+
+  .root[data-width="hug"] {
+    inline-size: fit-content;
+  }
+
+  .root[data-width="fill"] {
+    inline-size: 100%;
+  }
+
+  .root:not([data-save-action="true"]):not([data-cancel-action="true"]) {
+    grid-template-columns: minmax(0, 1fr);
+    column-gap: 0;
+  }
+
+  .root[data-size="sm"] {
+    --inline-edit-control-height: var(--ui-control-height-sm);
+    --inline-edit-action-gap: var(--ui-space-xs);
+    --inline-edit-content-gap: var(--ui-space-xs);
+    --inline-edit-paint-padding-inline: var(--ui-space-md);
+    --inline-edit-radius: var(--radius-ui-sm);
+    --inline-edit-font-size: var(--type-body-sm-font-size);
+    --inline-edit-font-weight: var(--type-body-sm-font-weight);
+    --inline-edit-letter-spacing: var(--type-body-sm-letter-spacing);
+    --inline-edit-line-height: var(--type-body-sm-line-height);
+  }
+
+  .root[data-size="lg"] {
+    --inline-edit-control-height: var(--ui-control-height-lg);
+    --inline-edit-paint-padding-inline: var(--ui-space-xl);
+    --inline-edit-radius: var(--radius-ui-lg);
+    --inline-edit-font-size: var(--type-body-md-font-size);
+    --inline-edit-font-weight: var(--type-body-md-font-weight);
+    --inline-edit-letter-spacing: var(--type-body-md-letter-spacing);
+    --inline-edit-line-height: var(--type-body-md-line-height);
+  }
+
+  .root[data-size="xl"] {
+    --inline-edit-control-height: var(--ui-control-height-xl);
+    --inline-edit-action-gap: var(--ui-space-md);
+    --inline-edit-content-gap: var(--ui-space-md);
+    --inline-edit-paint-padding-inline: var(--ui-space-2xl);
+    --inline-edit-radius: var(--radius-ui-xl);
+    --inline-edit-font-size: var(--type-body-lg-font-size);
+    --inline-edit-font-weight: var(--type-body-lg-font-weight);
+    --inline-edit-letter-spacing: var(--type-body-lg-letter-spacing);
+    --inline-edit-line-height: var(--type-body-lg-line-height);
+  }
+
+  .root[data-kind="heading"][data-heading-size="sm"] {
+    --inline-edit-font-family: var(--type-family-display);
+    --inline-edit-font-size: var(--type-heading-base-font-size);
+    --inline-edit-font-weight: var(--type-heading-base-font-weight);
+    --inline-edit-letter-spacing: var(--type-heading-base-letter-spacing);
+    --inline-edit-line-height: var(--type-heading-base-line-height);
+  }
+
+  .root[data-kind="heading"][data-heading-size="lg"] {
+    --inline-edit-font-family: var(--type-family-display);
+    --inline-edit-font-size: var(--type-heading-lg-font-size);
+    --inline-edit-font-weight: var(--type-heading-lg-font-weight);
+    --inline-edit-letter-spacing: var(--type-heading-lg-letter-spacing);
+    --inline-edit-line-height: var(--type-heading-lg-line-height);
+  }
+
+  .field {
+    position: relative;
+    display: grid;
+    grid-column: 1;
+    grid-row: 1;
+    min-inline-size: 0;
+    min-block-size: var(--inline-edit-control-height);
+    align-items: center;
+    isolation: isolate;
+  }
+
+  .field[data-auto-size-text]::after {
+    grid-area: 1 / 1;
+    box-sizing: border-box;
+    min-inline-size: 0;
+    padding-inline-end: calc(
+      var(--inline-edit-paint-padding-inline) +
+        var(--inline-edit-rest-icon-size) + var(--inline-edit-content-gap)
+    );
+    content: attr(data-auto-size-text) "\200b";
+    font: var(--inline-edit-font-weight) var(--inline-edit-font-size) /
+      var(--inline-edit-line-height) var(--inline-edit-font-family);
+    letter-spacing: var(--inline-edit-letter-spacing);
+    overflow: hidden;
+    visibility: hidden;
+    white-space: pre;
+  }
+
+  .field[data-auto-size-type="multiline"]::after {
+    max-inline-size: 100%;
+    padding-block: var(--inline-edit-editor-padding-block);
+    overflow-wrap: anywhere;
+    white-space: pre-wrap;
+  }
+
+  .field::before,
+  .restContent::before {
+    position: absolute;
+    z-index: -1;
+    inset-block: 0;
+    inset-inline-start: calc(-1 * var(--inline-edit-paint-padding-inline));
+    inset-inline-end: 0;
+    border: var(--border-width-default) solid transparent;
+    outline: var(--border-width-default) solid transparent;
+    outline-offset: var(--ref-space-0);
+    border-radius: var(--inline-edit-radius);
+    background: transparent;
+    content: "";
+    pointer-events: none;
+    transition-duration: var(--motion-duration-feedback);
+    transition-property: background-color, border-color, outline-color;
+    transition-timing-function: var(--motion-easing-standard);
+  }
+
+  .restContent {
+    position: relative;
+    display: inline-flex;
+    box-sizing: border-box;
+    grid-area: 1 / 1;
+    inline-size: 100%;
+    min-inline-size: 0;
+    max-inline-size: 100%;
+    min-block-size: var(--inline-edit-control-height);
+    align-items: center;
+    padding-inline-end: calc(
+      var(--inline-edit-paint-padding-inline) +
+        var(--inline-edit-rest-icon-size) + var(--inline-edit-content-gap)
+    );
+  }
+
+  .restText {
+    min-inline-size: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .root[data-value-type="number"] .restText {
+    font-variant-numeric: tabular-nums;
+  }
+
+  .root:not([data-multiline="true"]) .restText {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .root[data-multiline="true"] .restText {
+    white-space: pre-wrap;
+  }
+
+  .root[data-empty="true"] .restText {
+    color: var(--color-text-muted);
+  }
+
+  .root:is([data-disabled="true"], [data-read-only="true"]) .restContent,
+  .root:is([data-disabled="true"], [data-read-only="true"])
+    .field[data-auto-size-text]::after {
+    padding-inline-end: 0;
+  }
+
+  .trigger {
+    position: absolute;
+    z-index: 2;
+    inset-block: 0;
+    inset-inline-start: calc(-1 * var(--inline-edit-paint-padding-inline));
+    inset-inline-end: 0;
+    padding: 0;
+    border: 0;
+    appearance: none;
+    background: transparent;
+    color: inherit;
+    cursor: text;
+  }
+
+  .trigger::before {
+    position: absolute;
+    inset-block-start: 50%;
+    inset-inline-start: 50%;
+    inline-size: max(100%, var(--ui-interaction-target-min));
+    block-size: max(100%, var(--ui-interaction-target-min));
+    content: "";
+    transform: translate(-50%, -50%);
+  }
+
+  .trigger:focus-visible {
+    border-radius: var(--inline-edit-radius);
+    outline: var(--focus-indicator-width) solid var(--focus-indicator-color);
+    outline-offset: var(--focus-indicator-offset);
+  }
+
+  .trigger:focus-visible + .restContent .restIcon {
+    opacity: 1;
+  }
+
+  .emptyAction {
+    --inline-edit-empty-icon-size: var(--ui-icon-size-md);
+    position: relative;
+    grid-area: 1 / 1;
+    justify-self: start;
+    inset-inline-start: calc(-1 * var(--inline-edit-paint-padding-inline));
+  }
+
+  .emptyAction[data-size="sm"] { --inline-edit-empty-icon-size: var(--ui-icon-size-sm); }
+  .emptyAction[data-size="lg"] { --inline-edit-empty-icon-size: var(--ui-icon-size-lg); }
+  .emptyAction[data-size="xl"] { --inline-edit-empty-icon-size: var(--ui-icon-size-xl); }
+
+  /* Keep the existing paint outset; plus-s ink starts a quarter into its icon. */
+  .root .emptyAction[data-icon-position="leading"] {
+    padding-inline-start: calc(
+      var(--inline-edit-paint-padding-inline) - var(--border-width-default) -
+        var(--inline-edit-empty-icon-size) / 4
+    );
+  }
+
+  .root[data-width="fill"] .emptyAction {
+    inline-size: calc(100% + var(--inline-edit-paint-padding-inline));
+    max-inline-size: none;
+    justify-content: start;
+  }
+
+  .root[data-empty-action="true"] .restContent,
+  .root:not([data-phase="rest"]) .emptyAction {
+    visibility: hidden;
+  }
+
+  .root:not([data-phase="rest"]) .trigger,
+  .root:not([data-phase="rest"]) .restText {
+    visibility: hidden;
+  }
+
+  .root[data-width="hug"] .restContent,
+  .root[data-multiline="true"] .restContent,
+  .root:not([data-phase="rest"]) .restContent {
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline-start: 0;
+  }
+
+  .restIcon {
+    --icon-color: currentColor;
+
+    position: absolute;
+    z-index: 1;
+    inset-block-start: 50%;
+    inset-inline-end: var(--inline-edit-paint-padding-inline);
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-50%);
+    transition-duration: var(--motion-duration-feedback);
+    transition-property: color, opacity;
+    transition-timing-function: var(--motion-easing-standard);
+  }
+
+  .root[data-multiline="true"] .restContent {
+    align-items: flex-start;
+    padding-block: var(--inline-edit-editor-padding-block);
+  }
+
+  .root[data-multiline="true"] .restIcon {
+    inset-block-start: calc(var(--inline-edit-control-height) / 2);
+  }
+
+  .field > .editorLayer {
+    --editable-text-clear-block-position: calc(
+      var(--inline-edit-control-height) / 2
+    );
+
+    position: absolute;
+    z-index: 3;
+    inset-block: 0;
+    inset-inline-start: calc(-1 * var(--inline-edit-editor-offset));
+    inset-inline-end: 0;
+    display: block;
+    min-inline-size: 0;
+  }
+
+  .root[data-phase="editing"] .saveAction,
+  .root[data-phase="saving"] .saveAction {
+    visibility: visible;
+  }
+
+  .editor[data-editable-text-editor="true"] {
+    inline-size: 100%;
+    min-inline-size: 0;
+    padding-block: 0;
+    padding-inline-start: 0;
+    border: 0;
+    appearance: none;
+    resize: none;
+    background: transparent;
+    color: inherit;
+    caret-color: currentColor;
+    font: var(--inline-edit-font-weight) var(--inline-edit-font-size) /
+      var(--inline-edit-line-height) var(--inline-edit-font-family);
+    letter-spacing: var(--inline-edit-letter-spacing);
+    outline: none;
+    overflow-wrap: anywhere;
+  }
+
+  .editor::placeholder {
+    color: var(--color-text-muted);
+    opacity: 1;
+  }
+
+  .editor.multilineEditor[data-editable-text-editor="true"],
+  .editor.multilineEditor[data-editable-text-editor="true"]:is(
+      :hover,
+      :active,
+      :focus,
+      :focus-visible
+    ) {
+    block-size: 100%;
+    min-block-size: 0;
+    padding-block: var(--inline-edit-editor-padding-block);
+    padding-inline-start: var(--inline-edit-editor-offset);
+    border: 0;
+    outline: 0;
+    resize: none;
+    background: transparent;
+  }
+
+  .editor:focus-visible {
+    outline: none;
+  }
+
+  .stationaryAction {
+    --button-hover-translate-y: var(--ref-space-0);
+  }
+
+  .actions {
+    display: flex;
+    align-items: center;
+    gap: var(--inline-edit-action-gap);
+    grid-column: 2;
+    grid-row: 1;
+    align-self: end;
+  }
+
+  .saveAction {
+    visibility: hidden;
+  }
+
+  .root[data-multiline="true"] .actions {
+    align-self: start;
+  }
+
+  .error {
+    grid-column: 1;
+    grid-row: 2;
+    min-inline-size: 0;
+    margin-block: var(--ui-space-sm) 0;
+    margin-inline: 0;
+    color: var(--color-text-destructive-default);
+    font: var(--type-ui-sm-font-weight) var(--type-ui-sm-font-size) /
+      var(--type-ui-sm-line-height) var(--type-family-base);
+    letter-spacing: var(--type-ui-sm-letter-spacing);
+  }
+
+  .liveStatus {
+    position: absolute;
+    inline-size: var(--ref-space-px);
+    block-size: var(--ref-space-px);
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  @media (hover: hover) {
+    /* Empty Add actions already paint hover through their native Button. */
+    .root[data-width="hug"][data-phase="rest"]:not(
+        [data-disabled="true"], [data-empty-action="true"]
+      ):hover
+      .restContent::before {
+      background: var(--color-surface-neutral-subtle-hover);
+    }
+
+    .root[data-width="fill"][data-phase="rest"]:not(
+        [data-disabled="true"], [data-empty-action="true"]
+      ):hover
+      .field::before {
+      background: var(--color-surface-neutral-subtle-hover);
+    }
+
+    .root[data-phase="rest"]:not([data-disabled="true"]):hover .restIcon {
+      opacity: 1;
+    }
+  }
+
+  .root[data-multiline="true"][data-phase="editing"] .field::before,
+  .root[data-multiline="true"][data-phase="saving"] .field::before {
+    border-color: var(--editable-text-editing-border);
+    outline-color: var(--editable-text-editing-border);
+    background: var(--color-surface-neutral-subtle-pressed);
+  }
+
+  .root[data-multiline="true"][data-outcome="error"] .field::before {
+    border-color: var(--color-border-destructive-hover);
+    outline-color: var(--color-border-destructive-hover);
+  }
+
+  .root[data-disabled="true"] {
+    color: var(--color-text-disabled);
+  }
+
+  .root[data-disabled="true"] .restText {
+    color: inherit;
+  }
+
+  .root[data-disabled="true"] .trigger {
+    cursor: not-allowed;
+  }
+
+  @media (hover: none), (pointer: coarse) {
+    .root[data-phase="rest"]:not([data-disabled="true"]) .restIcon {
+      opacity: 1;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .field::before,
+    .restContent::before,
+    .restIcon {
+      transition-duration: var(--motion-duration-instant);
+    }
+  }
+
+  @media (forced-colors: active) {
+    .root[data-multiline="true"][data-phase="editing"] .field::before,
+    .root[data-multiline="true"][data-phase="saving"] .field::before {
+      border-color: Highlight;
+      outline-color: Highlight;
+      background: Field;
+    }
+  }
+
+}

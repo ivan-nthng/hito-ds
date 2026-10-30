@@ -1,51 +1,72 @@
-# Hito Running
+<p align="left"><img src="docs/hito-wordmark.svg" width="240" alt="Hito DS" /></p>
 
-Hito Running currently contains an imported TanStack Start frontend baseline plus the project operating docs that define how that baseline should be stabilized and later replaced with backend truth.
+# Design it. Build it. Keep it together.
 
-## Current Repo Shape
+Hito DS connects a Figma library, reusable React components and a working Storybook. It comes from building real products: dense workspaces, forms, data tables and the small interactions that make them usable.
 
-- `src/`
-  imported running-plan app baseline
-- `docs/`
-  canonical project, product, system, and execution docs
-- `agents/`
-  role definitions used by project agents
-- `prompts/`
-  task prompt templates
+**[Explore Storybook](https://www.hitocajon.com/)** · **[Figma library](https://www.figma.com/design/C8ymDNFqGISrgIe6iGimHX/Hito-DS)** · **[How design and code connect](docs/figma-and-code.md)** · **[Implementation services](docs/implementation.md)**
 
-## Current Product State
+**Status: alpha.** See [verification notes](docs/verification.md) before adopting.
 
-- weekly plan home and workout detail support preview mode plus authenticated saved mode through one backend seam
-- `/progress`, `/body`, and `/integrations` are preserved as non-connected preview shells
-- Supabase-backed auth/session wiring is implemented
-- a temporary local-only single-user bypass also exists for local unblock and should remain disabled on Vercel deploys
-- OpenAI, weather, and device integrations are still not wired
+## What’s inside
 
-## Commands
+- A complete React component library with CSS Modules and semantic CSS custom properties.
+- Foundations for color, typography, spacing, sizing, radius, elevation and motion.
+- Light/dark appearance, responsive examples, keyboard interaction and reduced-motion behavior.
+- Interactive Storybook examples with English/Portuguese and short/long content profiles.
+- Figma references alongside components, token validation and interaction tests.
 
-[`PROJECT_PROFILE.md`](PROJECT_PROFILE.md#current-command-surface) owns the current reproducible
-command surface. Use `npm ci` for the exact lockfile install, and select only the manifest-backed
-validation stages admitted by the active Task. CI invokes those same package scripts; it does not
-define a second command surface. Managed loopback QA uses `npm run qa:server:{status,start,restart,stop}`;
-direct `npm run start` / `serve:local` is not QA admission.
+This is a standalone extraction of the shared design system developed for Saavi. Product portals, backend services, environment configuration and business records are outside this repository. The system is a starting point to adapt to your product, not a claim that every component fits every use case.
 
-## Deployment
+## Run locally
 
-- the canonical deployment target is now Vercel via Nitro
-- `npm run build` produces `.output/` locally and `vercel build` produces `.vercel/output/`
-- required Vercel env for the current live auth path:
-  `NEXT_PUBLIC_SUPABASE_URL`
-  `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`
-- optional:
-  `NEXT_PUBLIC_APP_NAME`
-  `APP_BASE_URL`
-- local bypass env such as `LOCAL_AUTH_BYPASS_ENABLED` should stay unset on Vercel
+Use Node.js 24 and npm.
 
-## Canonical References
+```sh
+npm ci
+npm run storybook
+```
 
-- `docs/context.md`
-- `docs/current-system.md`
-- `docs/current-product.md`
-- `docs/current-state.md`
-- historical baseline record:
-  `docs/plans/archive/2026-05-05-full-baseline-import-and-stabilization-plan.md`
+Storybook starts on http://localhost:6006. `npm run build` produces the static site in `apps/storybook/storybook-static`.
+
+## Use the components
+
+The package is included in this workspace as `@hito-ds/react`. There is no npm registry release yet. To consume it in another application, add the package from a local checkout or vendor the source and configure your bundler for TypeScript and CSS Modules.
+
+```tsx
+import '@hito-ds/react/tokens.css';
+import '@hito-ds/react/base.css';
+import { Button } from '@hito-ds/react/components';
+
+export function SaveAction() {
+  return <Button intent="neutral" variant="primary" onClick={() => console.log('save')}>Save changes</Button>;
+}
+```
+
+See [integration guidance](docs/figma-and-code.md) for fonts, themes, token ownership and the maintenance workflow.
+
+## Checks
+
+```sh
+npm run typecheck
+npm test
+npm run validate:tokens
+npm run test:stories
+npm run build
+```
+
+The tests and examples make behavior reviewable; they do not replace testing in the consuming product.
+
+## Need this in your team?
+
+I help teams audit their existing UI, align Figma and frontend components, build Storybook documentation and introduce the system into a working product. [See the implementation offer](docs/implementation.md).
+
+Created by [Ivan Cheremisin](https://www.cheremisin.co.uk/), Product Designer & Design Engineer.
+
+## Repository migration
+
+This repository now hosts Hito DS in place of the former Runner application. Its history is preserved. See [migration notes](docs/migration.md).
+
+## License
+
+Code and original design-system assets: [MIT](LICENSE). Third-party glyphs, fonts and marks retain their own terms; see [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). The MIT license does not grant rights to third-party trademarks.

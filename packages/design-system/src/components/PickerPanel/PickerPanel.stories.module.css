@@ -1,0 +1,5 @@
+.body { display: grid; gap: var(--ui-space-sm); }
+.row { padding: 0; border: 0; }
+.action { justify-content: space-between; text-align: start; }
+.chips { display: flex; flex-wrap: wrap; gap: var(--ui-space-sm); }
+.end { display: flex; justify-content: end; }

@@ -1,0 +1,110 @@
+@layer hito.components {
+  .root {
+    position: relative;
+    min-inline-size: 0;
+    inline-size: 100%;
+    padding-block: var(--ui-space-sm);
+  }
+
+  .path {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    column-gap: var(--ui-space-xs);
+    /* Keep Link's out-of-flow interaction targets clear across wrapped rows. */
+    row-gap: var(--ui-interaction-target-min);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .item {
+    display: inline-flex;
+    align-items: center;
+    min-inline-size: 0;
+    max-inline-size: 100%;
+    gap: var(--ui-space-xs);
+  }
+
+  .root .ancestor,
+  .root .panelLink {
+    --link-color: var(--color-text-muted);
+    --link-color-hover: var(--color-text-primary);
+    text-decoration-line: none;
+  }
+
+  .root .overflowTrigger {
+    --button-context-foreground: var(--color-text-muted);
+  }
+
+  .ancestor,
+  .panelLink,
+  .current {
+    min-inline-size: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .ancestor > span,
+  .panelLink > span {
+    min-inline-size: 0;
+  }
+
+  .current {
+    flex: 0 1 auto;
+  }
+
+  .root[data-trail-mode="current"] .path:not(.measurement) {
+    flex-wrap: nowrap;
+    align-items: flex-start;
+  }
+
+  .root[data-trail-mode="current"] .current {
+    padding-block: calc((var(--ui-control-height-md) - var(--ui-icon-size-md)) / 2);
+  }
+
+  .root[data-size="sm"][data-trail-mode="current"] .current {
+    padding-block: calc((var(--ui-control-height-sm) - var(--ui-icon-size-sm)) / 2);
+  }
+
+  .measurementClip {
+    position: absolute;
+    visibility: hidden;
+    pointer-events: none;
+    inline-size: 0;
+    block-size: 0;
+    overflow: hidden;
+  }
+
+  .measurement {
+    inline-size: max-content;
+    max-inline-size: none;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+  }
+
+  .measurement .item {
+    max-inline-size: none;
+  }
+
+  .root .separator {
+    flex-shrink: 0;
+    color: var(--color-text-muted);
+  }
+
+  .root .separator[data-current="true"] {
+    color: var(--color-text-primary);
+  }
+
+  .overflow {
+    max-inline-size: calc(100vw - var(--layout-space-responsive-lg));
+  }
+
+  .panelLink {
+    inline-size: 100%;
+  }
+
+  .overflow li {
+    min-block-size: var(--ui-interaction-target-min);
+    align-items: center;
+  }
+}

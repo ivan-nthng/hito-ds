@@ -1,0 +1,26 @@
+@layer hito.components {
+  .panel {
+    --anchored-safe-top: env(safe-area-inset-top, 0px);
+    --anchored-safe-right: env(safe-area-inset-right, 0px);
+    --anchored-safe-bottom: env(safe-area-inset-bottom, 0px);
+    --anchored-safe-left: env(safe-area-inset-left, 0px);
+    position: fixed;
+    inset: auto;
+    margin: 0;
+    border: 0;
+    box-sizing: border-box;
+    scroll-margin-top: var(--ui-space-sm);
+    scroll-padding-top: var(--layout-space-fixed-md);
+    background: var(--color-surface-overlay);
+    color: var(--color-text-primary);
+    box-shadow: var(--elevation-floating);
+    overflow: auto;
+    inline-size: max-content;
+    max-inline-size: var(--anchored-available-inline-size, calc(100vw - var(--layout-space-fixed-md) * 2));
+    max-block-size: calc(100dvh - var(--layout-space-fixed-md) * 2);
+    overflow-wrap: anywhere;
+  }
+  .panel:popover-open:not([data-positioned]) { visibility: hidden; }
+  .panel::backdrop { background: transparent; }
+  @media (forced-colors: active) { .panel { border: var(--border-width-default) solid CanvasText; box-shadow: none; } }
+}

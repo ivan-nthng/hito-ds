@@ -1,0 +1,555 @@
+@layer hito.components {
+.icon {
+  display: inline-block;
+  flex: none;
+  inline-size: var(--ui-icon-size-md);
+  block-size: var(--ui-icon-size-md);
+  color: var(--icon-color, var(--color-icon-default));
+  background-color: currentcolor;
+  mask-position: center;
+  mask-repeat: no-repeat;
+  mask-size: contain;
+}
+
+.icon[data-size="sm"] {
+  inline-size: var(--ui-icon-size-sm);
+  block-size: var(--ui-icon-size-sm);
+}
+
+.icon[data-size="lg"] {
+  inline-size: var(--ui-icon-size-lg);
+  block-size: var(--ui-icon-size-lg);
+}
+
+.icon[data-size="xl"] {
+  inline-size: var(--ui-icon-size-xl);
+  block-size: var(--ui-icon-size-xl);
+}
+
+.icon[data-tone="secondary"] {
+  color: var(--color-icon-secondary);
+}
+
+.icon[data-tone="muted"] {
+  color: var(--color-icon-muted);
+}
+
+.icon[data-tone="accent"] {
+  color: var(--color-icon-accent-default);
+}
+
+.icon[data-tone="info"] {
+  color: var(--color-icon-info-default);
+}
+
+.icon[data-tone="success"] {
+  color: var(--color-icon-success-default);
+}
+
+.icon[data-tone="warning"] {
+  color: var(--color-icon-warning-default);
+}
+
+.icon[data-tone="destructive"] {
+  color: var(--color-icon-destructive-default);
+}
+
+.icon[data-state="hover"][data-tone="accent"] {
+  color: var(--color-icon-accent-hover);
+}
+
+.icon[data-state="hover"][data-tone="info"] {
+  color: var(--color-icon-info-hover);
+}
+
+.icon[data-state="hover"][data-tone="success"] {
+  color: var(--color-icon-success-hover);
+}
+
+.icon[data-state="hover"][data-tone="warning"] {
+  color: var(--color-icon-warning-hover);
+}
+
+.icon[data-state="hover"][data-tone="destructive"] {
+  color: var(--color-icon-destructive-hover);
+}
+
+.icon[data-state="disabled"] {
+  color: var(--color-icon-disabled);
+}
+
+.icon[data-icon-name="arrows/basic/down"] {
+  mask-image: url("./assets/arrows/basic-down.svg");
+}
+
+.icon[data-icon-name="arrows/basic/left"] {
+  mask-image: url("./assets/arrows/basic-left.svg");
+}
+
+.icon[data-icon-name="arrows/basic/right"] {
+  mask-image: url("./assets/arrows/basic-right.svg");
+}
+
+.icon[data-icon-name="arrows/basic/up"] {
+  mask-image: url("./assets/arrows/basic-up.svg");
+}
+
+.icon[data-icon-name="arrows/compact/down"] {
+  mask-image: url("./assets/arrows/compact-down.svg");
+}
+
+.icon[data-icon-name="arrows/compact/left"] {
+  mask-image: url("./assets/arrows/compact-left.svg");
+}
+
+.icon[data-icon-name="arrows/compact/left-right"] {
+  mask-image: url("./assets/arrows/compact-left-right.svg");
+}
+
+.icon[data-icon-name="arrows/compact/right"] {
+  mask-image: url("./assets/arrows/compact-right.svg");
+}
+
+.icon[data-icon-name="arrows/compact/up"] {
+  mask-image: url("./assets/arrows/compact-up.svg");
+}
+
+.icon[data-icon-name="arrows/compact/up-down"] {
+  mask-image: url("./assets/arrows/compact-up-down.svg");
+}
+
+.icon[data-icon-name="arrows/complex/down"] {
+  mask-image: url("./assets/arrows/complex-down.svg");
+}
+
+.icon[data-icon-name="arrows/complex/down-left"] {
+  mask-image: url("./assets/arrows/complex-down-left.svg");
+}
+
+.icon[data-icon-name="arrows/complex/down-right"] {
+  mask-image: url("./assets/arrows/complex-down-right.svg");
+}
+
+.icon[data-icon-name="arrows/complex/left"] {
+  mask-image: url("./assets/arrows/complex-left.svg");
+}
+
+.icon[data-icon-name="arrows/complex/right"] {
+  mask-image: url("./assets/arrows/complex-right.svg");
+}
+
+.icon[data-icon-name="arrows/complex/up"] {
+  mask-image: url("./assets/arrows/complex-up.svg");
+}
+
+.icon[data-icon-name="arrows/complex/up-left"] {
+  mask-image: url("./assets/arrows/complex-up-left.svg");
+}
+
+.icon[data-icon-name="arrows/complex/up-right"] {
+  mask-image: url("./assets/arrows/complex-up-right.svg");
+}
+
+.icon[data-icon-name="arrows/sorting"] {
+  mask-image: url("./assets/arrows/sorting.svg");
+}
+
+.icon[data-icon-name="arrows/stroke/down"] {
+  mask-image: url("./assets/arrows/stroke-down.svg");
+}
+
+.icon[data-icon-name="arrows/stroke/left"] {
+  mask-image: url("./assets/arrows/stroke-left.svg");
+}
+
+.icon[data-icon-name="arrows/stroke/right"] {
+  mask-image: url("./assets/arrows/stroke-right.svg");
+}
+
+.icon[data-icon-name="arrows/stroke/up"] {
+  mask-image: url("./assets/arrows/stroke-up.svg");
+}
+
+.icon[data-icon-name="controls/clear"] {
+  mask-image: url("./assets/controls/clear.svg");
+}
+
+.icon[data-icon-name="controls/close"] {
+  mask-image: url("./assets/controls/close.svg");
+}
+
+.icon[data-icon-name="controls/close-s"] {
+  mask-image: url("./assets/controls/close-s.svg");
+}
+
+.icon[data-icon-name="controls/copy"] {
+  mask-image: url("./assets/controls/copy.svg");
+}
+
+.icon[data-icon-name="controls/crop"] {
+  mask-image: url("./assets/controls/crop.svg");
+}
+
+.icon[data-icon-name="controls/delete"] {
+  mask-image: url("./assets/controls/delete.svg");
+}
+
+.icon[data-icon-name="controls/down"] {
+  mask-image: url("./assets/controls/down.svg");
+}
+
+.icon[data-icon-name="controls/drag"] {
+  mask-image: url("./assets/controls/drag.svg");
+}
+
+.icon[data-icon-name="controls/edit"] {
+  mask-image: url("./assets/controls/edit.svg");
+}
+
+.icon[data-icon-name="controls/edit-alternate"] {
+  mask-image: url("./assets/controls/edit-alternate.svg");
+}
+
+.icon[data-icon-name="controls/edit-fill"] {
+  mask-image: url("./assets/controls/edit-fill.svg");
+}
+
+.icon[data-icon-name="controls/hamburger"] {
+  mask-image: url("./assets/controls/hamburger.svg");
+}
+
+.icon[data-icon-name="controls/home"] {
+  mask-image: url("./assets/controls/home.svg");
+}
+
+.icon[data-icon-name="controls/leave"] {
+  mask-image: url("./assets/controls/leave.svg");
+}
+
+.icon[data-icon-name="controls/like-filled"] {
+  mask-image: url("./assets/controls/like-filled.svg");
+}
+
+.icon[data-icon-name="controls/login"] {
+  mask-image: url("./assets/controls/login.svg");
+}
+
+.icon[data-icon-name="controls/more"] {
+  mask-image: url("./assets/controls/more.svg");
+}
+
+.icon[data-icon-name="controls/pause"] {
+  mask-image: url("./assets/controls/pause.svg");
+}
+
+.icon[data-icon-name="controls/play"] {
+  mask-image: url("./assets/controls/play.svg");
+}
+
+.icon[data-icon-name="controls/plus"] {
+  mask-image: url("./assets/controls/plus.svg");
+}
+
+.icon[data-icon-name="controls/plus-s"] {
+  mask-image: url("./assets/controls/plus-s.svg");
+}
+
+.icon[data-icon-name="controls/quit"] {
+  mask-image: url("./assets/controls/quit.svg");
+}
+
+.icon[data-icon-name="controls/rate-up"] {
+  mask-image: url("./assets/controls/rate-up.svg");
+}
+
+.icon[data-icon-name="controls/refresh"] {
+  mask-image: url("./assets/controls/refresh.svg");
+}
+
+.icon[data-icon-name="controls/save"] {
+  mask-image: url("./assets/controls/save.svg");
+}
+
+.icon[data-icon-name="controls/send"] {
+  mask-image: url("./assets/controls/send.svg");
+}
+
+.icon[data-icon-name="controls/settings"] {
+  mask-image: url("./assets/controls/settings.svg");
+}
+
+.icon[data-icon-name="controls/share"] {
+  mask-image: url("./assets/controls/share.svg");
+}
+
+.icon[data-icon-name="controls/stop"] {
+  mask-image: url("./assets/controls/stop.svg");
+}
+
+.icon[data-icon-name="controls/up"] {
+  mask-image: url("./assets/controls/up.svg");
+}
+
+.icon[data-icon-name="controls/view/gallery"] {
+  mask-image: url("./assets/controls/view-gallery.svg");
+}
+
+.icon[data-icon-name="controls/view/table"] {
+  mask-image: url("./assets/controls/view-table.svg");
+}
+
+.icon[data-icon-name="general/alarm"] {
+  mask-image: url("./assets/general/alarm.svg");
+}
+
+.icon[data-icon-name="general/assets"] {
+  mask-image: url("./assets/general/assets.svg");
+}
+
+.icon[data-icon-name="general/basket"] {
+  mask-image: url("./assets/general/basket.svg");
+}
+
+.icon[data-icon-name="general/calendar"] {
+  mask-image: url("./assets/general/calendar.svg");
+}
+
+.icon[data-icon-name="general/check"] {
+  mask-image: url("./assets/general/check.svg");
+}
+
+.icon[data-icon-name="general/check-filled"] {
+  mask-image: url("./assets/general/check-filled.svg");
+}
+
+.icon[data-icon-name="general/clock"] {
+  mask-image: url("./assets/general/clock.svg");
+}
+
+.icon[data-icon-name="general/coffee"] {
+  mask-image: url("./assets/general/coffee.svg");
+}
+
+.icon[data-icon-name="general/connections"] {
+  mask-image: url("./assets/general/connections.svg");
+}
+
+.icon[data-icon-name="general/dashboard"] {
+  mask-image: url("./assets/general/dashboard.svg");
+}
+
+.icon[data-icon-name="general/default"] {
+  mask-image: url("./assets/general/default.svg");
+}
+
+.icon[data-icon-name="general/download"] {
+  mask-image: url("./assets/general/download.svg");
+}
+
+.icon[data-icon-name="general/eye-closed"] {
+  mask-image: url("./assets/general/eye-closed.svg");
+}
+
+.icon[data-icon-name="general/eye-open"] {
+  mask-image: url("./assets/general/eye-open.svg");
+}
+
+.icon[data-icon-name="general/eye-open-filled"] {
+  mask-image: url("./assets/general/eye-open-filled.svg");
+}
+
+.icon[data-icon-name="general/info-filled"] {
+  mask-image: url("./assets/general/info-filled.svg");
+}
+
+.icon[data-icon-name="general/link"] {
+  mask-image: url("./assets/general/link.svg");
+}
+
+.icon[data-icon-name="general/location"] {
+  mask-image: url("./assets/general/location.svg");
+}
+
+.icon[data-icon-name="general/lock"] {
+  mask-image: url("./assets/general/lock.svg");
+}
+
+.icon[data-icon-name="general/magnify"] {
+  mask-image: url("./assets/general/magnify.svg");
+}
+
+.icon[data-icon-name="general/notification"] {
+  mask-image: url("./assets/general/notification.svg");
+}
+
+.icon[data-icon-name="general/read"] {
+  mask-image: url("./assets/general/read.svg");
+}
+
+.icon[data-icon-name="general/report"] {
+  mask-image: url("./assets/general/report.svg");
+}
+
+.icon[data-icon-name="general/search"] {
+  mask-image: url("./assets/general/search.svg");
+}
+
+.icon[data-icon-name="general/sent"] {
+  mask-image: url("./assets/general/sent.svg");
+}
+
+.icon[data-icon-name="general/star"] {
+  mask-image: url("./assets/general/star.svg");
+}
+
+.icon[data-icon-name="general/star-filled"] {
+  mask-image: url("./assets/general/star-filled.svg");
+}
+
+.icon[data-icon-name="general/unlock"] {
+  mask-image: url("./assets/general/unlock.svg");
+}
+
+.icon[data-icon-name="general/user-filled"] {
+  mask-image: url("./assets/general/user-filled.svg");
+}
+
+.icon[data-icon-name="general/win-filled"] {
+  mask-image: url("./assets/general/win-filled.svg");
+}
+}
+
+.icon[data-icon-name="general/status-dashed-circle"] { mask-image: url("./assets/general/status-dashed-circle.svg"); }
+
+.icon[data-icon-name="general/status-exclamation-circle"] { mask-image: url("./assets/general/status-exclamation-circle.svg"); }
+
+.icon[data-icon-name="general/status-progress-half"] { mask-image: url("./assets/general/status-progress-half.svg"); }
+.icon[data-icon-name="general/status-half-circle"] { mask-image: url("./assets/general/status-half-circle.svg"); }
+
+.icon[data-icon-name="general/status-progress-three-quarter"] { mask-image: url("./assets/general/status-progress-three-quarter.svg"); }
+
+.icon[data-icon-name="general/status-check-circle"] { mask-image: url("./assets/general/status-check-circle.svg"); }
+
+.icon[data-icon-name="general/status-cross-circle"] { mask-image: url("./assets/general/status-cross-circle.svg"); }
+
+@layer hito.components {
+.icon[data-icon-name="tech/gap-x"] { mask-image: url("./assets/tech/gap-x.svg"); }
+.icon[data-icon-name="tech/margin"] { mask-image: url("./assets/tech/margin.svg"); }
+.icon[data-icon-name="tech/padding"] { mask-image: url("./assets/tech/padding.svg"); }
+.icon[data-icon-name="tech/gap-y"] { mask-image: url("./assets/tech/gap-x.svg"); transform: rotate(90deg); }
+.icon[data-icon-name="tech/height"] { mask-image: url("./assets/tech/height.svg"); }
+.icon[data-icon-name="tech/width"] { mask-image: url("./assets/tech/height.svg"); transform: rotate(90deg); }
+.icon[data-icon-name="tech/font-size"] { mask-image: url("./assets/tech/font-size.svg"); }
+.icon[data-icon-name="tech/line-height"] { mask-image: url("./assets/tech/line-height.svg"); }
+.icon[data-icon-name="tech/weight"] { mask-image: url("./assets/tech/weight.svg"); }
+.icon[data-icon-name="tech/radius"] { mask-image: url("./assets/tech/radius.svg"); }
+.icon[data-icon-name="tech/radius-top-left"] { mask-image: url("./assets/tech/radius.svg"); transform: rotate(270deg); }
+.icon[data-icon-name="tech/radius-top-right"] { mask-image: url("./assets/tech/radius.svg"); }
+.icon[data-icon-name="tech/radius-bottom-right"] { mask-image: url("./assets/tech/radius.svg"); transform: rotate(90deg); }
+.icon[data-icon-name="tech/radius-bottom-left"] { mask-image: url("./assets/tech/radius.svg"); transform: rotate(180deg); }
+.icon[data-icon-name="tech/border"] { mask-image: url("./assets/tech/border.svg"); }
+.icon[data-icon-name="tech/shadow"] { mask-image: url("./assets/tech/shadow.svg"); }
+.icon[data-icon-name="tech/fill"] { mask-image: url("./assets/tech/fill.svg"); }
+.icon[data-icon-name="tech/space"] { mask-image: url("./assets/tech/space.svg"); }
+.icon[data-icon-name="tech/typography"] { mask-image: url("./assets/tech/typography.svg"); }
+}
+
+@layer hito.components {
+.icon[data-icon-name="keyboard/command"] { mask-image: url("./assets/keyboard/command.svg"); }
+.icon[data-icon-name="keyboard/shift"] { mask-image: url("./assets/keyboard/shift.svg"); }
+.icon[data-icon-name="keyboard/option"] { mask-image: url("./assets/keyboard/option.svg"); }
+.icon[data-icon-name="keyboard/control"] { mask-image: url("./assets/keyboard/control.svg"); }
+.icon[data-icon-name="keyboard/return"] { mask-image: url("./assets/keyboard/return.svg"); }
+.icon[data-icon-name="keyboard/backspace"] { mask-image: url("./assets/keyboard/backspace.svg"); }
+}
+
+@layer hito.components {
+.icon[data-icon-name="controls/upload"] { mask-image: url("./assets/controls/upload.svg"); }
+.icon[data-icon-name="controls/filter"] { mask-image: url("./assets/controls/filter.svg"); }
+.icon[data-icon-name="controls/filter-active"] { mask-image: url("./assets/controls/filter-active.svg"); }
+.icon[data-icon-name="controls/attach"] { mask-image: url("./assets/controls/attach.svg"); }
+.icon[data-icon-name="controls/minus"] { mask-image: url("./assets/controls/minus.svg"); }
+.icon[data-icon-name="controls/help"] { mask-image: url("./assets/controls/help.svg"); }
+.icon[data-icon-name="general/history"] { mask-image: url("./assets/general/history.svg"); }
+.icon[data-icon-name="general/image"] { mask-image: url("./assets/general/image.svg"); }
+.icon[data-icon-name="general/users"] { mask-image: url("./assets/general/users.svg"); }
+.icon[data-icon-name="general/user-add"] { mask-image: url("./assets/general/user-add.svg"); }
+.icon[data-icon-name="general/mail"] { mask-image: url("./assets/general/mail.svg"); }
+.icon[data-icon-name="general/document"] { mask-image: url("./assets/general/document.svg"); }
+.icon[data-icon-name="general/timer"] { mask-image: url("./assets/general/timer.svg"); }
+.icon[data-icon-name="general/kitchen"] { mask-image: url("./assets/general/kitchen.svg"); }
+.icon[data-icon-name="general/warehouse"] { mask-image: url("./assets/general/warehouse.svg"); }
+.icon[data-icon-name="delivery/food"] { mask-image: url("./assets/delivery/food.svg"); }
+.icon[data-icon-name="delivery/grocery"] { mask-image: url("./assets/delivery/grocery.svg"); }
+.icon[data-icon-name="delivery/in-transit"] { mask-image: url("./assets/delivery/in-transit.svg"); }
+.icon[data-icon-name="delivery/received"] { mask-image: url("./assets/delivery/received.svg"); }
+.icon[data-icon-name="delivery/thermal-bag"] { mask-image: url("./assets/delivery/thermal-bag.svg"); }
+.icon[data-icon-name="finance/cash"] { mask-image: url("./assets/finance/cash.svg"); }
+.icon[data-icon-name="finance/bank-card"] { mask-image: url("./assets/finance/bank-card.svg"); }
+.icon[data-icon-name="finance/discount"] { mask-image: url("./assets/finance/discount.svg"); }
+.icon[data-icon-name="finance/receipt"] { mask-image: url("./assets/finance/receipt.svg"); }
+.icon[data-icon-name="finance/wallet"] { mask-image: url("./assets/finance/wallet.svg"); }
+.icon[data-icon-name="finance/transaction"] { mask-image: url("./assets/finance/transaction.svg"); }
+.icon[data-icon-name="communication/phone"] { mask-image: url("./assets/communication/phone.svg"); }
+.icon[data-icon-name="communication/message"] { mask-image: url("./assets/communication/message.svg"); }
+.icon[data-icon-name="communication/support"] { mask-image: url("./assets/communication/support.svg"); }
+}
+
+@layer hito.components {
+.icon[data-icon-name="delivery/scooter"] { mask-image: url("./assets/delivery/scooter.svg"); }
+.icon[data-icon-name="delivery/walking"] { mask-image: url("./assets/delivery/walking.svg"); }
+.icon[data-icon-name="delivery/driver"] { mask-image: url("./assets/delivery/driver.svg"); }
+.icon[data-icon-name="delivery/express"] { mask-image: url("./assets/delivery/express.svg"); }
+.icon[data-icon-name="delivery/orders"] { mask-image: url("./assets/delivery/orders.svg"); }
+.icon[data-icon-name="delivery/order-search"] { mask-image: url("./assets/delivery/order-search.svg"); }
+.icon[data-icon-name="delivery/finish"] { mask-image: url("./assets/delivery/finish.svg"); }
+.icon[data-icon-name="delivery/door"] { mask-image: url("./assets/delivery/door.svg"); }
+.icon[data-icon-name="map/route"] { mask-image: url("./assets/map/route.svg"); }
+.icon[data-icon-name="map/navigation"] { mask-image: url("./assets/map/navigation.svg"); }
+.icon[data-icon-name="map/current-location"] { mask-image: url("./assets/map/current-location.svg"); }
+.icon[data-icon-name="map/layers"] { mask-image: url("./assets/map/layers.svg"); }
+.icon[data-icon-name="map/area"] { mask-image: url("./assets/map/area.svg"); }
+.icon[data-icon-name="map/store"] { mask-image: url("./assets/map/store.svg"); }
+.icon[data-icon-name="map/parking"] { mask-image: url("./assets/map/parking.svg"); }
+.icon[data-icon-name="map/add-address"] { mask-image: url("./assets/map/add-address.svg"); }
+.icon[data-icon-name="map/roadworks"] { mask-image: url("./assets/map/roadworks.svg"); }
+.icon[data-icon-name="finance/business-account"] { mask-image: url("./assets/finance/business-account.svg"); }
+.icon[data-icon-name="finance/bank"] { mask-image: url("./assets/finance/bank.svg"); }
+.icon[data-icon-name="finance/commission"] { mask-image: url("./assets/finance/commission.svg"); }
+.icon[data-icon-name="finance/gift"] { mask-image: url("./assets/finance/gift.svg"); }
+.icon[data-icon-name="finance/voucher"] { mask-image: url("./assets/finance/voucher.svg"); }
+.icon[data-icon-name="finance/tips"] { mask-image: url("./assets/finance/tips.svg"); }
+.icon[data-icon-name="finance/payment"] { mask-image: url("./assets/finance/payment.svg"); }
+.icon[data-icon-name="documents/license"] { mask-image: url("./assets/documents/license.svg"); }
+.icon[data-icon-name="documents/license-invalid"] { mask-image: url("./assets/documents/license-invalid.svg"); }
+.icon[data-icon-name="documents/policy"] { mask-image: url("./assets/documents/policy.svg"); }
+.icon[data-icon-name="documents/medical-book"] { mask-image: url("./assets/documents/medical-book.svg"); }
+.icon[data-icon-name="documents/vehicle-document"] { mask-image: url("./assets/documents/vehicle-document.svg"); }
+.icon[data-icon-name="documents/confidentiality"] { mask-image: url("./assets/documents/confidentiality.svg"); }
+.icon[data-icon-name="general/lightning"] { mask-image: url("./assets/general/lightning.svg"); }
+.icon[data-icon-name="general/camera"] { mask-image: url("./assets/general/camera.svg"); }
+.icon[data-icon-name="controls/scan"] { mask-image: url("./assets/controls/scan.svg"); }
+.icon[data-icon-name="general/return"] { mask-image: url("./assets/general/return.svg"); }
+.icon[data-icon-name="general/shield"] { mask-image: url("./assets/general/shield.svg"); }
+.icon[data-icon-name="communication/end-call"] { mask-image: url("./assets/communication/end-call.svg"); }
+.icon[data-icon-name="communication/microphone"] { mask-image: url("./assets/communication/microphone.svg"); }
+.icon[data-icon-name="communication/microphone-off"] { mask-image: url("./assets/communication/microphone-off.svg"); }
+}
+
+/* Accepted373 Google mark retains its four original paints. */
+.icon[data-icon-name="social/google/branded"] {
+  background-color: transparent;
+  background-image: url("./assets/social/google-branded.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  mask-image: none;
+}
+.icon[data-state="disabled"][data-icon-name="social/google/branded"] { opacity: var(--ref-opacity-48); }
+.icon[data-icon-name="social/visa/branded"] { background: transparent url("./assets/social/visa-branded.svg") center / contain no-repeat; mask-image: none; }
+.icon[data-icon-name="social/mastercard/branded"] { background: transparent url("./assets/social/mastercard-branded.svg") center / contain no-repeat; mask-image: none; }
+.icon[data-state="disabled"][data-icon-name="social/visa/branded"], .icon[data-state="disabled"][data-icon-name="social/mastercard/branded"] { opacity: var(--ref-opacity-48); }
+
+.icon[data-icon-name="controls/pin"] {
+  mask-image: url("./assets/controls/pin.svg");
+}

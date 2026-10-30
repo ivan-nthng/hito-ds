@@ -1,0 +1,2 @@
+.example { display: grid; gap: var(--ui-space-2xl); }
+.actions { display: flex; flex-wrap: wrap; gap: var(--ui-space-sm); }

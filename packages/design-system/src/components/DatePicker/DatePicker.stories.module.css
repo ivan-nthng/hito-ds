@@ -1,0 +1,30 @@
+.page {
+  display: grid;
+  gap: var(--layout-space-responsive-xl);
+  min-inline-size: 0;
+  padding: var(--layout-space-responsive-xl);
+}
+
+.measure {
+  inline-size: 100%;
+  max-inline-size: var(--ref-space-96);
+}
+
+.form {
+  display: grid;
+  justify-items: start;
+  gap: var(--layout-space-fixed-md);
+  inline-size: 100%;
+  max-inline-size: var(--ref-space-96);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+  align-items: start;
+  gap: var(--layout-space-fixed-lg);
+}
+
+.secondary {
+  color: var(--color-text-secondary);
+}

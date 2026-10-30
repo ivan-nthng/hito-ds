@@ -1,0 +1,3 @@
+@layer hito.patterns {
+  .root { display: flex; flex-wrap: wrap; gap: var(--ui-space-sm); }
+}

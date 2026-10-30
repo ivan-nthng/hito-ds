@@ -1,0 +1,193 @@
+.referenceSample,
+.roleSample {
+  box-sizing: border-box;
+  border: var(--demo-border-width) solid var(--color-border-default);
+  border-radius: var(--radius-layout-fixed-sm);
+  background: var(--color-surface-base);
+}
+
+.referenceSample {
+  inline-size: var(--ref-space-32);
+  block-size: var(--ref-space-12);
+}
+
+.roleSample {
+  block-size: var(--ref-space-16);
+}
+
+.surfaceSample,
+.inputSample,
+.outlinedButton,
+.tagSample,
+.tableSample {
+  box-sizing: border-box;
+  border: var(--border-width-default) solid var(--color-border-default);
+  color: var(--color-text-primary);
+  background: var(--color-surface-base);
+}
+
+.surfaceSample,
+.inputSample,
+.outlinedButton {
+  padding: var(--ui-space-md) var(--ui-space-lg);
+  border-radius: var(--radius-ui-md);
+  font: inherit;
+}
+
+.outlinedButton {
+  cursor: default;
+}
+
+.tagSample {
+  display: inline-flex;
+  padding: var(--ui-space-xs) var(--ui-space-sm);
+  border-radius: var(--ref-radius-full);
+}
+
+.separatorSample {
+  inline-size: 100%;
+  block-size: var(--border-width-default);
+  background: var(--color-border-default);
+}
+
+.tableSample {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  border-radius: var(--radius-ui-sm);
+}
+
+.tableSample > * {
+  padding: var(--ui-space-sm);
+}
+
+.tableSample > :last-child {
+  border-inline-start: var(--border-width-default) solid var(--color-border-subtle);
+}
+
+.stateSample {
+  box-sizing: border-box;
+  inline-size: 100%;
+  block-size: var(--ui-control-height-lg);
+  place-items: center;
+  border: var(--border-width-default) solid var(--color-border-default);
+  border-radius: var(--radius-ui-md);
+  color: var(--color-text-primary);
+  background: var(--color-surface-base);
+}
+
+.stateHover {
+  border-color: var(--color-border-strong);
+}
+
+.statePressed,
+.stateSelected {
+  background: var(--color-surface-accent-subtle-default);
+}
+
+.statePressed {
+  border-color: var(--color-border-accent-hover);
+}
+
+.stateSelected {
+  border-color: var(--color-border-accent-default);
+}
+
+.stateInvalid {
+  border-color: var(--color-border-destructive-default);
+}
+
+.stateDisabled {
+  border-color: var(--color-border-disabled);
+  color: var(--color-text-disabled);
+}
+
+.focusTarget {
+  box-sizing: border-box;
+  justify-self: start;
+  min-block-size: var(--ui-control-height-lg);
+  padding: var(--ui-space-md) var(--ui-space-lg);
+  border: var(--border-width-default) solid var(--color-border-accent-default);
+  border-radius: var(--radius-ui-md);
+  color: var(--color-text-primary);
+  background: var(--color-surface-accent-subtle-default);
+  font: inherit;
+}
+
+.focusTarget:focus-visible {
+  outline: var(--focus-indicator-width) solid var(--focus-indicator-color);
+  outline-offset: var(--focus-indicator-offset);
+}
+
+.nestedOuter {
+  max-inline-size: var(--ref-space-96);
+  padding: var(--layout-space-fixed-lg);
+  border: var(--border-width-default) solid var(--color-border-default);
+  border-radius: var(--radius-layout-fixed-xl);
+  background: var(--color-surface-base);
+}
+
+.nestedInner {
+  min-block-size: var(--ref-space-24);
+  padding: var(--layout-space-fixed-lg);
+  border-radius: var(--radius-layout-fixed-sm);
+  background: var(--color-surface-subtle);
+}
+
+.ruleList {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(min(100%, var(--ref-space-96)), 1fr)
+  );
+  gap: var(--layout-space-responsive-xl);
+  margin: 0;
+  padding-inline-start: var(--layout-space-fixed-lg);
+  color: var(--color-text-secondary);
+}
+
+@media (forced-colors: active) {
+  .surfaceSample,
+  .inputSample,
+  .outlinedButton,
+  .tagSample,
+  .tableSample,
+  .stateSample,
+  .nestedOuter,
+  .focusTarget {
+    border-color: CanvasText;
+  }
+
+  .separatorSample {
+    background: CanvasText;
+  }
+
+  .focusTarget:focus-visible {
+    outline-color: Highlight;
+  }
+}
+
+@media print {
+  .tableSample {
+    border-color: CanvasText;
+  }
+
+  .separatorSample {
+    background: CanvasText;
+  }
+}
+.referenceStage,
+.applicationStage {
+  display: flex;
+  align-items: center;
+}
+
+.referenceStage {
+  min-block-size: var(--ref-space-20);
+  justify-content: center;
+  border-radius: var(--radius-layout-fixed-md);
+  background: var(--color-surface-subtle);
+}
+
+.applicationStage {
+  min-block-size: var(--ref-space-16);
+}

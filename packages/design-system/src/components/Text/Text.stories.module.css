@@ -1,0 +1,89 @@
+.page {
+  display: grid;
+  inline-size: min(100%, 72rem);
+  gap: var(--layout-space-responsive-xl);
+  margin-inline: auto;
+  padding: var(--layout-space-responsive-lg);
+  background: var(--color-surface-canvas);
+}
+
+.intro {
+  display: grid;
+  gap: var(--layout-space-fixed-sm);
+  max-inline-size: 60rem;
+}
+
+.rows {
+  display: grid;
+  gap: var(--layout-space-responsive-xl);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: minmax(11rem, 1fr) minmax(10rem, 0.8fr) minmax(0, 2.5fr);
+  align-items: baseline;
+  gap: var(--layout-space-fixed-lg);
+}
+
+.identity {
+  display: grid;
+  gap: var(--layout-space-fixed-xs);
+}
+
+.secondary {
+  color: var(--color-text-secondary);
+}
+
+.muted {
+  color: var(--color-text-muted);
+}
+
+.metrics {
+  color: var(--color-text-secondary);
+}
+
+.specimen {
+  min-inline-size: 0;
+  overflow-wrap: anywhere;
+}
+
+.familyList {
+  display: grid;
+  gap: var(--layout-space-responsive-xl);
+}
+
+.familyRow {
+  display: grid;
+  grid-template-columns: minmax(11rem, 1fr) minmax(0, 3fr);
+  align-items: baseline;
+  gap: var(--layout-space-fixed-xl);
+}
+
+.guidance {
+  display: grid;
+  gap: var(--layout-space-responsive-xl);
+}
+
+.guidanceSection {
+  display: grid;
+  gap: var(--layout-space-fixed-md);
+  max-inline-size: 60rem;
+}
+
+.rules {
+  display: grid;
+  gap: var(--layout-space-fixed-sm);
+  margin: 0;
+  padding-inline-start: var(--layout-space-fixed-lg);
+  color: var(--color-text-secondary);
+  font: var(--type-body-base-font-weight) var(--type-body-base-font-size) / var(--type-body-base-line-height) var(--type-family-base);
+  letter-spacing: var(--type-body-base-letter-spacing);
+}
+
+@media (max-width: 40rem) {
+  .row,
+  .familyRow {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--layout-space-fixed-sm);
+  }
+}

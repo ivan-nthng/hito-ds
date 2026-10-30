@@ -1,0 +1,12 @@
+@layer hito.storybook {
+  .example { display: grid; justify-items: start; gap: var(--layout-space-fixed-lg); }
+  .stage { display: flex; align-items: start; inline-size: 100%; gap: var(--layout-space-fixed-lg); }
+  .stage[data-edge="end"] { justify-content: end; }
+  .panel { inline-size: calc(var(--layout-space-fixed-2xl) * 9); }
+  .content { display: grid; gap: var(--layout-space-fixed-lg); }
+  .muted { color: var(--color-text-secondary); }
+  .fixture { display: grid; justify-items: start; gap: var(--layout-space-fixed-lg); padding: var(--layout-space-fixed-lg); }
+  .scrollBox { overflow: auto; max-block-size: calc(var(--layout-space-fixed-2xl) * 6); inline-size: 100%; }
+  .spacer { block-size: calc(var(--layout-space-fixed-2xl) * 20); }
+  .safeTarget { position: fixed; inset-block-end: var(--layout-space-fixed-md); inset-inline-start: var(--layout-space-fixed-md); }
+}

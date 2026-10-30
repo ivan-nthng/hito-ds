@@ -1,0 +1,73 @@
+@layer hito.components {
+  .root {
+    --avatar-size: var(--avatar-size-md);
+    --avatar-icon-size: var(--avatar-icon-size-md);
+    --avatar-radius: var(--avatar-radius-md);
+    --avatar-shape-radius: var(--radius-shape-round);
+    --avatar-strip-height: var(--ui-control-height-sm);
+    display: inline-flex;
+    flex: none;
+    inline-size: var(--avatar-size);
+    block-size: var(--avatar-size);
+    vertical-align: middle;
+    border-radius: var(--avatar-shape-radius);
+  }
+  .root[data-size="xs"] { --avatar-size: var(--avatar-size-xs); --avatar-icon-size: var(--avatar-icon-size-xs); --avatar-radius: var(--avatar-radius-xs); }
+  .root[data-size="sm"] { --avatar-size: var(--avatar-size-sm); --avatar-icon-size: var(--avatar-icon-size-sm); --avatar-radius: var(--avatar-radius-sm); }
+  .root[data-size="lg"] { --avatar-size: var(--avatar-size-lg); --avatar-icon-size: var(--avatar-icon-size-lg); --avatar-radius: var(--avatar-radius-lg); --avatar-strip-height: var(--ui-control-height-md); }
+  .root[data-shape="rounded"] { --avatar-shape-radius: var(--avatar-radius); }
+  .visual {
+    position: relative; display: inline-grid; place-items: center; flex: none;
+    inline-size: var(--avatar-size); block-size: var(--avatar-size); overflow: clip;
+    border-radius: var(--avatar-shape-radius);
+    background: var(--color-surface-neutral-subtle-default); color: var(--color-text-secondary);
+  }
+  .initials { color: inherit; white-space: nowrap; }
+  .fallbackIcon { inline-size: var(--avatar-icon-size); block-size: var(--avatar-icon-size); }
+  .photo { position: absolute; inset: 0; display: block; inline-size: 100%; block-size: 100%; object-fit: cover; object-position: center; opacity: 0; }
+  .photo[data-loaded="true"] { opacity: 1; }
+  .photo[data-loaded="true"] ~ .initials,
+  .photo[data-loaded="true"] ~ .fallbackIcon { visibility: hidden; }
+  .editButton {
+    --button-hover-translate-y: 0;
+    padding: 0; border: 0; min-block-size: 0;
+    inline-size: var(--avatar-size); block-size: var(--avatar-size);
+    border-radius: var(--avatar-shape-radius);
+  }
+  .editButton > span { display: block; inline-size: 100%; block-size: 100%; }
+  .overlay {
+    position: absolute; inset: 0; display: grid; place-items: center; pointer-events: none;
+    color: var(--color-foreground-on-scrim); background: var(--color-surface-scrim); opacity: 0;
+    transition: opacity var(--motion-duration-transition) var(--motion-easing-standard);
+  }
+  .editContent { --icon-color: currentColor; display: flex; align-items: center; justify-content: center; gap: var(--ui-space-2xs); }
+  .editContent > span { color: inherit; }
+  .root[data-size="lg"] .editContent { gap: var(--ui-space-xs); }
+  .editButton:focus-visible .overlay { opacity: 1; }
+  @media (hover: hover) and (pointer: fine) { .editButton:hover .overlay { opacity: 1; } }
+  .root[data-edit-presentation="persistent-strip"] .overlay {
+    inset-block-start: auto; block-size: var(--avatar-strip-height); opacity: 1;
+  }
+  .root[data-edit-presentation="persistent-strip"] .editContent > [data-icon-name] { display: none; }
+  .root[data-edit-presentation="persistent-strip"][data-shape="circle"] .overlay { padding-block-end: var(--ui-space-2xs); }
+  @media (hover: none), (any-pointer: coarse) {
+    .overlay { inset-block-start: auto; block-size: var(--avatar-strip-height); opacity: 1; }
+    .root:not([data-size="sm"]) .editContent > [data-icon-name] { display: none; }
+    .root[data-shape="circle"] .overlay { padding-block-end: var(--ui-space-2xs); }
+    .root[data-size="sm"] .overlay { inset: 0; block-size: auto; padding: 0; }
+    .root[data-size="sm"][data-editable] {
+      box-sizing: content-box;
+      padding: calc((var(--ui-interaction-target-min) - var(--avatar-size)) / 2);
+    }
+    .root[data-size="sm"] .editButton::after {
+      content: ""; position: absolute;
+      inset: calc((var(--avatar-size) - var(--ui-interaction-target-min)) / 2);
+      border-radius: inherit;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) { .overlay { transition-duration: var(--motion-duration-instant); } }
+  @media (forced-colors: active) {
+    .editButton { outline: var(--border-width-default) solid ButtonText; }
+    .overlay { color: ButtonText; background: ButtonFace; forced-color-adjust: none; }
+  }
+}

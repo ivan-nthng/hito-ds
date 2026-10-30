@@ -1,0 +1,27 @@
+@layer hito.components {
+  .root[data-search-clear="true"] {
+    padding-inline-end: var(--ref-space-0);
+  }
+
+  .root[data-search-clear="true"] .input::-webkit-search-cancel-button {
+    appearance: none;
+  }
+
+  .clearButton {
+    inline-size: calc(
+      var(--input-frame-height) - var(--border-width-default) -
+        var(--border-width-default)
+    );
+    block-size: calc(
+      var(--input-frame-height) - var(--border-width-default) -
+        var(--border-width-default)
+    );
+    border-start-end-radius: max(
+      0px, calc(var(--input-frame-radius) - var(--border-width-default))
+    );
+    border-end-end-radius: max(
+      0px, calc(var(--input-frame-radius) - var(--border-width-default))
+    );
+  }
+
+}

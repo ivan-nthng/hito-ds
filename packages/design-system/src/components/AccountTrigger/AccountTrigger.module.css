@@ -1,0 +1,6 @@
+@layer hito.components {
+  .trigger { min-inline-size: 0; }
+  .trigger[data-compact] { inline-size: var(--ui-interaction-target-min); padding-inline: 0; }
+  .content { display: flex; align-items: center; gap: var(--ui-space-sm); min-inline-size: 0; }
+  .label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+}

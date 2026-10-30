@@ -1,0 +1,279 @@
+.secondary {
+  color: var(--color-text-secondary);
+}
+
+.scaleGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--layout-space-responsive-lg);
+}
+
+.scaleContent {
+  display: grid;
+  gap: var(--layout-space-fixed-md);
+}
+
+.scaleControls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--layout-space-fixed-lg);
+}
+
+.scaleOuterSurface {
+  padding: var(--layout-space-fixed-lg);
+  border: 0;
+  border-radius: var(--radius-layout-fixed-xl);
+}
+
+.scaleInnerSurface {
+  padding: var(--layout-space-fixed-md);
+  border: 0;
+  border-radius: var(--demo-radius);
+  background: var(--color-surface-raised);
+  box-shadow: var(--elevation-raised);
+}
+
+.referenceGrid,
+.uiGrid,
+.layoutGrid,
+.responsiveGrid,
+.cornerComparisonGrid,
+.radiusItem,
+.radiusIdentity,
+.cornerComparison,
+.cornerVariants,
+.cornerVariant,
+.boundaryNotes {
+  display: grid;
+}
+
+.referenceGrid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--layout-space-fixed-xl);
+}
+
+.uiGrid {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: var(--layout-space-fixed-lg);
+}
+
+.layoutGrid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--layout-space-fixed-xl);
+}
+
+.responsiveGrid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--layout-space-fixed-lg);
+}
+
+.radiusItem {
+  min-inline-size: 0;
+  align-content: start;
+  gap: var(--layout-space-fixed-md);
+}
+
+.radiusIdentity {
+  gap: var(--layout-space-fixed-xs);
+}
+
+.referenceSample,
+.layoutSample,
+.responsiveSample,
+.uiSample {
+  border: var(--border-width-default) solid var(--color-border-info-subtle);
+  border-radius: var(--demo-radius);
+  background: var(--color-surface-info-subtle-default);
+}
+
+.referenceSample {
+  block-size: var(--ref-space-20);
+}
+
+.uiSample {
+  display: flex;
+  min-block-size: var(--ui-control-height-lg);
+  align-items: center;
+  justify-content: center;
+  padding-inline: var(--ui-space-md);
+}
+
+.layoutSample {
+  block-size: var(--ref-space-24);
+}
+
+.responsiveSample {
+  display: grid;
+  block-size: var(--ref-space-16);
+  place-items: center;
+}
+
+.cornerComparisonGrid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--layout-space-fixed-xl);
+}
+
+.panelNestingGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--layout-space-fixed-lg);
+}
+
+.panelNestingExample {
+  display: grid;
+  align-content: start;
+  gap: var(--layout-space-fixed-sm);
+  min-inline-size: 0;
+}
+
+.panelNestingOuter {
+  padding: var(--ui-space-xs);
+  border-radius: var(--selection-panel-radius-md);
+  background: var(--color-surface-overlay);
+  box-shadow: var(--elevation-overlay);
+}
+
+.panelNestingOuter[data-size="sm"] {
+  padding: var(--ui-space-2xs);
+  border-radius: var(--selection-panel-radius-sm);
+}
+
+.panelNestingOuter[data-size="lg"] {
+  padding: var(--ui-space-sm);
+  border-radius: var(--selection-panel-radius-lg);
+}
+
+.panelNestingInner {
+  min-block-size: var(--ui-control-height-md);
+  border-radius: var(--radius-ui-md);
+  background: var(--color-surface-neutral-subtle-hover);
+}
+
+.panelNestingOuter[data-size="sm"] .panelNestingInner {
+  min-block-size: var(--ui-control-height-sm);
+  border-radius: var(--radius-ui-sm);
+}
+
+.panelNestingOuter[data-size="lg"] .panelNestingInner {
+  min-block-size: var(--ui-control-height-lg);
+  border-radius: var(--radius-ui-lg);
+}
+
+@media (max-width: 39.999rem) {
+  .panelNestingGrid { grid-template-columns: 1fr; }
+}
+
+.cornerComparison {
+  align-content: start;
+  gap: var(--layout-space-fixed-md);
+}
+
+.cornerComparisonHeader {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--layout-space-fixed-sm);
+}
+
+.cornerVariants {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--layout-space-fixed-sm);
+}
+
+.cornerVariant {
+  gap: var(--layout-space-fixed-sm);
+}
+
+.cornerOuter {
+  min-block-size: 9rem;
+  padding: var(--demo-corner-inset);
+  border: var(--demo-corner-border) solid var(--color-border-info-default);
+  border-radius: var(--demo-corner-outer-radius);
+  color: var(--color-foreground-on-info-strong);
+  background: var(--color-surface-info-strong-default);
+}
+
+.cornerInner {
+  min-block-size: 6rem;
+  background: var(--color-surface-subtle);
+}
+
+.cornerInnerStrict {
+  border-radius: var(--demo-corner-strict-radius);
+}
+
+.cornerInnerOptical {
+  border-radius: var(--demo-corner-optical-radius);
+}
+
+.cornerInnerIndependent {
+  border-radius: var(--demo-corner-independent-radius);
+}
+
+.cornerPairSmall {
+  --demo-corner-outer-radius: var(--radius-layout-fixed-lg);
+  --demo-corner-inset: var(--layout-space-fixed-md);
+  --demo-corner-border: var(--ref-border-width-0);
+  --demo-corner-strict-radius: calc(var(--ref-space-1) * var(--radius-scale));
+  --demo-corner-optical-radius: calc(var(--ref-space-1-5) * var(--radius-scale));
+}
+
+.cornerPairMedium {
+  --demo-corner-outer-radius: var(--radius-layout-fixed-xl);
+  --demo-corner-inset: var(--layout-space-fixed-lg);
+  --demo-corner-border: var(--ref-border-width-0);
+  --demo-corner-strict-radius: calc(var(--ref-space-2) * var(--radius-scale));
+  --demo-corner-optical-radius: calc(var(--ref-space-2-5) * var(--radius-scale));
+}
+
+.cornerPairLarge {
+  --demo-corner-outer-radius: var(--radius-layout-fixed-2xl);
+  --demo-corner-inset: var(--layout-space-fixed-xl);
+  --demo-corner-border: var(--ref-border-width-0);
+  --demo-corner-strict-radius: calc(var(--ref-space-2) * var(--radius-scale));
+  --demo-corner-optical-radius: calc(var(--ref-space-2-5) * var(--radius-scale));
+}
+
+.cornerPairExtraLarge {
+  --demo-corner-outer-radius: var(--radius-layout-fixed-2xl);
+  --demo-corner-inset: var(--layout-space-fixed-2xl);
+  --demo-corner-border: var(--ref-border-width-0);
+  --demo-corner-independent-radius: var(--radius-layout-fixed-md);
+}
+
+.boundaryNotes {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--layout-space-fixed-lg);
+}
+
+.boundaryNotes > * {
+  padding: var(--layout-space-fixed-md);
+  border-radius: var(--radius-layout-fixed-md);
+  background: var(--color-surface-base);
+}
+
+@media (max-width: 64rem) {
+  .referenceGrid,
+  .layoutGrid,
+  .cornerComparisonGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .uiGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 40rem) {
+  .referenceGrid,
+  .scaleGrid,
+  .uiGrid,
+  .layoutGrid,
+  .responsiveGrid,
+  .cornerComparisonGrid,
+  .cornerVariants,
+  .boundaryNotes {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

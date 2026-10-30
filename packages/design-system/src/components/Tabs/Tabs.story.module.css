@@ -1,0 +1,10 @@
+.example,
+.content {
+  display: grid;
+  min-inline-size: 0;
+  gap: var(--ui-space-lg);
+}
+
+.secondary {
+  color: var(--color-text-secondary);
+}

@@ -1,0 +1,89 @@
+{
+  "subject_id": "hub-navigation",
+  "server_service_id": null,
+  "task": "SAVI-357",
+  "status": "candidate_for_visual_review",
+  "resize": "Lanczos in premultiplied alpha; no crop or upscaling",
+  "original": {
+    "path": "originals/hub-navigation.png",
+    "dimensions": [
+      1254,
+      1254
+    ],
+    "bytes": 1300671,
+    "sha256": "f0b38a919fbf90290a851b77d7981c6174241f47166f0ebbb9b39e2bd42f54f8",
+    "alpha_bbox": [
+      109,
+      53,
+      1212,
+      1254
+    ],
+    "alpha_zero_corners": true
+  },
+  "exports": [
+    {
+      "path": "png-640/hub-navigation.png",
+      "dimensions": [
+        640,
+        640
+      ],
+      "bytes": 285598,
+      "sha256": "1d0ba8bd5bf9ff2d5157631a45a797f47abb7997a471c4a78924efc737f16493",
+      "alpha_bbox": [
+        57,
+        62,
+        607,
+        631
+      ],
+      "alpha_zero_corners": true
+    },
+    {
+      "path": "png-320/hub-navigation.png",
+      "dimensions": [
+        320,
+        320
+      ],
+      "bytes": 76274,
+      "sha256": "9502402cfd83142339d55de3f63add6665cdd438ec15ccee9bca39d7bbded741",
+      "alpha_bbox": [
+        28,
+        30,
+        303,
+        315
+      ],
+      "alpha_zero_corners": true
+    },
+    {
+      "path": "png-160/hub-navigation.png",
+      "dimensions": [
+        160,
+        160
+      ],
+      "bytes": 23998,
+      "sha256": "196caea95e7baaa6f35a5a86bc0732ed3dea6332b54b2f73fc0ce8360d970608",
+      "alpha_bbox": [
+        13,
+        14,
+        152,
+        157
+      ],
+      "alpha_zero_corners": true
+    },
+    {
+      "path": "png-64/hub-navigation.png",
+      "dimensions": [
+        64,
+        64
+      ],
+      "bytes": 5537,
+      "sha256": "392c2d61a233ed2a59e6790967c166bcb40e7983752b4482361492f79a949ae1",
+      "alpha_bbox": [
+        4,
+        4,
+        61,
+        60
+      ],
+      "alpha_zero_corners": true
+    }
+  ]
+}

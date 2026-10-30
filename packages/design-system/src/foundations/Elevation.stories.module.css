@@ -1,0 +1,206 @@
+.contentScene,
+.flatContent,
+.raisedContent,
+.floatingContent,
+.modalSurface,
+.requiredBoundary {
+  display: grid;
+}
+
+.roleSample {
+  min-block-size: calc(var(--layout-space-fixed-2xl) * 5);
+  align-content: end;
+  gap: var(--layout-space-fixed-sm);
+  padding: var(--layout-space-fixed-lg);
+  border-radius: var(--radius-layout-fixed-lg);
+  background: var(--color-surface-base);
+  box-shadow: var(--demo-elevation);
+}
+
+.roleSample[data-elevation-role="raised"] {
+  background: var(--color-surface-raised);
+}
+
+.roleSample[data-elevation-role="floating"],
+.roleSample[data-elevation-role="overlay"] {
+  background: var(--color-surface-overlay);
+}
+
+.intentSample {
+  min-block-size: calc(var(--layout-space-fixed-2xl) * 3);
+  align-content: end;
+  padding: var(--layout-space-fixed-md);
+  border-radius: var(--radius-layout-fixed-md);
+  background: var(--color-surface-overlay);
+  box-shadow: var(--elevation-floating);
+}
+
+.contentScene {
+  position: relative;
+  gap: var(--layout-space-fixed-xl);
+  min-block-size: calc(var(--layout-space-fixed-2xl) * 12);
+  padding: var(--layout-space-fixed-xl);
+  border-radius: var(--radius-layout-fixed-xl);
+  background: var(--color-surface-base);
+}
+
+.flatContent,
+.raisedContent {
+  gap: var(--layout-space-fixed-sm);
+  max-inline-size: calc(var(--layout-space-fixed-2xl) * 12);
+  padding: var(--layout-space-fixed-lg);
+  border-radius: var(--radius-layout-fixed-lg);
+}
+
+.flatContent {
+  box-shadow: var(--elevation-none);
+}
+
+.raisedContent {
+  background: var(--color-surface-raised);
+  box-shadow: var(--elevation-raised);
+}
+
+.floatingContent {
+  position: absolute;
+  right: var(--layout-space-fixed-xl);
+  bottom: var(--layout-space-fixed-xl);
+  gap: var(--layout-space-fixed-xs);
+  padding: var(--layout-space-fixed-lg);
+  border-radius: var(--radius-layout-fixed-md);
+  background: var(--color-surface-overlay);
+  box-shadow: var(--elevation-floating);
+}
+
+.modalScene {
+  position: relative;
+  display: grid;
+  min-block-size: calc(var(--layout-space-fixed-2xl) * 10);
+  place-items: center;
+  overflow: hidden;
+  border-radius: var(--radius-layout-fixed-xl);
+  background: var(--color-surface-base);
+}
+
+.pageLines {
+  position: absolute;
+  inset: var(--layout-space-fixed-xl);
+  display: grid;
+  align-content: start;
+  gap: var(--layout-space-fixed-md);
+}
+
+.pageLines span {
+  block-size: var(--layout-space-fixed-sm);
+  border-radius: var(--radius-ui-sm);
+  background: var(--color-surface-subtle);
+}
+
+.pageLines span:nth-child(2) {
+  inline-size: 70%;
+}
+
+.pageLines span:nth-child(3) {
+  inline-size: 45%;
+}
+
+.scrim {
+  position: absolute;
+  inset: 0;
+  background: var(--color-surface-scrim);
+}
+
+.modalSurface {
+  position: relative;
+  inline-size: min(75%, calc(var(--layout-space-fixed-2xl) * 12));
+  gap: var(--layout-space-fixed-sm);
+  padding: var(--layout-space-fixed-xl);
+  border-radius: var(--radius-layout-fixed-lg);
+  background: var(--color-surface-overlay);
+  box-shadow: var(--elevation-overlay);
+}
+
+.intentHost {
+  position: relative;
+  min-block-size: calc(var(--layout-space-fixed-2xl) * 8);
+  padding: var(--layout-space-fixed-xl);
+  border-radius: var(--radius-layout-fixed-xl);
+  background: var(--color-surface-accent-strong-default);
+}
+
+.intentHostLabel {
+  color: var(--color-foreground-on-accent-strong);
+}
+
+.intentFloating {
+  position: absolute;
+  right: var(--layout-space-fixed-xl);
+  bottom: var(--layout-space-fixed-xl);
+  display: grid;
+  gap: var(--layout-space-fixed-xs);
+  padding: var(--layout-space-fixed-lg);
+  color: var(--color-text-primary);
+  border-radius: var(--radius-layout-fixed-md);
+  background: var(--color-surface-overlay);
+  box-shadow: var(--elevation-floating);
+}
+
+.requiredBoundary {
+  gap: var(--layout-space-fixed-sm);
+  padding: var(--layout-space-fixed-xl);
+  border: var(--border-width-default) solid var(--color-border-default);
+  border-radius: var(--radius-layout-fixed-lg);
+  background: var(--color-surface-raised);
+  box-shadow: var(--elevation-raised);
+}
+
+.clippedHost,
+.portalHost {
+  position: relative;
+  min-block-size: calc(var(--layout-space-fixed-2xl) * 5);
+  border-radius: var(--radius-layout-fixed-lg);
+  background: var(--color-surface-base);
+}
+
+.clippedHost {
+  overflow: hidden;
+}
+
+.portalHost {
+  overflow: visible;
+}
+
+.clippedFloating,
+.portalFloating {
+  position: absolute;
+  right: calc(var(--layout-space-fixed-xl) * -1);
+  bottom: var(--layout-space-fixed-xl);
+  padding: var(--layout-space-fixed-lg);
+  border-radius: var(--radius-layout-fixed-md);
+  background: var(--color-surface-overlay);
+  box-shadow: var(--elevation-floating);
+}
+
+@media (forced-colors: active) {
+  .roleSample,
+  .intentSample,
+  .raisedContent,
+  .floatingContent,
+  .modalSurface,
+  .intentFloating,
+  .requiredBoundary,
+  .clippedFloating,
+  .portalFloating {
+    border: var(--border-width-default) solid;
+    border-color: CanvasText;
+    box-shadow: none;
+  }
+}
+
+@media (max-width: 40rem) {
+  /* Specimen exception: keep anchored content inside the narrow demo canvas. */
+  .floatingContent,
+  .intentFloating {
+    position: static;
+  }
+}
