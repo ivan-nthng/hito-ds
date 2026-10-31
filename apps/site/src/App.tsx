@@ -15,9 +15,9 @@ export function App() {
         <nav aria-label="Main navigation" className={styles.links}><Link href="/storybook/">Storybook</Link><Link href={repository} external target="_blank">GitHub</Link><Link href="https://www.figma.com/design/C8ymDNFqGISrgIe6iGimHX" external target="_blank">Figma</Link></nav>
       </header>
       <main id="main" tabIndex={-1} className={styles.main}>
-        <Breadcrumbs items={[{id:"home",label:"Hito",href:"/"}]} currentPage="Overview" label="Breadcrumb" overflowLabel={count => `Show ${count} ancestors`} closeLabel="Close breadcrumb menu" className={styles.breadcrumbs} />
         <div className={styles.editorial}>
           <section className={styles.intro} aria-labelledby="site-title">
+            <Breadcrumbs items={[{id:"home",label:"Hito",href:"/"}]} currentPage="Overview" label="Breadcrumb" overflowLabel={count => `Show ${count} ancestors`} closeLabel="Close breadcrumb menu" className={styles.breadcrumbs} />
             <Text as="h1" id="site-title" variant="display-hero" className={styles.heading}><span>Structure.</span>{" "}<span>With feeling.</span></Text>
             <Text as="p" variant="body-md" className={styles.support}>A design system for interfaces with a point of view. Native Figma components, semantic tokens and React — ready to make your own.</Text>
             <div className={styles.ctas}><MediaActionLink href="/storybook/">Explore Storybook</MediaActionLink><Link href={repository} size="lg" external target="_blank">View source</Link></div>

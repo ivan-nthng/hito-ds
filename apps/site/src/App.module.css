@@ -38,8 +38,13 @@
 
 @media (forced-colors: active) { .footerContent::before { display: none; } }
 
-@media (max-width: 64rem) {
- .intro { position: relative; }
- .intro::before { content: ""; position: absolute; z-index: -1; pointer-events: none; inset: calc(-2 * var(--layout-space-fixed-2xl)); background: var(--color-surface-scrim); filter: blur(var(--layout-space-fixed-2xl)); }
-}
+.intro { position: relative; }
+.intro::before { content: ""; position: absolute; z-index: -1; pointer-events: none; inset: calc(-2 * var(--layout-space-fixed-2xl)); background: var(--color-surface-scrim); filter: blur(var(--layout-space-fixed-2xl)); }
 @media (forced-colors: active) { .intro::before { display: none; } }
+
+/* Budget the desktop composition against available content height. */
+@media (min-width: 64.001rem) {
+ .page { padding-block: clamp(var(--layout-space-fixed-lg), calc(50svh - 23.75rem), var(--layout-space-responsive-xl)); }
+ .content { row-gap: clamp(var(--layout-space-fixed-lg), calc(50svh - 23.75rem), var(--layout-space-responsive-2xl)); }
+ .media { padding-block: 0; }
+}

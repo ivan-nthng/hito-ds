@@ -116,6 +116,37 @@ async function verifyAmbient(context, engine) {
   } finally { await page.close(); }
 }
 
+async function verifyDesktopFit(context, engine) {
+  const page=await context.newPage();
+  for(const [width,height] of [[1280,640],[1280,696],[1366,650],[1440,768],[1440,800],[1536,735],[1920,900]]) {
+    await page.setViewportSize({width,height});await page.goto(origin);await page.evaluate(()=>document.fonts.ready);
+    const bounds=await page.evaluate(()=>{
+      const rect=e=>{const r=e.getBoundingClientRect();return {top:r.top,bottom:r.bottom,left:r.left,right:r.right,height:r.height}};
+      const image=document.querySelector('img[src*="coastal"]'),card=image.parentElement,credit=document.querySelector('[aria-label="Built with Hito"] a');
+      return {header:rect(document.querySelector('header')),card:rect(card),credit:rect(credit),photo:rect(image),live:rect(document.querySelector('[data-hito-live]')),actions:[...card.querySelectorAll('button')].map(rect),imageStyle:{fit:getComputedStyle(image).objectFit,radius:getComputedStyle(image).borderRadius,liveInset:parseFloat(getComputedStyle(document.querySelector('[data-hito-live]')).right)},width:innerWidth,height:innerHeight,scrollY,overflow:document.documentElement.scrollWidth>innerWidth};
+    });
+    assert.equal(bounds.scrollY,0);assert.equal(bounds.overflow,false);
+    for(const [label,r] of Object.entries({header:bounds.header,card:bounds.card,credit:bounds.credit,...Object.fromEntries(bounds.actions.map((r,i)=>[`action${i}`,r]))})) {
+      assert(r.top>=0&&r.bottom<=height-8&&r.left>=0&&r.right<=width,`${engine} ${width}x${height}: ${label} outside first viewport ${JSON.stringify(r)}`);
+    }
+    assert(bounds.card.top>bounds.header.bottom+8,`${engine}: header separation`);
+    assert(bounds.live.top>=bounds.photo.top&&bounds.live.bottom<=bounds.photo.bottom-8&&Math.abs(bounds.photo.right-bounds.live.right-bounds.imageStyle.liveInset)<1,`${engine}: Live stays inside cropped photo`);
+    assert.equal(bounds.imageStyle.fit,'cover');assert(bounds.photo.height>=160&&bounds.photo.height<=289);
+    if(height>=768)assert(Math.abs(bounds.photo.height-288)<1,`${engine}: tall desktop photo preserved`);
+    const track=page.getByRole('button',{name:'View Tracklist'});await track.focus();
+    assert(await track.evaluate(e=>e.matches(':focus-visible')),`${engine}: visible keyboard focus`);
+    await page.keyboard.press('Enter');assert.equal(await track.getAttribute('aria-expanded'),'true');
+    await page.getByRole('link',{name:'Built with Hito DS'}).scrollIntoViewIfNeeded();
+    assert(await page.getByText('Demo tracklist · Soft Signals · Coastal Echoes · After the Tide',{exact:true}).isVisible());
+  }
+  // 200% zoom-equivalent CSS reflow keeps the complete composition reachable.
+  await page.setViewportSize({width:640,height:320});await page.goto(origin);await page.evaluate(()=>document.fonts.ready);
+  await page.getByRole('button',{name:'View Tracklist'}).click();await page.getByRole('link',{name:'Built with Hito DS'}).scrollIntoViewIfNeeded();
+  assert(await page.getByRole('link',{name:'Built with Hito DS'}).isVisible());
+  assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
+  await page.close();console.log(`${engine}: desktop first-viewport Card/actions/credit and expanded/reflow reachability PASS`);
+}
+
 let browser;
 try {
   for (const route of ["/", "/storybook/", "/storybook/iframe.html", "/storybook/index.json", "/favicon.svg", "/storybook/favicon.svg", "/storybook/hito-wordmark-manager.svg"]) assert.equal((await fetch(origin + route)).status, 200, route);
@@ -280,9 +311,10 @@ try {
   await page.goto(`${origin}/?path=//example.com`); await page.getByRole("heading", { name: "Structure. With feeling.", exact: true }).waitFor();
   assert.ok(!requests.some(request => request.method !== "GET"), "demo must not send data");
   assert.ok(!external.some(url => /fonts\.googleapis|fonts\.gstatic/.test(url)), "fonts must remain local");
+  await verifyDesktopFit(context,"chromium");
   await verifyAmbient(context,"chromium");
   if(process.env.HITO_VERIFY_WEBKIT==="1") {
-    const webkitBrowser=await webkit.launch();try {const webkitContext=await webkitBrowser.newContext({isMobile:true,hasTouch:true,reducedMotion:"no-preference"});await verifyAmbient(webkitContext,"webkit");await webkitContext.close();} finally {await webkitBrowser.close();}
+    const webkitBrowser=await webkit.launch();try {const webkitContext=await webkitBrowser.newContext({isMobile:true,hasTouch:true,reducedMotion:"no-preference"});await verifyDesktopFit(webkitContext,"webkit");await verifyAmbient(webkitContext,"webkit");await webkitContext.close();} finally {await webkitBrowser.close();}
   }
   assert.deepEqual(failures, []);
   const npm = process.platform === "win32" ? "npm.cmd" : "npm";

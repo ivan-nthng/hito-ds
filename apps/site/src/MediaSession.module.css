@@ -18,3 +18,12 @@
 
 .attribution::after { content: ""; position: absolute; z-index: -1; pointer-events: none; inset: calc(-1 * var(--layout-space-fixed-xl)); background: var(--color-surface-scrim); filter: blur(var(--layout-space-fixed-lg)); }
 @media (forced-colors: active) { .attribution::after { display: none; } }
+
+/* Reserve native header, copy, actions and credit; crop only the short desktop photo. */
+@media (min-width: 64.001rem) {
+ .photo { max-block-size: clamp(var(--ref-space-40), calc(100svh - var(--ref-space-96) - var(--ref-space-10)), var(--ref-space-72)); }
+}
+
+@media (min-width: 64.001rem) {
+ .statusFrame { aspect-ratio: auto; block-size: clamp(var(--ref-space-40), calc(100svh - var(--ref-space-96) - var(--ref-space-10)), var(--ref-space-72)); }
+}
