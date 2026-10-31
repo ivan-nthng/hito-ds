@@ -13,12 +13,13 @@
   ],
   "scripts": {
     "storybook": "npm run storybook --workspace=@hito-ds/storybook",
-    "build": "npm run build --workspace=@hito-ds/storybook",
+    "build": "node scripts/build-public-site.mjs",
     "typecheck": "npm run typecheck --workspaces",
     "test": "vitest run --config vitest.config.ts",
     "test:stories": "npm run test --workspace=@hito-ds/storybook",
     "validate:tokens": "npm run validate:tokens --workspace=@hito-ds/react",
-    "check": "npm run typecheck && npm test && npm run validate:tokens && npm run build"
+    "check": "npm run typecheck && npm test && npm run validate:tokens && npm run build && npm run verify:site",
+    "verify:site": "node scripts/verify-public-site.mjs"
   },
   "devDependencies": {
     "@testing-library/dom": "10.4.1",

@@ -16,7 +16,7 @@ const surfaceLayerDefinitions = [
     "color/surface/canvas",
     "--color-surface-canvas",
     "root-page-or-environment-background",
-    { light: "color/neutral/50", dark: "color/neutral/1000" },
+    { light: "color/basic/white", dark: "color/neutral/1000" },
   ],
   [
     "color/surface/base",

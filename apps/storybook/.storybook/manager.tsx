@@ -1,6 +1,6 @@
 import React from "react";
 import { create } from "storybook/theming";
-addons.setConfig({ layoutCustomisations: { showPanel: (state, defaultValue) => state.storyId === "hito-welcome--overview" ? false : defaultValue }, theme: create({ base: "light", brandTitle: "Hito DS", brandUrl: "?path=/story/hito-welcome--overview", brandImage: "./hito-wordmark-manager.svg", colorPrimary: "#111827", colorSecondary: "#375dcc" }) });
+addons.setConfig({ layoutCustomisations: { showPanel: (state, defaultValue) => state.storyId === "hito-welcome--overview" ? false : defaultValue }, theme: create({ base: "light", brandTitle: "Hito DS", brandUrl: "/", brandTarget: "_top", brandImage: "./hito-wordmark-manager.svg", colorPrimary: "#111827", colorSecondary: "#375dcc" }) });
 import { Button } from "storybook/internal/components";
 import { addons, types, useParameter } from "storybook/manager-api";
 

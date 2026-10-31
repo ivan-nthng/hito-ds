@@ -1,0 +1,23 @@
+.page { padding: var(--layout-space-responsive-xl); color: var(--color-text-primary); background: var(--color-surface-canvas); }
+.content { display: grid; inline-size: 100%; max-inline-size: 72rem; margin-inline: auto; gap: var(--layout-space-responsive-2xl); }
+.header, .footer, .links { display: flex; flex-wrap: wrap; align-items: center; }
+.header, .footer { justify-content: space-between; gap: var(--layout-space-fixed-md); }
+.links { gap: var(--layout-space-fixed-lg); }
+.logo { inline-size: var(--ref-space-24); block-size: auto; flex: none; }
+.main { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--layout-space-responsive-2xl); padding-block: var(--layout-space-responsive-2xl); }
+.main > *, .stack { min-inline-size: 0; }
+.stack { display: grid; align-content: start; gap: var(--layout-space-fixed-lg); }
+.secondary { color: var(--color-text-secondary); }
+.footer { padding-block: var(--layout-space-responsive-xl); border-block-start: var(--ref-space-px) solid var(--color-border-default); }
+.skip:not(:focus) { position: absolute; inline-size: 1px; block-size: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.skip:focus { position: absolute; inset-block-start: var(--layout-space-fixed-sm); background: var(--color-surface-canvas); }
+@media (max-width: 40rem) {
+  .page { padding: var(--layout-space-responsive-lg); }
+  .main { grid-template-columns: minmax(0, 1fr); }
+  .links { gap: var(--layout-space-fixed-md); }
+}
+
+/* Shared optical content inset: the Checkbox keeps its native root/44px target. */
+.form { --choice-visible-inset: calc((var(--ui-interaction-target-min) - var(--ui-icon-size-md)) / 2); }
+.form > :not(.alignedChoice) { margin-inline-start: var(--choice-visible-inset); }
+.alignedChoice { min-inline-size: 0; }

@@ -315,7 +315,7 @@
     --ref-duration-480: 480ms;
 
     /* Surface layers and contextual composition. */
-    --color-surface-canvas: var(--ref-color-neutral-50);
+    --color-surface-canvas: var(--ref-color-basic-white);
     --color-surface-base: var(--ref-color-basic-white);
     --color-surface-raised: var(--ref-color-basic-white);
     --color-surface-overlay: var(--ref-color-basic-white);
@@ -827,7 +827,7 @@
 
   [data-hito-color-scheme="light"] {
     color-scheme: light;
-    --color-surface-canvas: var(--ref-color-neutral-50);
+    --color-surface-canvas: var(--ref-color-basic-white);
     --color-surface-base: var(--ref-color-basic-white);
     --color-surface-raised: var(--ref-color-basic-white);
     --color-surface-overlay: var(--ref-color-basic-white);
@@ -1430,7 +1430,7 @@
     --type-family-base: var(--font-hito-base-source, "Instrument Sans"), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     --type-family-display: var(--font-hito-display-source, "Poppins"), var(--font-hito-base-source, "Instrument Sans"), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     --type-family-mono: var(--font-hito-mono-source, "Fira Mono"), ui-monospace, "SFMono-Regular", Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-    --color-surface-canvas: light-dark(var(--ref-color-neutral-50), var(--ref-color-neutral-1000));
+    --color-surface-canvas: light-dark(var(--ref-color-basic-white), var(--ref-color-neutral-1000));
     --color-surface-base: light-dark(var(--ref-color-basic-white), var(--ref-color-neutral-950));
     --color-surface-raised: light-dark(var(--ref-color-basic-white), var(--ref-color-neutral-900));
     --color-surface-overlay: light-dark(var(--ref-color-basic-white), var(--ref-color-neutral-950));

@@ -3,5 +3,6 @@
   "framework": null,
   "installCommand": "npm ci",
   "buildCommand": "npm run build",
-  "outputDirectory": "apps/storybook/storybook-static"
+  "outputDirectory": "output/public-site",
+  "trailingSlash": true
 }

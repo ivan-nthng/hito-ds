@@ -4,7 +4,7 @@
 
 Hito DS connects a Figma library, reusable React components and a working Storybook. It comes from building real products: dense workspaces, forms, data tables and the small interactions that make them usable.
 
-**[Explore Storybook](https://www.hitocajon.com/)** · **[Figma library](https://www.figma.com/design/C8ymDNFqGISrgIe6iGimHX/Hito-DS)** · **[How design and code connect](docs/figma-and-code.md)** · **[Implementation services](docs/implementation.md)**
+**[Hito DS](https://www.hitocajon.com/)** · **[Explore Storybook](https://www.hitocajon.com/storybook/)** · **[Figma library](https://www.figma.com/design/C8ymDNFqGISrgIe6iGimHX/Hito-DS)** · **[How design and code connect](docs/figma-and-code.md)**
 
 **Status: alpha.** See [verification notes](docs/verification.md) before adopting.
 
@@ -16,7 +16,7 @@ Hito DS connects a Figma library, reusable React components and a working Storyb
 - Interactive Storybook examples with English/Portuguese and short/long content profiles.
 - Figma references alongside components, token validation and interaction tests.
 
-This is a standalone extraction of the shared design system developed for Saavi. Product portals, backend services, environment configuration and business records are outside this repository. The system is a starting point to adapt to your product, not a claim that every component fits every use case.
+Hito DS is a standalone open-source design system for adaptation to different products. Product-specific backend services and business records are outside its scope. Test the components in your consuming application before adopting them.
 
 ## Run locally
 
@@ -24,10 +24,12 @@ Use Node.js 24 and npm.
 
 ```sh
 npm ci
-npm run storybook
+npm run dev --workspace=@hito-ds/site
 ```
 
-Storybook starts on http://localhost:6006. `npm run build` produces the static site in `apps/storybook/storybook-static`.
+The site dev server prints its local URL. Run `npm run storybook` for the separate component explorer at http://localhost:6006.
+
+`npm run build` produces the combined static site in `output/public-site`: the landing at `/` and the complete Storybook at `/storybook/`. `npm run verify:site` checks that real combined artifact, including links, demo interactions, local assets and missing-file responses. Browser checks need the existing Playwright Chromium installation (`npx playwright install chromium`).
 
 ## Use the components
 
@@ -53,15 +55,10 @@ npm test
 npm run validate:tokens
 npm run test:stories
 npm run build
+npm run verify:site
 ```
 
 The tests and examples make behavior reviewable; they do not replace testing in the consuming product.
-
-## Need this in your team?
-
-I help teams audit their existing UI, align Figma and frontend components, build Storybook documentation and introduce the system into a working product. [See the implementation offer](docs/implementation.md).
-
-Created by [Ivan Cheremisin](https://www.cheremisin.co.uk/), Product Designer & Design Engineer.
 
 ## Repository migration
 

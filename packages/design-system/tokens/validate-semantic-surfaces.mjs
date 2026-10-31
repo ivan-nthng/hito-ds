@@ -15,7 +15,7 @@ import { assert, contrastRatio, normalizeCss } from "./validation-helpers.mjs";
 
 const expectedLayers = Object.freeze({
   "color/surface/canvas": Object.freeze({
-    light: "color/neutral/50",
+    light: "color/basic/white",
     dark: "color/neutral/1000",
   }),
   "color/surface/base": Object.freeze({

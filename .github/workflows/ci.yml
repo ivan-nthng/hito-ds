@@ -1,4 +1,4 @@
-name: Verify Storybook
+name: Verify public site and Storybook
 on:
   push:
     branches: [main]

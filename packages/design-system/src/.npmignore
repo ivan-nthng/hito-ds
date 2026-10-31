@@ -1,0 +1,7 @@
+# Development-only Storybook and test fixtures are not public runtime contents.
+foundations/
+storybook/
+**/*.stories.*
+**/*.story.*
+**/*.test.*
+**/__tests__/
