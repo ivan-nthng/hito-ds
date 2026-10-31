@@ -20,11 +20,11 @@ export const mediaRecipe = Object.freeze([
   parameter("glow-warm", "color(srgb 1 0.7254901961 0.1764705882)", "Approved source warm field; footer contrast correction retained."),
   parameter("glow-cool", "color(srgb 0 0.8078431373 0.8196078431)", "Approved source cool field."),
   parameter("field-width", "124vw", "Reference isolated field extent."),
-  parameter("field-height", "69.75vw", "Native retained field geometry at desktop/mobile."),
+  parameter("field-height", "124%", "HDS-44 source inset−12% on both viewport-height edges."),
   parameter("field-left", "-12vw", "Reference field crop."),
-  parameter("field-bottom", "-6.75vw", "Native field anchor inside retained artwork bounds."),
-  parameter("field-overhang", "calc(var(--layout-space-responsive-2xl) / 2)", "Retained artwork exceeds shortened desktop root by28px/mobile16px.", "var(--layout-space-fixed-lg)"),
-  parameter("field-blur", "7vw", "Approved isolated group blur; objects remain SCREEN."),
+  parameter("field-bottom", "-12%", "HDS-44 source viewport-bottom overscan, independent of document height."),
+  parameter("field-overhang", "0px", "HDS-44 reserved compatibility parameter; obsolete document compensation is no longer consumed."),
+  Object.freeze({ ...parameter("field-blur", "clamp(44px, 7vw, 100px)", "HDS-44 exact implemented source clamp; objects remain SCREEN."), narrowWebValue: "52px" }),
   parameter("mask-start", "25%", "Source isolated field mask transparent stop."),
   parameter("mask-end", "80%", "Source isolated field mask opaque stop."),
   parameter("field-blend", "screen", "Six-object approved compositing operation."),
@@ -33,8 +33,8 @@ export const mediaRecipe = Object.freeze([
   parameter("warm-sixth-opacity", "0.4", "Source object6 opacity on mobile.", "0.75"),
   parameter("soft-opacity", "0.9", "Source violet/cool object opacity."),
   parameter("grain-opacity", "0.18", "Separate above-field grain overlay."),
-  parameter("grain-luminance", "0.45", "Runtime SVG calibration to approved native black+monotone NOISE; not a Figma filter property."),
-  parameter("grain-contrast", "2.35", "Scoped SVG texture variance calibration; brightness precedes contrast, preserving native near-black grain."),
+  parameter("grain-luminance", "1", "HDS-44 source-consistent visible grain; neutral brightness."),
+  parameter("grain-contrast", "1", "HDS-44 source-consistent visible grain; neutral contrast."),
   parameter("grain-size", "var(--ref-space-64)", "Original256px grain tile."),
   parameter("orb-radius", "50%", "Ellipse geometry, not a UI corner token."),
   parameter("intro-column", "32rem", "Native512px desktop introduction column."),
@@ -56,5 +56,6 @@ export const mediaRecipe = Object.freeze([
 export function mediaRecipeCss() {
   const declarations = mediaRecipe.flatMap(p => p.cssVariable ? [`    ${p.cssVariable}: ${p.webValue};`] : Object.entries(p.values).map(([name,value]) => `    ${name}: ${value};`)).join("\n");
   const mobile = mediaRecipe.filter(p => p.mobileWebValue).map(p => `      ${p.cssVariable}: ${p.mobileWebValue};`).join("\n");
-  return `/* HDS-41 media recipe start */\n@layer hito.tokens {\n  :root {\n${declarations}\n  }\n  @media (max-width: 64rem) {\n    :root {\n${mobile}\n    }\n  }\n}\n/* HDS-41 media recipe end */`;
+  const narrow = mediaRecipe.filter(p => p.narrowWebValue).map(p => `      ${p.cssVariable}: ${p.narrowWebValue};`).join("\n");
+  return `/* HDS-41 media recipe start */\n@layer hito.tokens {\n  :root {\n${declarations}\n  }\n  @media (max-width: 64rem) {\n    :root {\n${mobile}\n    }\n  }\n  @media (max-width: 37.5rem) {\n    :root {\n${narrow}\n    }\n  }\n}\n/* HDS-41 media recipe end */`;
 }

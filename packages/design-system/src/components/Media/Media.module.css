@@ -8,8 +8,8 @@
   .actionLink:active { background: var(--color-surface-neutral-strong-pressed); color: var(--color-foreground-on-neutral-strong); }
   .footer { margin-inline: calc(-1 * var(--layout-space-fixed-sm)); }
   .actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--layout-space-fixed-sm); padding: var(--layout-space-fixed-lg) calc(var(--layout-space-fixed-sm) + var(--media-body-inset)) var(--media-body-inset); }
-  .backdrop { position: absolute; inset: 0; overflow: hidden; pointer-events: none; isolation: isolate; background: var(--media-background); }
-  .field { position: absolute; inline-size: var(--media-field-width); block-size: var(--media-field-height); left: var(--media-field-left); bottom: calc(var(--media-field-bottom) - var(--media-field-overhang)); filter: blur(var(--media-field-blur)); isolation: isolate; mask-image: linear-gradient(to bottom, transparent var(--media-mask-start), var(--media-background) var(--media-mask-end)); }
+  .backdrop { position: fixed; inset: 0; overflow: hidden; pointer-events: none; isolation: isolate; background: var(--media-background); }
+  .field { position: absolute; inline-size: var(--media-field-width); block-size: var(--media-field-height); left: var(--media-field-left); bottom: var(--media-field-bottom); filter: blur(var(--media-field-blur)); isolation: isolate; mask-image: linear-gradient(to bottom, transparent var(--media-mask-start), var(--media-background) var(--media-mask-end)); }
   .object { position: absolute; border-radius: var(--media-orb-radius); mix-blend-mode: var(--media-field-blend); }
   .object:nth-child(1) { width: var(--media-object-1-width); height: var(--media-object-1-height); left: var(--media-object-1-left); top: var(--media-object-1-top); background: var(--media-glow-violet); opacity: var(--media-soft-opacity); }
   .object:nth-child(2) { width: var(--media-object-2-width); height: var(--media-object-2-height); left: var(--media-object-2-left); top: var(--media-object-2-top); background: var(--media-glow-warm); opacity: var(--media-warm-opacity); }

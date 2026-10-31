@@ -1432,11 +1432,11 @@
     --media-glow-warm: color(srgb 1 0.7254901961 0.1764705882);
     --media-glow-cool: color(srgb 0 0.8078431373 0.8196078431);
     --media-field-width: 124vw;
-    --media-field-height: 69.75vw;
+    --media-field-height: 124%;
     --media-field-left: -12vw;
-    --media-field-bottom: -6.75vw;
-    --media-field-overhang: calc(var(--layout-space-responsive-2xl) / 2);
-    --media-field-blur: 7vw;
+    --media-field-bottom: -12%;
+    --media-field-overhang: 0px;
+    --media-field-blur: clamp(44px, 7vw, 100px);
     --media-mask-start: 25%;
     --media-mask-end: 80%;
     --media-field-blend: screen;
@@ -1445,8 +1445,8 @@
     --media-warm-sixth-opacity: 0.4;
     --media-soft-opacity: 0.9;
     --media-grain-opacity: 0.18;
-    --media-grain-luminance: 0.45;
-    --media-grain-contrast: 2.35;
+    --media-grain-luminance: 1;
+    --media-grain-contrast: 1;
     --media-grain-size: var(--ref-space-64);
     --media-orb-radius: 50%;
     --media-intro-column: 32rem;
@@ -1490,7 +1490,6 @@
   }
   @media (max-width: 64rem) {
     :root {
-      --media-field-overhang: var(--layout-space-fixed-lg);
       --media-warm-opacity: 0.8;
       --media-warm-third-opacity: 1;
       --media-warm-sixth-opacity: 0.75;
@@ -1498,6 +1497,11 @@
       --media-card-radius: var(--radius-layout-fixed-lg);
       --media-photo-radius: var(--radius-layout-fixed-sm);
       --media-body-inset: var(--layout-space-fixed-lg);
+    }
+  }
+  @media (max-width: 37.5rem) {
+    :root {
+      --media-field-blur: 52px;
     }
   }
 }

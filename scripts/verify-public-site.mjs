@@ -61,6 +61,7 @@ try {
     await page.emulateMedia({ colorScheme: scheme }); await page.setViewportSize({ width, height: 1000 });
     await page.goto(origin); await page.getByRole("heading", { name: "Structure. With feeling.", exact: true }).waitFor();
     await page.evaluate(() => document.fonts.ready);
+    await page.locator("main img").evaluate(image => image.decode());
     assert.equal(await page.locator("html").getAttribute("data-hito-color-scheme"), "dark");
     assert.equal(await overflow(), false, `${scheme}/${width} overflow`);
     const geometry = await page.locator("[data-card]").evaluate(el => {
@@ -126,6 +127,27 @@ try {
   const credit=page.getByRole("link",{name:"Built with Hito DS",exact:true}); await credit.focus();
   assert.equal(await credit.evaluate(el=>el.matches(":focus-visible") && getComputedStyle(el).outlineWidth==="2px"),true);
   assert.equal(await page.locator("[data-tag] button,[data-tag] a,[data-tag][tabindex]").count(),0,"Tags remain passive");
+  console.log("Checking actual viewport-stationary artwork across scroll and content growth");
+  for(const [width,height] of [[1440,900],[390,844],[320,800],[1440,1400]]) {
+    await page.setViewportSize({width,height}); await page.goto(origin); await page.evaluate(()=>document.fonts.ready);
+    const backgroundFrame=()=>page.locator("[data-media-backdrop]").evaluate(el=>{const r=el.getBoundingClientRect();return [r.x,r.y,r.width,r.height];});
+    const artwork=async()=>{await page.locator("header").evaluate(el=>el.parentElement.style.visibility="hidden");const pixels=await page.screenshot();await page.locator("header").evaluate(el=>el.parentElement.style.visibility="");return pixels;};
+    const initial=await artwork(), cardTop=await page.locator("[data-card]").evaluate(el=>el.getBoundingClientRect().top);
+    assert.deepEqual(await backgroundFrame(),[0,0,width,height]);
+    for(const expanded of [false,true]) {
+      if(expanded) await page.getByRole("button",{name:"View Tracklist",exact:true}).click();
+      for(const fraction of [0,.5,1]) {
+        await page.evaluate(f=>scrollTo(0,f*(document.documentElement.scrollHeight-innerHeight)),fraction); await page.waitForTimeout(40);
+        assert.deepEqual(await backgroundFrame(),[0,0,width,height],"artwork frame remains viewport-bound");
+        assert.ok((await artwork()).equals(initial),"actual artwork pixels stay fixed through scroll/expanded content");
+        if(!expanded && fraction===1 && await page.evaluate(()=>scrollY>0)) assert.ok(await page.locator("[data-card]").evaluate(el=>el.getBoundingClientRect().top)<cardTop,"foreground still scrolls");
+        assert.equal(await overflow(),false);
+        assert.ok(await page.evaluate(()=>Math.abs(document.documentElement.scrollHeight-document.querySelector("#root > div").getBoundingClientRect().height)<=1),"decorative paint adds no document height");
+      }
+    }
+    const footerLink=page.getByRole("link",{name:"MIT license",exact:true}); await footerLink.focus(); await page.keyboard.press("Tab"); await page.keyboard.press("Shift+Tab");
+    assert.equal(await footerLink.evaluate(el=>{const r=el.getBoundingClientRect(),s=getComputedStyle(el),extent=parseFloat(s.outlineWidth)+parseFloat(s.outlineOffset);return el.matches(":focus-visible")&&r.left-extent>=0&&r.right+extent<=innerWidth&&r.top-extent>=0&&r.bottom+extent<=innerHeight;}),true,"footer focus remains inside viewport paint bounds");
+  }
   console.log("Checking actual repeated Live beyond the finite native export and reduced motion");
   await page.setViewportSize({width:1440,height:1019}); await page.emulateMedia({reducedMotion:"no-preference"}); await page.goto(origin);
   const phases=[];

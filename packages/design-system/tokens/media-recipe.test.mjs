@@ -10,8 +10,8 @@ test("bounded approved recipe preserves native geometry, opacity and repeat timi
  assert.equal(get("warm-opacity").mobileWebValue,"0.8");
  assert.equal(get("warm-third-opacity").mobileWebValue,"1");
  assert.equal(get("warm-sixth-opacity").mobileWebValue,"0.75");
- assert.equal(get("grain-luminance").webValue,"0.45");
- assert.equal(get("grain-contrast").webValue,"2.35");
+ assert.equal(get("grain-luminance").webValue,"1");
+ assert.equal(get("grain-contrast").webValue,"1");
  assert.equal(get("live-cycle").webValue,"calc(var(--motion-duration-emphasis) * 4)");
  assert.ok((await readFile(new URL("../src/tokens.css",import.meta.url),"utf8")).includes(mediaRecipeCss()));
 });
