@@ -37,13 +37,25 @@ async function verifyAmbient(context, engine) {
   const snapshot = async () => {
     await page.waitForFunction(()=>Math.abs(document.querySelector("[data-media-anchor]").getBoundingClientRect().top-(window.visualViewport?.offsetTop??0))<1);
     await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
-    await page.locator("header").evaluate(el=>el.parentElement.style.visibility="hidden");
+    await page.locator("[data-site-content]").evaluate(el=>el.style.visibility="hidden");
     const grain=page.locator("[data-media-backdrop]").locator(":scope > div").last();await grain.evaluate(el=>el.style.visibility="hidden");
     const pixels=await page.screenshot({style:"::-webkit-scrollbar{display:none!important} html{scrollbar-width:none!important}"});
     await grain.evaluate(el=>el.style.visibility="");
-    await page.locator("header").evaluate(el=>el.parentElement.style.visibility="");
+    await page.locator("[data-site-content]").evaluate(el=>el.style.visibility="");
     return pixels;
   };
+  const compareArtworkFrames = async (first, second) => page.evaluate(async ({first,second})=>{
+    const decode=async encoded=>{const image=new Image();image.src=`data:image/png;base64,${encoded}`;await image.decode();const canvas=document.createElement("canvas");canvas.width=image.width;canvas.height=image.height;const context=canvas.getContext("2d");context.drawImage(image,0,0);return {width:image.width,height:image.height,pixels:context.getImageData(0,0,image.width,image.height).data};};
+    const a=await decode(first),b=await decode(second);
+    if(a.width!==b.width||a.height!==b.height)return {stationary:false,reason:"dimensions changed"};
+    let changedPixels=0,maxChannelDelta=0,alphaChanges=0;
+    for(let i=0;i<a.pixels.length;i+=4){let changed=false;for(let channel=0;channel<3;channel++){const delta=Math.abs(a.pixels[i+channel]-b.pixels[i+channel]);maxChannelDelta=Math.max(maxChannelDelta,delta);changed ||= delta!==0;}if(changed)changedPixels++;if(a.pixels[i+3]!==b.pixels[i+3])alphaChanges++;}
+    // Captured static WebKit pair:173/334836 pixels differ by one RGB level.
+    // Bound only that minute raster noise; a normal moving pair must fail this same policy.
+    const pixelBudget=Math.floor(a.width*a.height*.001);
+    return {stationary:maxChannelDelta<=1&&changedPixels<=pixelBudget&&alphaChanges===0,changedPixels,maxChannelDelta,alphaChanges,pixelBudget};
+  },{first:first.toString("base64"),second:second.toString("base64")});
+  const reducedState=()=>page.locator("[data-media-backdrop]").evaluate(root=>({forms:[...root.querySelectorAll("[data-media-object]")].map(el=>({transform:getComputedStyle(el).transform,animations:el.getAnimations().length})),anchorTop:root.querySelector("[data-media-anchor]").getBoundingClientRect().top,scrollY,clientWidth:document.documentElement.clientWidth,viewportTop:window.visualViewport?.offsetTop??0,viewportHeight:window.visualViewport?.height??innerHeight}));
   const phase = time => page.locator("[data-media-backdrop]").evaluate((root,time)=>{
     for(const el of [...root.querySelectorAll("[data-media-object]"),root.lastElementChild]) for(const animation of el.getAnimations()) { animation.pause(); animation.currentTime=time; }
   },time);
@@ -68,9 +80,28 @@ async function verifyAmbient(context, engine) {
       if(await page.evaluate(()=>scrollY>0)) assert.ok(await page.locator("[data-card]").evaluate(el=>el.getBoundingClientRect().top)<cardTop);
       await page.emulateMedia({reducedMotion:"reduce"});
       assert.equal(await page.locator("[data-media-backdrop]").evaluate(el=>el.getAnimations({subtree:true}).length),0);
-      await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
-      await page.waitForTimeout(250); // Allow WebKit to commit removal of promoted moving layers.
-      const stillA=await snapshot();await page.waitForTimeout(300);assert.ok((await snapshot()).equals(stillA),`${engine}: reduced motion freezes actual artwork`);
+      // Hold isolation constant across the pair: toggling filtered foreground layers between
+      // captures can rerasterize an unchanged gradient with one-channel rounding differences.
+      const reducedIsolation=await page.addStyleTag({content:'[data-site-content], [data-media-backdrop] > :last-child {visibility:hidden!important} ::-webkit-scrollbar{display:none!important} html{scrollbar-width:none!important}'});
+      try {
+        await page.waitForFunction(()=>Math.abs(document.querySelector("[data-media-anchor]").getBoundingClientRect().top-(window.visualViewport?.offsetTop??0))<1);
+        await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
+        await page.waitForTimeout(250); // Commit reduced layers and isolation before either capture.
+        const before=await reducedState();assert.ok(before.forms.every(form=>form.animations===0&&form.transform==="none"));
+        const stillA=await page.screenshot();await page.waitForTimeout(300);const stillB=await page.screenshot();
+        assert.deepEqual(await reducedState(),before,`${engine}: reduced forms/viewport remain stationary`);
+        const stationary=await compareArtworkFrames(stillA,stillB);
+        assert.ok(stationary.stationary,`${engine}: reduced motion freezes actual artwork ${width}x${height} ${JSON.stringify(stationary)}`);
+        // Negative control uses the real six slow CSS animations, with no pause or screenshot disabling.
+        await page.emulateMedia({reducedMotion:"no-preference"});
+        await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
+        assert.equal(await page.locator("[data-media-backdrop]").evaluate(root=>root.getAnimations({subtree:true}).length),6);
+        const movingA=await page.screenshot();await page.waitForTimeout(1000);const movingB=await page.screenshot();
+        const moving=await compareArtworkFrames(movingA,movingB);
+        assert.equal(moving.stationary,false,`${engine}: stationary comparison must reject real ambient movement ${width}x${height} ${JSON.stringify(moving)}`);
+        console.log(`${engine}: reduced frame ${width}x${height} ${JSON.stringify(stationary)}; moving negative ${JSON.stringify(moving)}`);
+        await page.emulateMedia({reducedMotion:"reduce"});
+      } finally { await reducedIsolation.evaluate(el=>el.remove()); }
       await page.getByRole("button",{name:"Play",exact:true}).click();await page.getByRole("button",{name:"Pause",exact:true}).click();
     }
     // Real page paint below a deliberately shortened viewport plane while Card continues.
@@ -88,9 +119,9 @@ async function verifyAmbient(context, engine) {
     assert.equal(await page.locator("[data-media-backdrop]").evaluate(root=>[root,...root.querySelectorAll("*")].some(el=>["fixed","sticky"].includes(getComputedStyle(el).position))),false,"live decoration has no native fixed/sticky layer");
     assert.equal(canvas.html,canvas.root);assert.equal(canvas.body,"rgba(0, 0, 0, 0)");assert.equal(canvas.page,"rgba(0, 0, 0, 0)");
     // Isolate grain: actual time-separated frames must be static while forms still run.
-    await page.locator("header").evaluate(el=>el.parentElement.style.visibility="hidden");await page.locator("[data-media-anchor]").evaluate(el=>el.style.visibility="hidden");
+    await page.locator("[data-site-content]").evaluate(el=>el.style.visibility="hidden");await page.locator("[data-media-anchor]").evaluate(el=>el.style.visibility="hidden");
     const grainA=await page.screenshot();await page.waitForTimeout(500);assert.ok((await page.screenshot()).equals(grainA),`${engine}: no directional grain animation`);
-    await page.locator("header").evaluate(el=>el.parentElement.style.visibility="");await page.locator("[data-media-anchor]").evaluate(el=>el.style.visibility="");
+    await page.locator("[data-site-content]").evaluate(el=>el.style.visibility="");await page.locator("[data-media-anchor]").evaluate(el=>el.style.visibility="");
     // Same document resized through toolbar-like heights; this is engine coverage, not iOS toolbar hardware.
     await page.setViewportSize({width:393,height:852});await page.goto(origin);await page.emulateMedia({reducedMotion:"no-preference"});
     for(const height of [664,852,744]) {
@@ -118,17 +149,24 @@ async function verifyAmbient(context, engine) {
 
 async function verifyDesktopFit(context, engine) {
   const page=await context.newPage();
-  for(const [width,height] of [[1280,640],[1280,696],[1366,650],[1440,768],[1440,800],[1536,735],[1920,900]]) {
+  for(const [width,height] of [[1280,640],[1280,696],[1366,650],[1440,768],[1440,800],[1536,735],[1920,900],[1920,1200]]) {
     await page.setViewportSize({width,height});await page.goto(origin);await page.evaluate(()=>document.fonts.ready);
     const bounds=await page.evaluate(()=>{
       const rect=e=>{const r=e.getBoundingClientRect();return {top:r.top,bottom:r.bottom,left:r.left,right:r.right,height:r.height}};
       const image=document.querySelector('img[src*="coastal"]'),card=image.parentElement,credit=document.querySelector('[aria-label="Built with Hito"] a');
-      return {header:rect(document.querySelector('header')),card:rect(card),credit:rect(credit),photo:rect(image),live:rect(document.querySelector('[data-hito-live]')),actions:[...card.querySelectorAll('button')].map(rect),imageStyle:{fit:getComputedStyle(image).objectFit,radius:getComputedStyle(image).borderRadius,liveInset:parseFloat(getComputedStyle(document.querySelector('[data-hito-live]')).right)},width:innerWidth,height:innerHeight,scrollY,overflow:document.documentElement.scrollWidth>innerWidth};
+      return {intro:rect(document.querySelector('[aria-labelledby="site-title"]')),introParts:[...document.querySelectorAll('[aria-labelledby="site-title"] h1,[aria-labelledby="site-title"] p,[aria-labelledby="site-title"] a,header nav a')].map(rect),footer:rect(document.querySelector('footer')),header:rect(document.querySelector('header')),card:rect(card),credit:rect(credit),photo:rect(image),live:rect(document.querySelector('[data-hito-live]')),actions:[...card.querySelectorAll('button')].map(rect),imageStyle:{fit:getComputedStyle(image).objectFit,radius:getComputedStyle(image).borderRadius,liveInset:parseFloat(getComputedStyle(document.querySelector('[data-hito-live]')).right)},width:innerWidth,height:innerHeight,scrollY,overflow:document.documentElement.scrollWidth>innerWidth};
     });
     assert.equal(bounds.scrollY,0);assert.equal(bounds.overflow,false);
-    for(const [label,r] of Object.entries({header:bounds.header,card:bounds.card,credit:bounds.credit,...Object.fromEntries(bounds.actions.map((r,i)=>[`action${i}`,r]))})) {
+    for(const [label,r] of Object.entries({header:bounds.header,intro:bounds.intro,card:bounds.card,credit:bounds.credit,...Object.fromEntries(bounds.introParts.map((r,i)=>[`heroPart${i}`,r])),...Object.fromEntries(bounds.actions.map((r,i)=>[`action${i}`,r]))})) {
       assert(r.top>=0&&r.bottom<=height-8&&r.left>=0&&r.right<=width,`${engine} ${width}x${height}: ${label} outside first viewport ${JSON.stringify(r)}`);
     }
+    assert(bounds.footer.top>=height,`${engine}: footer must begin after first viewport`);
+    if(height>=900) {
+      const heroTop=Math.min(bounds.intro.top,bounds.card.top),heroBottom=Math.max(bounds.intro.bottom,bounds.credit.bottom);
+      assert(Math.abs((heroTop+heroBottom)/2-(bounds.header.bottom+height)/2)<40,`${engine}: tall hero centers below navigation`);
+    }
+    await page.locator('footer').scrollIntoViewIfNeeded();assert(await page.getByText('Open source. Built to be used together.',{exact:true}).isVisible());
+    await page.evaluate(()=>scrollTo(0,0));
     assert(bounds.card.top>bounds.header.bottom+8,`${engine}: header separation`);
     assert(bounds.live.top>=bounds.photo.top&&bounds.live.bottom<=bounds.photo.bottom-8&&Math.abs(bounds.photo.right-bounds.live.right-bounds.imageStyle.liveInset)<1,`${engine}: Live stays inside cropped photo`);
     assert.equal(bounds.imageStyle.fit,'cover');assert(bounds.photo.height>=160&&bounds.photo.height<=289);
@@ -249,7 +287,7 @@ try {
   for(const [width,height] of [[1440,900],[390,844],[320,800],[1440,1400]]) {
     await page.setViewportSize({width,height}); await page.goto(origin); await page.evaluate(()=>document.fonts.ready);
     const backgroundFrame=()=>page.locator("[data-media-viewport]").evaluate(el=>{const r=el.getBoundingClientRect();return [r.x,r.y,r.width,r.height];});
-    const artwork=async()=>{await page.locator("header").evaluate(el=>el.parentElement.style.visibility="hidden");await page.locator("[data-media-backdrop]").evaluate(root=>root.lastElementChild.style.visibility="hidden");const pixels=await page.screenshot();await page.locator("[data-media-backdrop]").evaluate(root=>root.lastElementChild.style.visibility="");await page.locator("header").evaluate(el=>el.parentElement.style.visibility="");return pixels;};
+    const artwork=async()=>{await page.locator("[data-site-content]").evaluate(el=>el.style.visibility="hidden");await page.locator("[data-media-backdrop]").evaluate(root=>root.lastElementChild.style.visibility="hidden");const pixels=await page.screenshot();await page.locator("[data-media-backdrop]").evaluate(root=>root.lastElementChild.style.visibility="");await page.locator("[data-site-content]").evaluate(el=>el.style.visibility="");return pixels;};
     const initial=await artwork(), cardTop=await page.locator("[data-card]").evaluate(el=>el.getBoundingClientRect().top);
     assert.deepEqual(await backgroundFrame(),[0,0,width,height]);
     for(const expanded of [false,true]) {

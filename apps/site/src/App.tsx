@@ -9,7 +9,8 @@ export function App() {
     <PageBackground />
     <div data-site-page="" className={styles.page} data-hito-theme="neutral" data-hito-color-scheme="dark">
     <Link href="#main" className={styles.skip}>Skip to main content</Link>
-    <div className={styles.content}>
+    <div data-site-content="" className={styles.content}>
+      <div className={styles.hero}>
       <header className={styles.header}>
         <div className={styles.logoSlot}><HitoWordmark className={styles.logo} /></div>
         <nav aria-label="Main navigation" className={styles.links}><Link href="/storybook/">Storybook</Link><Link href={repository} external target="_blank">GitHub</Link><Link href="https://www.figma.com/design/C8ymDNFqGISrgIe6iGimHX" external target="_blank">Figma</Link></nav>
@@ -25,6 +26,7 @@ export function App() {
           <section aria-label="Built with Hito" className={styles.media}><MediaSession /></section>
         </div>
       </main>
+      </div>
       <footer className={styles.footer}><Separator decorative /><div className={styles.footerContent}><Text as="p" variant="body-sm" className={styles.secondary}>Open source. Built to be used together.</Text><div className={styles.links}><Link href={repository} external target="_blank">Source &amp; contributions</Link><Link href={`${repository}/blob/main/LICENSE`} external target="_blank">MIT license</Link></div></div></footer>
     </div>
   </div></>;

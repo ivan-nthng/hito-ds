@@ -43,8 +43,12 @@
 @media (forced-colors: active) { .intro::before { display: none; } }
 
 /* Budget the desktop composition against available content height. */
+.hero { display: contents; }
 @media (min-width: 64.001rem) {
- .page { padding-block: clamp(var(--layout-space-fixed-lg), calc(50svh - 23.75rem), var(--layout-space-responsive-xl)); }
+ .page { --hero-inset: clamp(var(--layout-space-fixed-lg), calc(50svh - 23.75rem), var(--layout-space-responsive-xl)); padding-block: var(--hero-inset); }
  .content { row-gap: clamp(var(--layout-space-fixed-lg), calc(50svh - 23.75rem), var(--layout-space-responsive-2xl)); }
  .media { padding-block: 0; }
+ .hero { display: grid; grid-template-rows: auto 1fr; row-gap: var(--layout-space-fixed-lg); min-block-size: calc(100svh - 2 * var(--hero-inset)); }
+ .main { align-content: center; }
+ .footer { margin-block-start: var(--hero-inset); }
 }
