@@ -4,7 +4,7 @@ import { readFile, stat } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { execFileSync } from "node:child_process";
-import { chromium } from "playwright";
+import { chromium, webkit } from "playwright";
 
 const root = fileURLToPath(new URL("../output/public-site/", import.meta.url));
 const mime = { ".html": "text/html", ".js": "text/javascript", ".css": "text/css", ".svg": "image/svg+xml", ".json": "application/json", ".woff2": "font/woff2", ".png": "image/png", ".jpg": "image/jpeg" };
@@ -29,6 +29,69 @@ const server = createServer(async (request, response) => {
 const suppliedBase = process.argv[2] ?? process.env.HITO_SITE_BASE_URL;
 if (!suppliedBase) await new Promise(resolve => server.listen(0, "127.0.0.1", resolve));
 const origin = suppliedBase ? new URL(suppliedBase).origin : `http://127.0.0.1:${server.address().port}`;
+
+// Controlled phases test anchoring without rejecting intentionally moving artwork.
+async function verifyAmbient(context, engine) {
+  const page = await context.newPage(), errors = [];
+  page.on("pageerror",error=>errors.push(error.message));
+  const snapshot = async () => {
+    await page.locator("header").evaluate(el=>el.parentElement.style.visibility="hidden");
+    const pixels=await page.screenshot({style:"::-webkit-scrollbar{display:none!important} html{scrollbar-width:none!important}"});
+    await page.locator("header").evaluate(el=>el.parentElement.style.visibility="");
+    return pixels;
+  };
+  const phase = time => page.locator("[data-media-backdrop]").evaluate((root,time)=>{
+    for(const el of [...root.querySelectorAll("[data-media-object]"),root.lastElementChild]) for(const animation of el.getAnimations()) { animation.pause(); animation.currentTime=time; }
+  },time);
+  try {
+    for(const [width,height] of [[393,852],[390,664],[852,393],[320,700],[1440,900]]) {
+      await page.setViewportSize({width,height}); await page.emulateMedia({reducedMotion:"no-preference"}); await page.goto(origin); await page.locator("main img").evaluate(el=>el.decode()); await page.evaluate(()=>document.fonts.ready);
+      const motion=await page.locator("[data-media-backdrop]").evaluate(root=>[...root.querySelectorAll("[data-media-object]"),root.lastElementChild].map(el=>({transform:getComputedStyle(el).transform,animations:el.getAnimations().map(a=>({time:a.currentTime,duration:a.effect.getTiming().duration,properties:Object.keys(a.effect.getKeyframes()[0])}))})));
+      assert.equal(motion.length,7); assert.ok(motion.every(m=>m.animations.length===1&&m.animations[0].duration===96000));
+      const liveA=await snapshot(); await page.waitForTimeout(500); const liveB=await snapshot(); assert.ok(!liveA.equals(liveB),`${engine}: actual ambient frames change`);
+      const cardTop=await page.locator("[data-card]").evaluate(el=>el.getBoundingClientRect().top);
+      let cycleStart;
+      for(const time of [0,24000,48000,72000,96000]) {
+        await phase(time); await page.evaluate(()=>scrollTo(0,0)); const initial=await snapshot();
+        if(time===0) cycleStart=initial; else if(time===96000) assert.ok(initial.equals(cycleStart),`${engine}: rendered ambient cycle closes without a jump`);
+        await page.evaluate(()=>scrollTo(0,document.documentElement.scrollHeight));
+        assert.ok((await snapshot()).equals(initial),`${engine}: equivalent-phase anchoring`);
+        const coverage=await page.locator("[data-media-backdrop]").evaluate(el=>{const r=el.getBoundingClientRect(),grain=el.lastElementChild.getBoundingClientRect();return {x:r.x,y:r.y,right:r.right,bottom:r.bottom,width:innerWidth,height:innerHeight,grain:[grain.left,grain.top,grain.right,grain.bottom],overflow:document.documentElement.scrollWidth>innerWidth,extra:document.documentElement.scrollHeight-document.querySelector("#root > div").getBoundingClientRect().height};});
+        assert.equal(coverage.x,0);assert.equal(coverage.y,0);assert.ok(coverage.right>=coverage.width&&coverage.bottom>=coverage.height);assert.ok(coverage.grain[0]<=0&&coverage.grain[1]<=0&&coverage.grain[2]>=coverage.width&&coverage.grain[3]>=coverage.height,"grain overscan covers sampled phases");assert.equal(coverage.overflow,false);assert.ok(Math.abs(coverage.extra)<=1);
+      }
+      await page.getByRole("button",{name:"View Tracklist",exact:true}).click();await phase(24000);const expanded=await snapshot();await page.evaluate(()=>scrollTo(0,0));assert.ok((await snapshot()).equals(expanded),`${engine}: content growth keeps artwork anchored`);
+      if(await page.evaluate(()=>scrollY>0)) assert.ok(await page.locator("[data-card]").evaluate(el=>el.getBoundingClientRect().top)<cardTop);
+      await page.emulateMedia({reducedMotion:"reduce"});
+      assert.equal(await page.locator("[data-media-backdrop]").evaluate(el=>el.getAnimations({subtree:true}).length),0);
+      await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
+      await page.waitForTimeout(250); // Allow WebKit to commit removal of promoted moving layers.
+      const stillA=await snapshot();await page.waitForTimeout(300);assert.ok((await snapshot()).equals(stillA),`${engine}: reduced motion freezes actual artwork`);
+      await page.getByRole("button",{name:"Play",exact:true}).click();await page.getByRole("button",{name:"Pause",exact:true}).click();
+    }
+    // Same document resized through toolbar-like heights; this is engine coverage, not iOS toolbar hardware.
+    await page.setViewportSize({width:393,height:852});await page.goto(origin);await page.emulateMedia({reducedMotion:"no-preference"});
+    for(const height of [664,852,744]) {
+      await page.setViewportSize({width:393,height});await phase(48000);await page.evaluate(()=>scrollTo(0,document.documentElement.scrollHeight));
+      assert.ok(await page.locator("[data-media-backdrop]").evaluate(el=>el.getBoundingClientRect().bottom>=innerHeight));
+      assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
+    }
+    if(engine==="chromium") {
+      const cdp=await context.newCDPSession(page);
+      await cdp.send("Emulation.setSafeAreaInsetsOverride",{insets:{top:47,bottom:34,left:0,right:0}});
+      await page.setViewportSize({width:393,height:852});await page.goto(origin);
+      assert.ok(await page.locator("[data-media-backdrop]").evaluate(el=>el.getBoundingClientRect().bottom>=innerHeight+34),"synthetic safe-area lower coverage");
+      assert.ok(await page.locator("#root > div").evaluate(el=>parseFloat(getComputedStyle(el).paddingTop)>=47&&parseFloat(getComputedStyle(el).paddingBottom)>=34));
+      await cdp.send("Emulation.setSafeAreaInsetsOverride",{insets:{top:0,bottom:21,left:47,right:47}});
+      await page.setViewportSize({width:852,height:393});await page.goto(origin);
+      assert.ok(await page.locator("#root > div").evaluate(el=>parseFloat(getComputedStyle(el).paddingLeft)>=47&&parseFloat(getComputedStyle(el).paddingRight)>=47));
+      assert.ok(await page.locator("[data-media-backdrop]").evaluate(el=>el.getBoundingClientRect().bottom>=innerHeight+21));
+      assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
+      await cdp.send("Emulation.setSafeAreaInsetsOverride",{insets:{top:0,bottom:0,left:0,right:0}});await cdp.detach();
+    }
+    assert.deepEqual(errors,[]);console.log(`${engine}: ambient frames/controlled anchoring/coverage/resize/reduced-motion PASS (engine emulation, not physical iPhone)`);
+  } finally { await page.close(); }
+}
+
 let browser;
 try {
   for (const route of ["/", "/storybook/", "/storybook/iframe.html", "/storybook/index.json", "/favicon.svg", "/storybook/favicon.svg", "/storybook/hito-wordmark-manager.svg"]) assert.equal((await fetch(origin + route)).status, 200, route);
@@ -127,7 +190,7 @@ try {
   const credit=page.getByRole("link",{name:"Built with Hito DS",exact:true}); await credit.focus();
   assert.equal(await credit.evaluate(el=>el.matches(":focus-visible") && getComputedStyle(el).outlineWidth==="2px"),true);
   assert.equal(await page.locator("[data-tag] button,[data-tag] a,[data-tag][tabindex]").count(),0,"Tags remain passive");
-  console.log("Checking actual viewport-stationary artwork across scroll and content growth");
+  console.log("Checking reduced-motion static viewport artwork across scroll and content growth");
   for(const [width,height] of [[1440,900],[390,844],[320,800],[1440,1400]]) {
     await page.setViewportSize({width,height}); await page.goto(origin); await page.evaluate(()=>document.fonts.ready);
     const backgroundFrame=()=>page.locator("[data-media-backdrop]").evaluate(el=>{const r=el.getBoundingClientRect();return [r.x,r.y,r.width,r.height];});
@@ -193,6 +256,10 @@ try {
   await page.goto(`${origin}/?path=//example.com`); await page.getByRole("heading", { name: "Structure. With feeling.", exact: true }).waitFor();
   assert.ok(!requests.some(request => request.method !== "GET"), "demo must not send data");
   assert.ok(!external.some(url => /fonts\.googleapis|fonts\.gstatic/.test(url)), "fonts must remain local");
+  await verifyAmbient(context,"chromium");
+  if(process.env.HITO_VERIFY_WEBKIT==="1") {
+    const webkitBrowser=await webkit.launch();try {const webkitContext=await webkitBrowser.newContext({isMobile:true,hasTouch:true,reducedMotion:"no-preference"});await verifyAmbient(webkitContext,"webkit");await webkitContext.close();} finally {await webkitBrowser.close();}
+  }
   assert.deepEqual(failures, []);
   const npm = process.platform === "win32" ? "npm.cmd" : "npm";
   const [pack] = JSON.parse(execFileSync(npm, ["pack", "--dry-run", "--json", "--workspace=@hito-ds/react"], { cwd: fileURLToPath(new URL("../", import.meta.url)), encoding: "utf8" }));

@@ -4,7 +4,7 @@ import { readFile } from "node:fs/promises";
 import { mediaRecipe, mediaObjects, mediaRecipeCss } from "./media-recipe.mjs";
 test("bounded approved recipe preserves native geometry, opacity and repeat timing", async () => {
  assert.equal(mediaObjects.length,6);
- assert.equal(mediaRecipe.length,37);
+ assert.equal(mediaRecipe.length,45);
  const get=name=>mediaRecipe.find(p=>p.id===`recipe/media/${name}`);
  assert.equal(get("warm-opacity").webValue,"0.4");
  assert.equal(get("warm-opacity").mobileWebValue,"0.8");

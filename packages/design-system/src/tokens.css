@@ -1431,8 +1431,16 @@
     --media-glow-violet: color(srgb 0.5960784314 0.3490196078 0.9450980392);
     --media-glow-warm: color(srgb 1 0.7254901961 0.1764705882);
     --media-glow-cool: color(srgb 0 0.8078431373 0.8196078431);
+    --media-coverage-height: 100vh;
+    --media-ambient-cycle: 96s;
+    --media-ambient-easing: ease-in-out;
+    --media-ambient-shift-x: 4%;
+    --media-ambient-shift-y: 3%;
+    --media-ambient-scale: 1.06;
+    --media-ambient-rotation: 3deg;
+    --media-grain-cycle: 96s;
     --media-field-width: 124vw;
-    --media-field-height: 124%;
+    --media-field-height: 144%;
     --media-field-left: -12vw;
     --media-field-bottom: -12%;
     --media-field-overhang: 0px;
@@ -1444,10 +1452,10 @@
     --media-warm-third-opacity: 0.4;
     --media-warm-sixth-opacity: 0.4;
     --media-soft-opacity: 0.9;
-    --media-grain-opacity: 0.18;
+    --media-grain-opacity: 0.22;
     --media-grain-luminance: 1;
     --media-grain-contrast: 1;
-    --media-grain-size: var(--ref-space-64);
+    --media-grain-size: var(--ref-space-96);
     --media-orb-radius: 50%;
     --media-intro-column: 32rem;
     --media-intro-width: 25rem;
@@ -1487,9 +1495,16 @@
     --media-object-6-height: 70%;
     --media-object-6-left: -18%;
     --media-object-6-top: 72%;
+    --media-object-1-phase: calc(var(--media-ambient-cycle) * -0 / 6);
+    --media-object-2-phase: calc(var(--media-ambient-cycle) * -1 / 6);
+    --media-object-3-phase: calc(var(--media-ambient-cycle) * -2 / 6);
+    --media-object-4-phase: calc(var(--media-ambient-cycle) * -3 / 6);
+    --media-object-5-phase: calc(var(--media-ambient-cycle) * -4 / 6);
+    --media-object-6-phase: calc(var(--media-ambient-cycle) * -5 / 6);
   }
   @media (max-width: 64rem) {
     :root {
+      --media-field-height: 160%;
       --media-warm-opacity: 0.8;
       --media-warm-third-opacity: 1;
       --media-warm-sixth-opacity: 0.75;
@@ -1502,6 +1517,11 @@
   @media (max-width: 37.5rem) {
     :root {
       --media-field-blur: 52px;
+    }
+  }
+  @supports (height: 100lvh) {
+    :root {
+      --media-coverage-height: 100lvh;
     }
   }
 }

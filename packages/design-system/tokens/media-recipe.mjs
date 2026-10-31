@@ -13,14 +13,29 @@ for (const [i, row] of mediaObjects.entries()) for (const [j, axis] of ["width",
   const key = `${i + 1}-${axis}`, variable = `--media-object-${key}`;
   geometryVariables[key] = variable; geometryValues[variable] = `${row[j]}%`;
 }
+for (const [i] of mediaObjects.entries()) {
+  const variable = `--media-object-${i + 1}-phase`;
+  geometryVariables[`${i + 1}-phase`] = variable;
+  geometryValues[variable] = `calc(var(--media-ambient-cycle) * -${i} / 6)`;
+}
 export const mediaRecipe = Object.freeze([
   parameter("background", "var(--ref-color-basic-black)", "Quiet full-page artwork base; no canonical canvas override."),
   // Exact approved source colors, scoped here because no retained reference is an exact match.
   parameter("glow-violet", "color(srgb 0.5960784314 0.3490196078 0.9450980392)", "Approved source violet, native six-object field."),
   parameter("glow-warm", "color(srgb 1 0.7254901961 0.1764705882)", "Approved source warm field; footer contrast correction retained."),
   parameter("glow-cool", "color(srgb 0 0.8078431373 0.8196078431)", "Approved source cool field."),
+  Object.freeze({ ...parameter("coverage-height", "100vh", "HDS-46 largest controllable viewport fallback; safe-area added locally."), largeViewportWebValue: "100lvh", sourceTask: "HDS-46" }),
+  ...[
+    ["ambient-cycle", "96s", "Very slow bounded decorative movement; not UI response timing."],
+    ["ambient-easing", "ease-in-out", "Zero-velocity seamless turnarounds."],
+    ["ambient-shift-x", "4%", "Bounded object-relative horizontal travel."],
+    ["ambient-shift-y", "3%", "Bounded object-relative vertical travel."],
+    ["ambient-scale", "1.06", "Subtle transform-only breathing/morphing."],
+    ["ambient-rotation", "3deg", "Small transform-only mixing rotation."],
+    ["grain-cycle", "96s", "One repeating tile per cycle; no opacity flashing."],
+  ].map(([name,value,role]) => Object.freeze({ ...parameter(name,value,role), sourceTask: "HDS-46" })),
   parameter("field-width", "124vw", "Reference isolated field extent."),
-  parameter("field-height", "124%", "HDS-44 source inset−12% on both viewport-height edges."),
+  parameter("field-height", "144%", "HDS-46 taller/higher six-form composition, explicitly requested by Ivan.", "160%"),
   parameter("field-left", "-12vw", "Reference field crop."),
   parameter("field-bottom", "-12%", "HDS-44 source viewport-bottom overscan, independent of document height."),
   parameter("field-overhang", "0px", "HDS-44 reserved compatibility parameter; obsolete document compensation is no longer consumed."),
@@ -32,10 +47,10 @@ export const mediaRecipe = Object.freeze([
   parameter("warm-third-opacity", "0.4", "Source object3 opacity on mobile.", "1"),
   parameter("warm-sixth-opacity", "0.4", "Source object6 opacity on mobile.", "0.75"),
   parameter("soft-opacity", "0.9", "Source violet/cool object opacity."),
-  parameter("grain-opacity", "0.18", "Separate above-field grain overlay."),
+  parameter("grain-opacity", "0.22", "Separate above-field grain overlay."),
   parameter("grain-luminance", "1", "HDS-44 source-consistent visible grain; neutral brightness."),
   parameter("grain-contrast", "1", "HDS-44 source-consistent visible grain; neutral contrast."),
-  parameter("grain-size", "var(--ref-space-64)", "Original256px grain tile."),
+  parameter("grain-size", "var(--ref-space-96)", "HDS-46 original tile displayed at384px for coarser visible texture."),
   parameter("orb-radius", "50%", "Ellipse geometry, not a UI corner token."),
   parameter("intro-column", "32rem", "Native512px desktop introduction column."),
   parameter("intro-width", "25rem", "Native400px supporting copy limit."),
@@ -51,11 +66,12 @@ export const mediaRecipe = Object.freeze([
   parameter("live-dim", "0.45", "Approved pulse trough; label stays static."),
   parameter("live-cycle", "calc(var(--motion-duration-emphasis) * 4)", "1.92s, repeating indefinitely rather than finite Figma export."),
   parameter("live-easing", "var(--motion-easing-standard)", "Approved cubic(0.2,0,0,1)."),
-  Object.freeze({ id: "recipe/media/field-geometry", type: "illustration-geometry", cssVariables: Object.freeze(geometryVariables), values: Object.freeze(geometryValues), role: "One bounded six-object coordinate recipe; percentage geometry from the verified reference.", sourceTask: "HDS-41", lifecycle: "admitted" }),
+  Object.freeze({ id: "recipe/media/field-geometry", type: "illustration-geometry", cssVariables: Object.freeze(geometryVariables), values: Object.freeze(geometryValues), role: "Bounded six-object geometry preserving source lineage, plus HDS-46 asynchronous phase aliases.", sourceTask: "HDS-41", lifecycle: "admitted" }),
 ]);
 export function mediaRecipeCss() {
   const declarations = mediaRecipe.flatMap(p => p.cssVariable ? [`    ${p.cssVariable}: ${p.webValue};`] : Object.entries(p.values).map(([name,value]) => `    ${name}: ${value};`)).join("\n");
   const mobile = mediaRecipe.filter(p => p.mobileWebValue).map(p => `      ${p.cssVariable}: ${p.mobileWebValue};`).join("\n");
   const narrow = mediaRecipe.filter(p => p.narrowWebValue).map(p => `      ${p.cssVariable}: ${p.narrowWebValue};`).join("\n");
-  return `/* HDS-41 media recipe start */\n@layer hito.tokens {\n  :root {\n${declarations}\n  }\n  @media (max-width: 64rem) {\n    :root {\n${mobile}\n    }\n  }\n  @media (max-width: 37.5rem) {\n    :root {\n${narrow}\n    }\n  }\n}\n/* HDS-41 media recipe end */`;
+  const largeViewport = mediaRecipe.filter(p => p.largeViewportWebValue).map(p => `      ${p.cssVariable}: ${p.largeViewportWebValue};`).join("\n");
+  return `/* HDS-41 media recipe start */\n@layer hito.tokens {\n  :root {\n${declarations}\n  }\n  @media (max-width: 64rem) {\n    :root {\n${mobile}\n    }\n  }\n  @media (max-width: 37.5rem) {\n    :root {\n${narrow}\n    }\n  }\n  @supports (height: 100lvh) {\n    :root {\n${largeViewport}\n    }\n  }\n}\n/* HDS-41 media recipe end */`;
 }
