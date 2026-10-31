@@ -35,8 +35,12 @@ async function verifyAmbient(context, engine) {
   const page = await context.newPage(), errors = [];
   page.on("pageerror",error=>errors.push(error.message));
   const snapshot = async () => {
+    await page.waitForFunction(()=>Math.abs(document.querySelector("[data-media-anchor]").getBoundingClientRect().top-(window.visualViewport?.offsetTop??0))<1);
+    await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
     await page.locator("header").evaluate(el=>el.parentElement.style.visibility="hidden");
+    const grain=page.locator("[data-media-backdrop]").locator(":scope > div").last();await grain.evaluate(el=>el.style.visibility="hidden");
     const pixels=await page.screenshot({style:"::-webkit-scrollbar{display:none!important} html{scrollbar-width:none!important}"});
+    await grain.evaluate(el=>el.style.visibility="");
     await page.locator("header").evaluate(el=>el.parentElement.style.visibility="");
     return pixels;
   };
@@ -46,8 +50,9 @@ async function verifyAmbient(context, engine) {
   try {
     for(const [width,height] of [[393,852],[390,664],[852,393],[320,700],[1440,900]]) {
       await page.setViewportSize({width,height}); await page.emulateMedia({reducedMotion:"no-preference"}); await page.goto(origin); await page.locator("main img").evaluate(el=>el.decode()); await page.evaluate(()=>document.fonts.ready);
-      const motion=await page.locator("[data-media-backdrop]").evaluate(root=>[...root.querySelectorAll("[data-media-object]"),root.lastElementChild].map(el=>({transform:getComputedStyle(el).transform,animations:el.getAnimations().map(a=>({time:a.currentTime,duration:a.effect.getTiming().duration,properties:Object.keys(a.effect.getKeyframes()[0])}))})));
-      assert.equal(motion.length,7); assert.ok(motion.every(m=>m.animations.length===1&&m.animations[0].duration===96000));
+      const motion=await page.locator("[data-media-backdrop]").evaluate(root=>[...root.querySelectorAll("[data-media-object]")].map(el=>({transform:getComputedStyle(el).transform,animations:el.getAnimations().map(a=>({time:a.currentTime,duration:a.effect.getTiming().duration,properties:Object.keys(a.effect.getKeyframes()[0])}))})));
+      assert.equal(motion.length,6);
+      assert.equal(await page.locator("[data-media-backdrop]").evaluate(root=>root.lastElementChild.getAnimations().length),0,"grain is static in normal mode"); assert.ok(motion.every(m=>m.animations.length===1&&m.animations[0].duration===96000));
       const liveA=await snapshot(); await page.waitForTimeout(500); const liveB=await snapshot(); assert.ok(!liveA.equals(liveB),`${engine}: actual ambient frames change`);
       const cardTop=await page.locator("[data-card]").evaluate(el=>el.getBoundingClientRect().top);
       let cycleStart;
@@ -55,9 +60,9 @@ async function verifyAmbient(context, engine) {
         await phase(time); await page.evaluate(()=>scrollTo(0,0)); const initial=await snapshot();
         if(time===0) cycleStart=initial; else if(time===96000) assert.ok(initial.equals(cycleStart),`${engine}: rendered ambient cycle closes without a jump`);
         await page.evaluate(()=>scrollTo(0,document.documentElement.scrollHeight));
-        assert.ok((await snapshot()).equals(initial),`${engine}: equivalent-phase anchoring`);
-        const coverage=await page.locator("[data-media-backdrop]").evaluate(el=>{const r=el.getBoundingClientRect(),grain=el.lastElementChild.getBoundingClientRect();return {x:r.x,y:r.y,right:r.right,bottom:r.bottom,width:innerWidth,height:innerHeight,grain:[grain.left,grain.top,grain.right,grain.bottom],overflow:document.documentElement.scrollWidth>innerWidth,extra:document.documentElement.scrollHeight-document.querySelector("#root > div").getBoundingClientRect().height};});
-        assert.equal(coverage.x,0);assert.equal(coverage.y,0);assert.ok(coverage.right>=coverage.width&&coverage.bottom>=coverage.height);assert.ok(coverage.grain[0]<=0&&coverage.grain[1]<=0&&coverage.grain[2]>=coverage.width&&coverage.grain[3]>=coverage.height,"grain overscan covers sampled phases");assert.equal(coverage.overflow,false);assert.ok(Math.abs(coverage.extra)<=1);
+        assert.ok((await snapshot()).equals(initial),`${engine}: equivalent-phase anchoring ${width}x${height}@${time}`);
+        const coverage=await page.locator("[data-media-backdrop]").evaluate(el=>{const carrier=el.getBoundingClientRect(),r=el.querySelector("[data-media-viewport]").getBoundingClientRect(),grain=el.lastElementChild.getBoundingClientRect();return {carrierHeight:carrier.height,pageHeight:document.querySelector("[data-site-page]").getBoundingClientRect().height,x:r.x,y:r.y,right:r.right,bottom:r.bottom,width:innerWidth,height:innerHeight,grain:[grain.left,grain.top,grain.right,grain.bottom],overflow:document.documentElement.scrollWidth>innerWidth,extra:document.documentElement.scrollHeight-document.querySelector("[data-site-page]").getBoundingClientRect().height};});
+        assert.ok(coverage.carrierHeight>=coverage.pageHeight,"paint carrier follows full document");assert.equal(coverage.x,0);assert.equal(coverage.y,0);assert.ok(coverage.right>=coverage.width&&coverage.bottom>=coverage.height);assert.ok(coverage.grain[0]<=0&&coverage.grain[1]<=0&&coverage.grain[2]>=coverage.width&&coverage.grain[3]>=coverage.height-1,`document grain covers viewport: ${JSON.stringify(coverage)}`);assert.equal(coverage.overflow,false);assert.ok(Math.abs(coverage.extra)<=1);
       }
       await page.getByRole("button",{name:"View Tracklist",exact:true}).click();await phase(24000);const expanded=await snapshot();await page.evaluate(()=>scrollTo(0,0));assert.ok((await snapshot()).equals(expanded),`${engine}: content growth keeps artwork anchored`);
       if(await page.evaluate(()=>scrollY>0)) assert.ok(await page.locator("[data-card]").evaluate(el=>el.getBoundingClientRect().top)<cardTop);
@@ -68,23 +73,42 @@ async function verifyAmbient(context, engine) {
       const stillA=await snapshot();await page.waitForTimeout(300);assert.ok((await snapshot()).equals(stillA),`${engine}: reduced motion freezes actual artwork`);
       await page.getByRole("button",{name:"Play",exact:true}).click();await page.getByRole("button",{name:"Pause",exact:true}).click();
     }
+    // Real page paint below a deliberately shortened viewport plane while Card continues.
+    await page.setViewportSize({width:393,height:852});await page.emulateMedia({reducedMotion:"no-preference"});await page.goto(origin);await page.locator("main img").evaluate(el=>el.decode());await page.evaluate(()=>document.fonts.ready);await phase(0);
+    const boundary=await page.locator("[data-media-viewport]").evaluate(el=>{el.style.blockSize=`${innerHeight-240}px`;return el.firstElementChild.getBoundingClientRect().bottom;});
+    assert.ok(await page.locator("[data-card]").evaluate((el,boundary)=>el.getBoundingClientRect().bottom>boundary+80,boundary),"foreground continues below prior paint boundary");
+    const chromaticBelow=async()=>{
+      const bytes=await snapshot();return page.evaluate(async({encoded,y})=>{const image=new Image();image.src=`data:image/png;base64,${encoded}`;await image.decode();const canvas=document.createElement("canvas");canvas.width=image.width;canvas.height=image.height;const ctx=canvas.getContext("2d");ctx.drawImage(image,0,0);const pixels=ctx.getImageData(0,Math.floor(y)+10,canvas.width,70).data;let count=0;for(let i=0;i<pixels.length;i+=4)if(Math.max(pixels[i],pixels[i+1],pixels[i+2])-Math.min(pixels[i],pixels[i+1],pixels[i+2])>16)count++;return count;},{encoded:bytes.toString("base64"),y:boundary});
+    };
+    assert.ok(await chromaticBelow()>100,"colored document paint continues below old fixed-window cutoff");
+    await page.locator("[data-media-viewport]").evaluate(el=>el.style.overflow="hidden");
+    assert.equal(await chromaticBelow(),0,"counterfactual viewport clip reproduces lost color while foreground continues");
+    await page.locator("[data-media-viewport]").evaluate(el=>{el.style.overflow="";el.style.blockSize="";});
+    const canvas=await page.evaluate(()=>({html:getComputedStyle(document.documentElement).backgroundColor,body:getComputedStyle(document.body).backgroundColor,root:getComputedStyle(document.querySelector("#root")).backgroundColor,page:getComputedStyle(document.querySelector("[data-site-page]")).backgroundColor}));
+    assert.equal(await page.locator("[data-media-backdrop]").evaluate(root=>[root,...root.querySelectorAll("*")].some(el=>["fixed","sticky"].includes(getComputedStyle(el).position))),false,"live decoration has no native fixed/sticky layer");
+    assert.equal(canvas.html,canvas.root);assert.equal(canvas.body,"rgba(0, 0, 0, 0)");assert.equal(canvas.page,"rgba(0, 0, 0, 0)");
+    // Isolate grain: actual time-separated frames must be static while forms still run.
+    await page.locator("header").evaluate(el=>el.parentElement.style.visibility="hidden");await page.locator("[data-media-anchor]").evaluate(el=>el.style.visibility="hidden");
+    const grainA=await page.screenshot();await page.waitForTimeout(500);assert.ok((await page.screenshot()).equals(grainA),`${engine}: no directional grain animation`);
+    await page.locator("header").evaluate(el=>el.parentElement.style.visibility="");await page.locator("[data-media-anchor]").evaluate(el=>el.style.visibility="");
     // Same document resized through toolbar-like heights; this is engine coverage, not iOS toolbar hardware.
     await page.setViewportSize({width:393,height:852});await page.goto(origin);await page.emulateMedia({reducedMotion:"no-preference"});
     for(const height of [664,852,744]) {
       await page.setViewportSize({width:393,height});await phase(48000);await page.evaluate(()=>scrollTo(0,document.documentElement.scrollHeight));
-      assert.ok(await page.locator("[data-media-backdrop]").evaluate(el=>el.getBoundingClientRect().bottom>=innerHeight));
+      await page.waitForFunction(()=>Math.abs(document.querySelector("[data-media-anchor]").getBoundingClientRect().top-(window.visualViewport?.offsetTop??0))<1);
+      assert.ok(await page.locator("[data-media-viewport]").evaluate(el=>el.getBoundingClientRect().bottom>=innerHeight));
       assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
     }
     if(engine==="chromium") {
       const cdp=await context.newCDPSession(page);
       await cdp.send("Emulation.setSafeAreaInsetsOverride",{insets:{top:47,bottom:34,left:0,right:0}});
       await page.setViewportSize({width:393,height:852});await page.goto(origin);
-      assert.ok(await page.locator("[data-media-backdrop]").evaluate(el=>el.getBoundingClientRect().bottom>=innerHeight+34),"synthetic safe-area lower coverage");
-      assert.ok(await page.locator("#root > div").evaluate(el=>parseFloat(getComputedStyle(el).paddingTop)>=47&&parseFloat(getComputedStyle(el).paddingBottom)>=34));
+      assert.ok(await page.locator("[data-media-viewport]").evaluate(el=>el.getBoundingClientRect().bottom>=innerHeight+34),"synthetic safe-area lower coverage");
+      assert.ok(await page.locator("[data-site-page]").evaluate(el=>parseFloat(getComputedStyle(el).paddingTop)>=47&&parseFloat(getComputedStyle(el).paddingBottom)>=34));
       await cdp.send("Emulation.setSafeAreaInsetsOverride",{insets:{top:0,bottom:21,left:47,right:47}});
       await page.setViewportSize({width:852,height:393});await page.goto(origin);
-      assert.ok(await page.locator("#root > div").evaluate(el=>parseFloat(getComputedStyle(el).paddingLeft)>=47&&parseFloat(getComputedStyle(el).paddingRight)>=47));
-      assert.ok(await page.locator("[data-media-backdrop]").evaluate(el=>el.getBoundingClientRect().bottom>=innerHeight+21));
+      assert.ok(await page.locator("[data-site-page]").evaluate(el=>parseFloat(getComputedStyle(el).paddingLeft)>=47&&parseFloat(getComputedStyle(el).paddingRight)>=47));
+      assert.ok(await page.locator("[data-media-viewport]").evaluate(el=>el.getBoundingClientRect().bottom>=innerHeight+21));
       assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
       await cdp.send("Emulation.setSafeAreaInsetsOverride",{insets:{top:0,bottom:0,left:0,right:0}});await cdp.detach();
     }
@@ -193,8 +217,8 @@ try {
   console.log("Checking reduced-motion static viewport artwork across scroll and content growth");
   for(const [width,height] of [[1440,900],[390,844],[320,800],[1440,1400]]) {
     await page.setViewportSize({width,height}); await page.goto(origin); await page.evaluate(()=>document.fonts.ready);
-    const backgroundFrame=()=>page.locator("[data-media-backdrop]").evaluate(el=>{const r=el.getBoundingClientRect();return [r.x,r.y,r.width,r.height];});
-    const artwork=async()=>{await page.locator("header").evaluate(el=>el.parentElement.style.visibility="hidden");const pixels=await page.screenshot();await page.locator("header").evaluate(el=>el.parentElement.style.visibility="");return pixels;};
+    const backgroundFrame=()=>page.locator("[data-media-viewport]").evaluate(el=>{const r=el.getBoundingClientRect();return [r.x,r.y,r.width,r.height];});
+    const artwork=async()=>{await page.locator("header").evaluate(el=>el.parentElement.style.visibility="hidden");await page.locator("[data-media-backdrop]").evaluate(root=>root.lastElementChild.style.visibility="hidden");const pixels=await page.screenshot();await page.locator("[data-media-backdrop]").evaluate(root=>root.lastElementChild.style.visibility="");await page.locator("header").evaluate(el=>el.parentElement.style.visibility="");return pixels;};
     const initial=await artwork(), cardTop=await page.locator("[data-card]").evaluate(el=>el.getBoundingClientRect().top);
     assert.deepEqual(await backgroundFrame(),[0,0,width,height]);
     for(const expanded of [false,true]) {
@@ -205,7 +229,7 @@ try {
         assert.ok((await artwork()).equals(initial),"actual artwork pixels stay fixed through scroll/expanded content");
         if(!expanded && fraction===1 && await page.evaluate(()=>scrollY>0)) assert.ok(await page.locator("[data-card]").evaluate(el=>el.getBoundingClientRect().top)<cardTop,"foreground still scrolls");
         assert.equal(await overflow(),false);
-        assert.ok(await page.evaluate(()=>Math.abs(document.documentElement.scrollHeight-document.querySelector("#root > div").getBoundingClientRect().height)<=1),"decorative paint adds no document height");
+        assert.ok(await page.evaluate(()=>Math.abs(document.documentElement.scrollHeight-document.querySelector("[data-site-page]").getBoundingClientRect().height)<=1),"decorative paint adds no document height");
       }
     }
     const footerLink=page.getByRole("link",{name:"MIT license",exact:true}); await footerLink.focus(); await page.keyboard.press("Tab"); await page.keyboard.press("Shift+Tab");

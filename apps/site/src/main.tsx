@@ -2,6 +2,7 @@ import { createRoot } from "react-dom/client";
 import "@hito-ds/react/tokens.css";
 import "@hito-ds/react/base.css";
 import "./fonts.css";
+import "./site-canvas.css";
 import { App } from "./App";
 import { legacyBookmark } from "./legacy-bookmark";
 

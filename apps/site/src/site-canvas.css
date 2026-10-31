@@ -1,0 +1,7 @@
+/* Page canvas and decorative document carrier share one explicit root contract. */
+html { background-color: var(--media-background); }
+body { background-color: transparent; }
+#root { position: relative; isolation: isolate; min-block-size: 100svh; background-color: var(--media-background); }
+#root > [data-site-background] { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+[data-site-background] [data-media-anchor] { position: absolute; will-change: transform; }
+#root > [data-site-page] { z-index: 1; }

@@ -14,9 +14,9 @@ export function Dot({ className, ...props }: Omit<HTMLAttributes<HTMLSpanElement
 export function Live({ children = "Live", className, ...props }: HTMLAttributes<HTMLSpanElement>) {
   return <span {...props} data-hito-live="" data-hito-color-scheme="dark" className={classNames(styles.live, className)}><span aria-hidden="true" data-live-dot="" className={styles.liveDot} /><Text as="span" variant="ui-sm">{children}</Text></span>;
 }
-/** Bounded, static six-object artwork; no foreign runtime or theme/canvas mutation. */
+/** Document paint carrier; the site adapter owns anchoring and parent document extent. */
 export function MediaBackdrop({ className }: { className?: string }) {
-  return <div aria-hidden="true" data-media-backdrop="" className={classNames(styles.backdrop, className)}><div className={styles.field}>{[1,2,3,4,5,6].map(index => <span key={index} data-media-object={index} className={styles.object} />)}</div><div className={styles.grain} /></div>;
+  return <div aria-hidden="true" data-media-backdrop="" className={classNames(styles.backdrop, className)}><div data-media-anchor="" className={styles.anchor}><div data-media-viewport="" className={styles.viewport}><div className={styles.field}>{[1,2,3,4,5,6].map(index => <span key={index} data-media-object={index} className={styles.object} />)}</div></div></div><div className={styles.grain} /></div>;
 }
 type DistributiveOmit<T, K extends PropertyKey> = T extends unknown ? Omit<T, K> : never;
 export type RoundPlayButtonProps = DistributiveOmit<ButtonProps, "icon" | "children" | "size" | "variant" | "intent" | "leadingIcon" | "trailingIcon"> & { playing?: boolean; "aria-label": string };

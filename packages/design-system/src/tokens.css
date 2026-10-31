@@ -1452,10 +1452,10 @@
     --media-warm-third-opacity: 0.4;
     --media-warm-sixth-opacity: 0.4;
     --media-soft-opacity: 0.9;
-    --media-grain-opacity: 0.22;
+    --media-grain-opacity: 0.12;
     --media-grain-luminance: 1;
     --media-grain-contrast: 1;
-    --media-grain-size: var(--ref-space-96);
+    --media-grain-size: var(--ref-space-64);
     --media-orb-radius: 50%;
     --media-intro-column: 32rem;
     --media-intro-width: 25rem;
