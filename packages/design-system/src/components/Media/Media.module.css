@@ -1,0 +1,24 @@
+@layer hito.components {
+  .dot { display: inline-block; flex: none; inline-size: var(--media-dot-size); block-size: var(--media-dot-size); border-radius: var(--radius-shape-round); background: var(--color-text-secondary); }
+  .live { display: inline-flex; align-items: center; gap: var(--layout-space-fixed-sm); padding: var(--layout-space-fixed-sm); border-radius: var(--radius-layout-fixed-sm); background: var(--color-surface-scrim); color: var(--color-foreground-on-scrim); }
+  .liveDot { inline-size: var(--media-live-dot-size); block-size: var(--media-live-dot-size); flex: none; border-radius: var(--radius-shape-round); background: var(--color-icon-success-default); animation: live-pulse var(--media-live-cycle) var(--media-live-easing) infinite; }
+  @keyframes live-pulse { 0%,100% { opacity: 1; } 50% { opacity: var(--media-live-dim); } }
+  .play[data-size="xl"][data-icon-position="only"] { border-radius: var(--radius-shape-round); corner-shape: round; flex: none; }
+  .actionLink { min-block-size: var(--ui-control-height-md); padding: var(--ui-space-xs) var(--ui-space-2xl); border: var(--border-width-default) solid transparent; border-radius: var(--radius-ui-md); background: var(--color-surface-neutral-strong-default); color: var(--color-foreground-on-neutral-strong); text-decoration: none; justify-content: center; }
+  .actionLink:active { background: var(--color-surface-neutral-strong-pressed); color: var(--color-foreground-on-neutral-strong); }
+  .footer { margin-inline: calc(-1 * var(--layout-space-fixed-sm)); }
+  .actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--layout-space-fixed-sm); padding: var(--layout-space-fixed-lg) calc(var(--layout-space-fixed-sm) + var(--media-body-inset)) var(--media-body-inset); }
+  .backdrop { position: absolute; inset: 0; overflow: hidden; pointer-events: none; isolation: isolate; background: var(--media-background); }
+  .field { position: absolute; inline-size: var(--media-field-width); block-size: var(--media-field-height); left: var(--media-field-left); bottom: calc(var(--media-field-bottom) - var(--media-field-overhang)); filter: blur(var(--media-field-blur)); isolation: isolate; mask-image: linear-gradient(to bottom, transparent var(--media-mask-start), var(--media-background) var(--media-mask-end)); }
+  .object { position: absolute; border-radius: var(--media-orb-radius); mix-blend-mode: var(--media-field-blend); }
+  .object:nth-child(1) { width: var(--media-object-1-width); height: var(--media-object-1-height); left: var(--media-object-1-left); top: var(--media-object-1-top); background: var(--media-glow-violet); opacity: var(--media-soft-opacity); }
+  .object:nth-child(2) { width: var(--media-object-2-width); height: var(--media-object-2-height); left: var(--media-object-2-left); top: var(--media-object-2-top); background: var(--media-glow-warm); opacity: var(--media-warm-opacity); }
+  .object:nth-child(3) { width: var(--media-object-3-width); height: var(--media-object-3-height); left: var(--media-object-3-left); top: var(--media-object-3-top); background: var(--media-glow-warm); opacity: var(--media-warm-third-opacity); }
+  .object:nth-child(4) { width: var(--media-object-4-width); height: var(--media-object-4-height); left: var(--media-object-4-left); top: var(--media-object-4-top); background: var(--media-glow-cool); opacity: var(--media-soft-opacity); }
+  .object:nth-child(5) { width: var(--media-object-5-width); height: var(--media-object-5-height); left: var(--media-object-5-left); top: var(--media-object-5-top); background: var(--media-glow-violet); }
+  .object:nth-child(6) { width: var(--media-object-6-width); height: var(--media-object-6-height); left: var(--media-object-6-left); top: var(--media-object-6-top); background: var(--media-glow-warm); opacity: var(--media-warm-sixth-opacity); }
+  .grain { filter: brightness(var(--media-grain-luminance)) contrast(var(--media-grain-contrast)); position: absolute; inset: 0; opacity: var(--media-grain-opacity); background-image: url("../../../assets/media/grain.svg"); background-size: var(--media-grain-size); }
+  @media (hover: hover) { .actionLink:hover { background: var(--color-surface-neutral-strong-hover); color: var(--color-foreground-on-neutral-strong); text-decoration: none; } }
+  @media (prefers-reduced-motion: reduce) { .liveDot { animation: none; opacity: 1; } }
+  @media (forced-colors: active) { .backdrop { display: none; } .liveDot,.dot { background: CanvasText; } .actionLink { border-color: LinkText; background: Canvas; color: LinkText; } }
+}

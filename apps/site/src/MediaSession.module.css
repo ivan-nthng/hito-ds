@@ -1,0 +1,14 @@
+.wrapper { position: relative; inline-size: 100%; max-inline-size: var(--media-card-width); }
+.card { border-radius: var(--media-card-radius); }
+.photo { display: block; inline-size: 100%; block-size: auto; aspect-ratio: var(--media-photo-aspect); object-fit: cover; object-position: center; border-radius: var(--media-photo-radius); }
+.body { display: grid; gap: var(--layout-space-fixed-lg); padding: var(--media-body-inset); }
+.metadata { display: flex; flex-wrap: wrap; align-items: center; gap: var(--layout-space-fixed-sm); }
+.secondary { color: var(--color-text-secondary); }
+.title { display: flex; justify-content: space-between; gap: var(--layout-space-fixed-sm); align-items: center; }
+.title h2 { min-inline-size: 0; }
+.tags { display: flex; flex-wrap: wrap; gap: var(--layout-space-fixed-sm); }
+.statusFrame { position: absolute; pointer-events: none; inset-inline: var(--layout-space-fixed-sm); inset-block-start: var(--layout-space-fixed-sm); aspect-ratio: var(--media-photo-aspect); }
+.live { position: absolute; right: var(--layout-space-fixed-md); bottom: var(--layout-space-fixed-md); }
+.tracklist:not([hidden]) { padding: var(--media-body-inset); }
+.srOnly { position: absolute; inline-size: var(--ref-space-px); block-size: var(--ref-space-px); overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+@media (max-width: 64rem) { .live { top: var(--layout-space-fixed-md); bottom: auto; } }

@@ -45,6 +45,8 @@ export function SaveAction() {
 }
 ```
 
+The landing demonstrates a local media session using public Hito components. See [media recipe and behavior](docs/media-landing.md).
+
 See [integration guidance](docs/figma-and-code.md) for fonts, themes, token ownership and the maintenance workflow.
 
 ## Checks

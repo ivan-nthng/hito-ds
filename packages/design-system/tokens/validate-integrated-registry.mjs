@@ -20,6 +20,7 @@ import { cardResponsiveRadii } from "./component-card.mjs";
 import { avatarDimensions, avatarRadii, avatarSizes } from "./component-avatar.mjs";
 
 const EXPECTED_GROUP_COUNTS = Object.freeze({
+  "recipe/media": 37,
   "component/avatar-dimensions": 8,
   "component/avatar-radii": 4,
   "radius/scale": 1,
@@ -134,7 +135,7 @@ for (const group of registryGroups) {
 }
 
 assert(
-  registryEntries.length === 448,
+  registryEntries.length === 485,
   "Integrated registry entry count drifted",
 );
 assert(
@@ -142,7 +143,7 @@ assert(
   "Reference registry count drifted",
 );
 assert(
-  registrySemanticEntries.length === 197,
+  registrySemanticEntries.length === 234,
   "Semantic registry count drifted",
 );
 assert(

@@ -1,3 +1,4 @@
+import { mediaRecipe } from "./media-recipe.mjs";
 import { statusBadgeColorAliases } from "./component-status-badge.mjs";
 import { avatarDimensions, avatarRadii } from "./component-avatar.mjs";
 import { spinnerOpacityAliases, spinnerStroke } from "./component-spinner.mjs";
@@ -187,6 +188,7 @@ function defineGroup({
 }
 
 const groupDefinitions = [
+  { id: "recipe/media", domain: "radius-border-elevation-motion", layer: "semantic", tokenType: "visual-recipe", sourceTask: "HDS-41", definitions: mediaRecipe },
   {
     id: "component/avatar-dimensions", domain: "spacing-sizing-layout-responsive",
     layer: "component", tokenType: "dimension-alias", sourceTask: "SAVI-167",

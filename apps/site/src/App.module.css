@@ -1,23 +1,29 @@
-.page { padding: var(--layout-space-responsive-xl); color: var(--color-text-primary); background: var(--color-surface-canvas); }
-.content { display: grid; inline-size: 100%; max-inline-size: 72rem; margin-inline: auto; gap: var(--layout-space-responsive-2xl); }
-.header, .footer, .links { display: flex; flex-wrap: wrap; align-items: center; }
-.header, .footer { justify-content: space-between; gap: var(--layout-space-fixed-md); }
-.links { gap: var(--layout-space-fixed-lg); }
-.logo { inline-size: var(--ref-space-24); block-size: auto; flex: none; }
-.main { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--layout-space-responsive-2xl); padding-block: var(--layout-space-responsive-2xl); }
-.main > *, .stack { min-inline-size: 0; }
-.stack { display: grid; align-content: start; gap: var(--layout-space-fixed-lg); }
+.page { position: relative; isolation: isolate; min-block-size: 100svh; padding: var(--layout-space-responsive-xl) var(--layout-space-fixed-lg); color: var(--color-text-primary); background: var(--media-background); color-scheme: dark; }
+.content { position: relative; display: grid; inline-size: 100%; max-inline-size: 72rem; margin-inline: auto; gap: var(--layout-space-responsive-2xl); }
+.header,.links,.ctas { display: flex; flex-wrap: wrap; align-items: center; }
+.header { justify-content: space-between; gap: var(--layout-space-fixed-lg); }
+.links { gap: var(--layout-space-fixed-xl); }
+.logoSlot { display: flex; align-items: center; inline-size: var(--ref-space-24); aspect-ratio: var(--media-logo-aspect); }
+.logo { inline-size: 100%; block-size: auto; }
+.main { display: grid; gap: var(--layout-space-fixed-lg); min-inline-size: 0; }
+.breadcrumbs { font-size: var(--type-ui-md-font-size); line-height: var(--type-ui-md-line-height); padding-block: var(--layout-space-fixed-sm); }
+.editorial { display: grid; grid-template-columns: var(--media-intro-column) minmax(0,1fr); gap: var(--layout-space-responsive-2xl); align-items: center; }
+.intro { display: grid; align-content: center; gap: var(--layout-space-fixed-lg); min-inline-size: 0; }
+.heading > span { display: block; }
+.heading { max-inline-size: var(--media-heading-width); }
+.support { max-inline-size: var(--media-intro-width); color: var(--color-text-secondary); }
+.ctas { gap: var(--layout-space-fixed-lg); }
+.media { display: flex; justify-content: center; min-inline-size: 0; padding-block: var(--layout-space-fixed-xl); }
+.footer { display: grid; gap: var(--layout-space-fixed-lg); }
 .secondary { color: var(--color-text-secondary); }
-.footer { padding-block: var(--layout-space-responsive-xl); border-block-start: var(--ref-space-px) solid var(--color-border-default); }
-.skip:not(:focus) { position: absolute; inline-size: 1px; block-size: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
-.skip:focus { position: absolute; inset-block-start: var(--layout-space-fixed-sm); background: var(--color-surface-canvas); }
-@media (max-width: 40rem) {
-  .page { padding: var(--layout-space-responsive-lg); }
-  .main { grid-template-columns: minmax(0, 1fr); }
-  .links { gap: var(--layout-space-fixed-md); }
+.skip:not(:focus) { position: absolute; inline-size: var(--ref-space-px); block-size: var(--ref-space-px); overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.skip:focus { position: absolute; z-index: 1; inset-block-start: var(--layout-space-fixed-sm); background: var(--media-background); }
+@media (max-width: 64rem) {
+ .content,.editorial { gap: var(--ref-space-7); }
+ .heading { font-size: var(--ref-space-10); line-height: var(--ref-space-12); }
+ .header { flex-direction: column; align-items: flex-start; gap: var(--layout-space-fixed-lg); }
+ .editorial { grid-template-columns: minmax(0,1fr); }
+ .intro { gap: var(--layout-space-fixed-lg); }
+ .support { max-inline-size: none; }
+ .media { padding-block: 0; }
 }
-
-/* Shared optical content inset: the Checkbox keeps its native root/44px target. */
-.form { --choice-visible-inset: calc((var(--ui-interaction-target-min) - var(--ui-icon-size-md)) / 2); }
-.form > :not(.alignedChoice) { margin-inline-start: var(--choice-visible-inset); }
-.alignedChoice { min-inline-size: 0; }

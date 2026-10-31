@@ -1424,6 +1424,85 @@
   }
 }
 
+/* HDS-41 media recipe start */
+@layer hito.tokens {
+  :root {
+    --media-background: var(--ref-color-basic-black);
+    --media-glow-violet: color(srgb 0.5960784314 0.3490196078 0.9450980392);
+    --media-glow-warm: color(srgb 1 0.7254901961 0.1764705882);
+    --media-glow-cool: color(srgb 0 0.8078431373 0.8196078431);
+    --media-field-width: 124vw;
+    --media-field-height: 69.75vw;
+    --media-field-left: -12vw;
+    --media-field-bottom: -6.75vw;
+    --media-field-overhang: calc(var(--layout-space-responsive-2xl) / 2);
+    --media-field-blur: 7vw;
+    --media-mask-start: 25%;
+    --media-mask-end: 80%;
+    --media-field-blend: screen;
+    --media-warm-opacity: 0.4;
+    --media-warm-third-opacity: 0.4;
+    --media-warm-sixth-opacity: 0.4;
+    --media-soft-opacity: 0.9;
+    --media-grain-opacity: 0.18;
+    --media-grain-luminance: 0.45;
+    --media-grain-contrast: 2.35;
+    --media-grain-size: var(--ref-space-64);
+    --media-orb-radius: 50%;
+    --media-intro-column: 32rem;
+    --media-intro-width: 25rem;
+    --media-heading-width: 25rem;
+    --media-card-width: 28rem;
+    --media-card-radius: var(--radius-layout-fixed-xl);
+    --media-photo-radius: var(--radius-layout-fixed-lg);
+    --media-photo-aspect: 3 / 2;
+    --media-body-inset: var(--layout-space-fixed-md);
+    --media-logo-aspect: 68 / 32;
+    --media-dot-size: var(--ref-space-1);
+    --media-live-dot-size: var(--ref-space-1-5);
+    --media-live-dim: 0.45;
+    --media-live-cycle: calc(var(--motion-duration-emphasis) * 4);
+    --media-live-easing: var(--motion-easing-standard);
+    --media-object-1-width: 72%;
+    --media-object-1-height: 90%;
+    --media-object-1-left: 70%;
+    --media-object-1-top: 68%;
+    --media-object-2-width: 98%;
+    --media-object-2-height: 55%;
+    --media-object-2-left: 18%;
+    --media-object-2-top: 93%;
+    --media-object-3-width: 75%;
+    --media-object-3-height: 100%;
+    --media-object-3-left: -36%;
+    --media-object-3-top: 78%;
+    --media-object-4-width: 60%;
+    --media-object-4-height: 60%;
+    --media-object-4-left: 78%;
+    --media-object-4-top: 92%;
+    --media-object-5-width: 70%;
+    --media-object-5-height: 55%;
+    --media-object-5-left: 25%;
+    --media-object-5-top: 97%;
+    --media-object-6-width: 45%;
+    --media-object-6-height: 70%;
+    --media-object-6-left: -18%;
+    --media-object-6-top: 72%;
+  }
+  @media (max-width: 64rem) {
+    :root {
+      --media-field-overhang: var(--layout-space-fixed-lg);
+      --media-warm-opacity: 0.8;
+      --media-warm-third-opacity: 1;
+      --media-warm-sixth-opacity: 0.75;
+      --media-heading-width: 17.5rem;
+      --media-card-radius: var(--radius-layout-fixed-lg);
+      --media-photo-radius: var(--radius-layout-fixed-sm);
+      --media-body-inset: var(--layout-space-fixed-lg);
+    }
+  }
+}
+/* HDS-41 media recipe end */
+
 /* HITO-001 generated theme adapter; run node tokens/build-themes.mjs. */
 @layer hito.tokens {
   :where([data-hito-theme], [data-hito-color-scheme]) {

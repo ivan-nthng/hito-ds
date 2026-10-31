@@ -1,0 +1,12 @@
+{
+  "source": "User-supplied coastal photograph; approved native Hito media composition",
+  "figmaImageSha1": "db382c9973f692b3029c25595fcf602f30ffe194",
+  "sourceSha256": "bf4fdcc16dc25ec87da2eda414cca129ddccdb1c51d9675233eb24f57d0f23c9",
+  "servedSha256": "077752da931e13132993975d26c2e7bc1c3751bdf05ca29f3f1c4dcb03f94242",
+  "processing": "JPEG APP1, APP13 and comment metadata removed; compressed image scan retained without re-encoding",
+  "removedSegments": [
+    "0xe1",
+    "0xed",
+    "0xe1"
+  ]
+}
