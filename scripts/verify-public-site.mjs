@@ -84,6 +84,11 @@ try {
     const { nodeId } = await cdp.send("DOM.querySelector", { nodeId: documentRoot.nodeId, selector: "h1" });
     const native = await cdp.send("CSS.getPlatformFontsForNode", { nodeId });
     assert.ok(native.fonts.some(font => font.isCustomFont && /Instrument/.test(font.familyName))); await cdp.detach();
+    const credit = page.getByRole("link",{name:"Built with Hito DS",exact:true});
+    assert.equal(await credit.getAttribute("href"),"/storybook/");
+    const placement = await credit.evaluate(el => { const r=el.getBoundingClientRect(), card=el.parentElement.querySelector("[data-card]").getBoundingClientRect(), style=getComputedStyle(el);return {gap:r.top-card.bottom,left:r.left,right:r.right,cardLeft:card.left,cardRight:card.right,font:style.fontSize,line:style.lineHeight}; });
+    assert.equal(placement.gap,8); assert.equal(placement.font,"12px"); assert.equal(placement.line,"16px");
+    assert.ok(placement.left>=placement.cardLeft && placement.right<=placement.cardRight);
     await page.getByRole("button",{name:"Play",exact:true}).click();
     assert.equal(await page.getByRole("button",{name:"Pause",exact:true}).getAttribute("aria-pressed"),"true");
     assert.match(await page.getByRole("status").textContent(),/No audio is streamed/);
@@ -94,9 +99,33 @@ try {
     const tracklist=page.getByRole("button",{name:"View Tracklist",exact:true});
     await tracklist.click(); assert.equal(await tracklist.getAttribute("aria-expanded"),"true");
     assert.equal(await page.getByText("Demo tracklist",{exact:false}).isVisible(),true);
-    assert.equal(await overflow(),false); await tracklist.click();
+    assert.equal(await overflow(),false);
+    await page.getByRole("button",{name:"Save Session",exact:true}).click(); assert.equal(await overflow(),false,"expanded and saved reflow");
+    await page.getByRole("button",{name:"Session saved",exact:true}).click(); await tracklist.click();
+    await credit.focus(); await page.keyboard.press("Enter"); await page.waitForURL(url=>url.pathname==="/storybook/");
 
   }
+  console.log("Checking native hover/pressed/keyboard interaction finish");
+  await page.setViewportSize({width:1440,height:1043}); await page.goto(origin);
+  const interactionStyle=locator=>locator.evaluate(el=>{const s=getComputedStyle(el);return {background:s.backgroundColor,color:s.color,decoration:s.textDecorationThickness};});
+  for(const locator of [page.getByRole("button",{name:"Play",exact:true}),page.getByRole("button",{name:"Save Session",exact:true}),page.getByRole("button",{name:"View Tracklist",exact:true}),page.getByRole("link",{name:"Built with Hito DS",exact:true})]) {
+    await page.mouse.move(0,0); await page.waitForTimeout(200); const normal=await interactionStyle(locator);
+    await locator.hover(); await page.waitForTimeout(200); const hover=await interactionStyle(locator);
+    await page.mouse.down(); await page.waitForTimeout(200); const pressed=await interactionStyle(locator);
+    assert.notDeepEqual(hover,normal,"visible native hover feedback"); assert.notDeepEqual(pressed,hover,"visible pressed feedback");
+    await page.mouse.move(0,0); await page.mouse.up();
+  }
+  const play=page.getByRole("button",{name:"Play",exact:true}); await play.focus(); await page.keyboard.press("Tab"); await page.keyboard.press("Shift+Tab");
+  assert.equal(await play.evaluate(el=>el.matches(":focus-visible") && getComputedStyle(el).outlineWidth==="2px"),true);
+  await page.keyboard.press("Space"); assert.equal(await page.getByRole("button",{name:"Pause",exact:true}).getAttribute("aria-pressed"),"true");
+  assert.equal(await page.getByRole("dialog").count(),0); assert.equal(new URL(page.url()).pathname,"/");
+  await page.keyboard.press("Enter"); await page.getByRole("button",{name:"Play",exact:true}).waitFor();
+  const save=page.getByRole("button",{name:"Save Session",exact:true}); await save.focus(); await page.keyboard.press("Space");
+  assert.equal(await page.getByRole("button",{name:"Session saved",exact:true}).getAttribute("aria-pressed"),"true"); await page.keyboard.press("Space");
+  const track=page.getByRole("button",{name:"View Tracklist",exact:true}); await track.focus(); await page.keyboard.press("Enter"); assert.equal(await track.getAttribute("aria-expanded"),"true"); await page.keyboard.press("Enter"); assert.equal(await track.getAttribute("aria-expanded"),"false");
+  const credit=page.getByRole("link",{name:"Built with Hito DS",exact:true}); await credit.focus();
+  assert.equal(await credit.evaluate(el=>el.matches(":focus-visible") && getComputedStyle(el).outlineWidth==="2px"),true);
+  assert.equal(await page.locator("[data-tag] button,[data-tag] a,[data-tag][tabindex]").count(),0,"Tags remain passive");
   console.log("Checking actual repeated Live beyond the finite native export and reduced motion");
   await page.setViewportSize({width:1440,height:1019}); await page.emulateMedia({reducedMotion:"no-preference"}); await page.goto(origin);
   const phases=[];

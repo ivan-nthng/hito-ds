@@ -1,5 +1,5 @@
 import { useId, useState } from "react";
-import { Button, Card, Dot, Live, MediaFooter, RoundPlayButton, Tag, Text } from "@hito-ds/react";
+import { Button, Card, Dot, Link, Live, MediaFooter, RoundPlayButton, Tag, Text } from "@hito-ds/react";
 import styles from "./MediaSession.module.css";
 
 export function MediaSession() {
@@ -21,5 +21,6 @@ export function MediaSession() {
       <span role="status" className={styles.srOnly}>{playing ? "Demo playback active. No audio is streamed." : "Demo playback paused."} {saved ? "Session saved for this visit." : "Session not saved."}</span>
     </Card>
     <div className={styles.statusFrame}><Live className={styles.live} /></div>
+    <Link href="/storybook/" size="sm" className={styles.attribution}>Built with Hito DS</Link>
   </div>;
 }
