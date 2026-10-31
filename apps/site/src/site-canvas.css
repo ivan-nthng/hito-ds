@@ -1,6 +1,6 @@
 /* Page canvas and decorative document carrier share one explicit root contract. */
-html { background-color: var(--media-background); }
-body { background-color: transparent; }
+html { background-color: var(--media-background); overscroll-behavior-y: none; }
+body { background-color: transparent; overscroll-behavior-y: none; }
 #root { position: relative; isolation: isolate; min-block-size: 100svh; background-color: var(--media-background); }
 #root > [data-site-background] { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
 /* Unsupported positioning retains ordinary document paint without JS catch-up. */
@@ -8,5 +8,7 @@ body { background-color: transparent; }
 @supports (position: fixed) {
   /* No viewport-sized painter/background/clip: only this transparent zero-height origin is fixed. */
   [data-site-background] [data-media-anchor] { position: fixed; inset-block-start: 0; inset-inline-start: 0; }
+  /* Transparent texture covers exposed viewport paint independently of document-end elasticity. */
+  [data-site-background] [data-media-backdrop] > :last-child { position: fixed; inset: 0; min-block-size: 100vh; min-block-size: 100lvh; }
 }
 #root > [data-site-page] { z-index: 1; }

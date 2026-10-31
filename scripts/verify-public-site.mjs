@@ -30,6 +30,19 @@ const suppliedBase = process.argv[2] ?? process.env.HITO_SITE_BASE_URL;
 if (!suppliedBase) await new Promise(resolve => server.listen(0, "127.0.0.1", resolve));
 const origin = suppliedBase ? new URL(suppliedBase).origin : `http://127.0.0.1:${server.address().port}`;
 
+async function compareArtworkFrames(page, first, second) { return page.evaluate(async ({first,second})=>{
+    const decode=async encoded=>{const image=new Image();image.src=`data:image/png;base64,${encoded}`;await image.decode();const canvas=document.createElement("canvas");canvas.width=image.width;canvas.height=image.height;const context=canvas.getContext("2d");context.drawImage(image,0,0);return {width:image.width,height:image.height,pixels:context.getImageData(0,0,image.width,image.height).data};};
+    const a=await decode(first),b=await decode(second);
+    if(a.width!==b.width||a.height!==b.height)return {stationary:false,reason:"dimensions changed"};
+    let changedPixels=0,maxChannelDelta=0,alphaChanges=0;
+    for(let i=0;i<a.pixels.length;i+=4){let changed=false;for(let channel=0;channel<3;channel++){const delta=Math.abs(a.pixels[i+channel]-b.pixels[i+channel]);maxChannelDelta=Math.max(maxChannelDelta,delta);changed ||= delta!==0;}if(changed)changedPixels++;if(a.pixels[i+3]!==b.pixels[i+3])alphaChanges++;}
+    // Captured static WebKit pair:173/334836 pixels differ by one RGB level.
+    // Bound only that minute raster noise; a normal moving pair must fail this same policy.
+    const pixelBudget=Math.floor(a.width*a.height*.001);
+    return {stationary:maxChannelDelta<=1&&changedPixels<=pixelBudget&&alphaChanges===0,changedPixels,maxChannelDelta,alphaChanges,pixelBudget};
+  },{first:first.toString("base64"),second:second.toString("base64")});
+}
+
 // Controlled phases test anchoring without rejecting intentionally moving artwork.
 async function verifyAmbient(context, engine) {
   const page = await context.newPage(), errors = [];
@@ -44,17 +57,6 @@ async function verifyAmbient(context, engine) {
     await page.locator("[data-site-content]").evaluate(el=>el.style.visibility="");
     return pixels;
   };
-  const compareArtworkFrames = async (first, second) => page.evaluate(async ({first,second})=>{
-    const decode=async encoded=>{const image=new Image();image.src=`data:image/png;base64,${encoded}`;await image.decode();const canvas=document.createElement("canvas");canvas.width=image.width;canvas.height=image.height;const context=canvas.getContext("2d");context.drawImage(image,0,0);return {width:image.width,height:image.height,pixels:context.getImageData(0,0,image.width,image.height).data};};
-    const a=await decode(first),b=await decode(second);
-    if(a.width!==b.width||a.height!==b.height)return {stationary:false,reason:"dimensions changed"};
-    let changedPixels=0,maxChannelDelta=0,alphaChanges=0;
-    for(let i=0;i<a.pixels.length;i+=4){let changed=false;for(let channel=0;channel<3;channel++){const delta=Math.abs(a.pixels[i+channel]-b.pixels[i+channel]);maxChannelDelta=Math.max(maxChannelDelta,delta);changed ||= delta!==0;}if(changed)changedPixels++;if(a.pixels[i+3]!==b.pixels[i+3])alphaChanges++;}
-    // Captured static WebKit pair:173/334836 pixels differ by one RGB level.
-    // Bound only that minute raster noise; a normal moving pair must fail this same policy.
-    const pixelBudget=Math.floor(a.width*a.height*.001);
-    return {stationary:maxChannelDelta<=1&&changedPixels<=pixelBudget&&alphaChanges===0,changedPixels,maxChannelDelta,alphaChanges,pixelBudget};
-  },{first:first.toString("base64"),second:second.toString("base64")});
   const reducedState=()=>page.locator("[data-media-backdrop]").evaluate(root=>({forms:[...root.querySelectorAll("[data-media-object]")].map(el=>({transform:getComputedStyle(el).transform,animations:el.getAnimations().length})),anchorTop:root.querySelector("[data-media-anchor]").getBoundingClientRect().top,scrollY,clientWidth:document.documentElement.clientWidth,viewportTop:window.visualViewport?.offsetTop??0,viewportHeight:window.visualViewport?.height??innerHeight}));
   const phase = time => page.locator("[data-media-backdrop]").evaluate((root,time)=>{
     for(const el of [...root.querySelectorAll("[data-media-object]"),root.lastElementChild]) for(const animation of el.getAnimations()) { animation.pause(); animation.currentTime=time; }
@@ -65,18 +67,18 @@ async function verifyAmbient(context, engine) {
       const motion=await page.locator("[data-media-backdrop]").evaluate(root=>[...root.querySelectorAll("[data-media-object]")].map(el=>({transform:getComputedStyle(el).transform,animations:el.getAnimations().map(a=>({time:a.currentTime,duration:a.effect.getTiming().duration,properties:Object.keys(a.effect.getKeyframes()[0])}))})));
       assert.equal(motion.length,6);
       assert.equal(await page.locator("[data-media-backdrop]").evaluate(root=>root.lastElementChild.getAnimations().length),0,"grain is static in normal mode"); assert.ok(motion.every(m=>m.animations.length===1&&m.animations[0].duration===96000));
-      const liveA=await snapshot(); await page.waitForTimeout(500); const liveB=await snapshot(); assert.ok(!liveA.equals(liveB),`${engine}: actual ambient frames change`);
+      const liveA=await snapshot(); await page.waitForTimeout(500); const liveB=await snapshot(); assert.equal((await compareArtworkFrames(page,liveA,liveB)).stationary,false,`${engine}: actual ambient frames change`);
       const cardTop=await page.locator("[data-card]").evaluate(el=>el.getBoundingClientRect().top);
       let cycleStart;
       for(const time of [0,24000,48000,72000,96000]) {
         await phase(time); await page.evaluate(()=>scrollTo(0,0)); const initial=await snapshot();
-        if(time===0) cycleStart=initial; else if(time===96000) assert.ok(initial.equals(cycleStart),`${engine}: rendered ambient cycle closes without a jump`);
+        if(time===0) cycleStart=initial; else if(time===96000) assert.ok((await compareArtworkFrames(page,cycleStart,initial)).stationary,`${engine}: rendered ambient cycle closes without a jump`);
         await page.evaluate(()=>scrollTo(0,document.documentElement.scrollHeight));
-        assert.ok((await snapshot()).equals(initial),`${engine}: equivalent-phase anchoring ${width}x${height}@${time}`);
+        assert.ok((await compareArtworkFrames(page,initial,await snapshot())).stationary,`${engine}: equivalent-phase anchoring ${width}x${height}@${time}`);
         const coverage=await page.locator("[data-media-backdrop]").evaluate(el=>{const carrier=el.getBoundingClientRect(),r=el.querySelector("[data-media-viewport]").getBoundingClientRect(),grain=el.lastElementChild.getBoundingClientRect();return {carrierHeight:carrier.height,pageHeight:document.querySelector("[data-site-page]").getBoundingClientRect().height,x:r.x,y:r.y,right:r.right,bottom:r.bottom,width:innerWidth,height:innerHeight,grain:[grain.left,grain.top,grain.right,grain.bottom],overflow:document.documentElement.scrollWidth>innerWidth,extra:document.documentElement.scrollHeight-document.querySelector("[data-site-page]").getBoundingClientRect().height};});
         assert.ok(coverage.carrierHeight>=coverage.pageHeight,"paint carrier follows full document");assert.equal(coverage.x,0);assert.equal(coverage.y,0);assert.ok(coverage.right>=coverage.width&&coverage.bottom>=coverage.height);assert.ok(coverage.grain[0]<=0&&coverage.grain[1]<=0&&coverage.grain[2]>=coverage.width&&coverage.grain[3]>=coverage.height-1,`document grain covers viewport: ${JSON.stringify(coverage)}`);assert.equal(coverage.overflow,false);assert.ok(Math.abs(coverage.extra)<=1);
       }
-      await page.getByRole("button",{name:"View Tracklist",exact:true}).click();await phase(24000);const expanded=await snapshot();await page.evaluate(()=>scrollTo(0,0));assert.ok((await snapshot()).equals(expanded),`${engine}: content growth keeps artwork anchored`);
+      await page.getByRole("button",{name:"View Tracklist",exact:true}).click();await phase(24000);const expanded=await snapshot();await page.evaluate(()=>scrollTo(0,0));assert.ok((await compareArtworkFrames(page,expanded,await snapshot())).stationary,`${engine}: content growth keeps artwork anchored`);
       if(await page.evaluate(()=>scrollY>0)) assert.ok(await page.locator("[data-card]").evaluate(el=>el.getBoundingClientRect().top)<cardTop);
       await page.emulateMedia({reducedMotion:"reduce"});
       assert.equal(await page.locator("[data-media-backdrop]").evaluate(el=>el.getAnimations({subtree:true}).length),0);
@@ -90,14 +92,14 @@ async function verifyAmbient(context, engine) {
         const before=await reducedState();assert.ok(before.forms.every(form=>form.animations===0&&form.transform==="none"));
         const stillA=await page.screenshot();await page.waitForTimeout(300);const stillB=await page.screenshot();
         assert.deepEqual(await reducedState(),before,`${engine}: reduced forms/viewport remain stationary`);
-        const stationary=await compareArtworkFrames(stillA,stillB);
+        const stationary=await compareArtworkFrames(page,stillA,stillB);
         assert.ok(stationary.stationary,`${engine}: reduced motion freezes actual artwork ${width}x${height} ${JSON.stringify(stationary)}`);
         // Negative control uses the real six slow CSS animations, with no pause or screenshot disabling.
         await page.emulateMedia({reducedMotion:"no-preference"});
         await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
         assert.equal(await page.locator("[data-media-backdrop]").evaluate(root=>root.getAnimations({subtree:true}).length),6);
         const movingA=await page.screenshot();await page.waitForTimeout(1000);const movingB=await page.screenshot();
-        const moving=await compareArtworkFrames(movingA,movingB);
+        const moving=await compareArtworkFrames(page,movingA,movingB);
         assert.equal(moving.stationary,false,`${engine}: stationary comparison must reject real ambient movement ${width}x${height} ${JSON.stringify(moving)}`);
         console.log(`${engine}: reduced frame ${width}x${height} ${JSON.stringify(stationary)}; moving negative ${JSON.stringify(moving)}`);
         await page.emulateMedia({reducedMotion:"reduce"});
@@ -116,11 +118,11 @@ async function verifyAmbient(context, engine) {
     assert.equal(await chromaticBelow(),0,"counterfactual viewport clip reproduces lost color while foreground continues");
     await page.locator("[data-media-viewport]").evaluate(el=>{el.style.overflow="";el.style.blockSize="";});
     const canvas=await page.evaluate(()=>({html:getComputedStyle(document.documentElement).backgroundColor,body:getComputedStyle(document.body).backgroundColor,root:getComputedStyle(document.querySelector("#root")).backgroundColor,page:getComputedStyle(document.querySelector("[data-site-page]")).backgroundColor}));
-    assert.equal(await page.locator("[data-media-backdrop]").evaluate(root=>{const fixed=[root,...root.querySelectorAll("*")].filter(el=>["fixed","sticky"].includes(getComputedStyle(el).position));const anchor=root.querySelector("[data-media-anchor]"),style=getComputedStyle(anchor);return fixed.length===1&&fixed[0]===anchor&&style.position==="fixed"&&anchor.getBoundingClientRect().height===0&&style.backgroundColor==="rgba(0, 0, 0, 0)"&&style.overflow==="visible"&&getComputedStyle(root).position==="absolute"&&getComputedStyle(root.querySelector("[data-media-viewport]")).overflow==="visible";}),true,"only a transparent zero-height native anchor; no fixed clipped viewport painter");
+    assert.equal(await page.locator("[data-media-backdrop]").evaluate(root=>{const fixed=[root,...root.querySelectorAll("*")].filter(el=>["fixed","sticky"].includes(getComputedStyle(el).position));const anchor=root.querySelector("[data-media-anchor]"),style=getComputedStyle(anchor);const grain=root.lastElementChild,grainStyle=getComputedStyle(grain);return fixed.length===2&&fixed.includes(anchor)&&fixed.includes(grain)&&style.position==="fixed"&&anchor.getBoundingClientRect().height===0&&style.backgroundColor==="rgba(0, 0, 0, 0)"&&style.overflow==="visible"&&grainStyle.position==="fixed"&&grainStyle.backgroundColor==="rgba(0, 0, 0, 0)"&&grainStyle.overflow==="visible"&&getComputedStyle(root).position==="absolute"&&getComputedStyle(root.querySelector("[data-media-viewport]")).overflow==="visible";}),true,"only transparent native grain and zero-height anchor; no opaque fixed clipped painter");
     assert.equal(canvas.html,canvas.root);assert.equal(canvas.body,"rgba(0, 0, 0, 0)");assert.equal(canvas.page,"rgba(0, 0, 0, 0)");
     // Isolate grain: actual time-separated frames must be static while forms still run.
     await page.locator("[data-site-content]").evaluate(el=>el.style.visibility="hidden");await page.locator("[data-media-anchor]").evaluate(el=>el.style.visibility="hidden");
-    const grainA=await page.screenshot();await page.waitForTimeout(500);assert.ok((await page.screenshot()).equals(grainA),`${engine}: no directional grain animation`);
+    const grainA=await page.screenshot();await page.waitForTimeout(500);assert.ok((await compareArtworkFrames(page,grainA,await page.screenshot())).stationary,`${engine}: no directional grain animation`);
     await page.locator("[data-site-content]").evaluate(el=>el.style.visibility="");await page.locator("[data-media-anchor]").evaluate(el=>el.style.visibility="");
     // Same document resized through toolbar-like heights; this is engine coverage, not iOS toolbar hardware.
     await page.setViewportSize({width:393,height:852});await page.goto(origin);await page.emulateMedia({reducedMotion:"no-preference"});
@@ -224,6 +226,40 @@ async function verifyActiveScroll(browser, engine) {
     // Same-document viewport-height changes retain native anchoring and full document extent.
     await page.goto(origin);for(const height of [664,852,700]){await page.setViewportSize({width:393,height});await page.mouse.wheel(0,100);await page.waitForTimeout(30);assert(Math.abs(await page.locator('[data-media-anchor]').evaluate(e=>e.getBoundingClientRect().top))<=1);}
     console.log(`${engine}: active scroll/reversal/contention/delayed negative/fallback/resize PASS (engine input, not Codex mobile iPhone)`);
+  } finally {await context.close();}
+}
+
+async function verifyTerminalPaint(browser, engine) {
+  const context=await browser.newContext({viewport:{width:393,height:852},reducedMotion:'no-preference'}),page=await context.newPage();
+  const geometry=()=>page.evaluate(()=>{const page=document.querySelector('[data-site-page]'),grain=document.querySelector('[data-media-backdrop]').lastElementChild,root=document.scrollingElement;return {scrollY,max:root.scrollHeight-root.clientHeight,clientHeight:root.clientHeight,documentHeight:root.scrollHeight,pageHeight:page.getBoundingClientRect().height,pageBottom:page.getBoundingClientRect().bottom,grainBottom:grain.getBoundingClientRect().bottom,visualHeight:visualViewport?.height??innerHeight,visualTop:visualViewport?.offsetTop??0,scale:visualViewport?.scale??1,policy:getComputedStyle(document.documentElement).overscrollBehaviorY,touchAction:getComputedStyle(document.documentElement).touchAction};});
+  const settle=()=>page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
+  const jump=async(bytes,boundary)=>page.evaluate(async({encoded,boundary})=>{const image=new Image();image.src=`data:image/png;base64,${encoded}`;await image.decode();const canvas=document.createElement('canvas');canvas.width=image.width;canvas.height=image.height;const ctx=canvas.getContext('2d');ctx.drawImage(image,0,0);const row=Math.floor(boundary),values=ctx.getImageData(0,row-4,canvas.width,8).data;let above=0,below=0;for(let y=0;y<8;y++)for(let x=0;x<canvas.width;x++)for(let c=0;c<3;c++){const value=values[(y*canvas.width+x)*4+c];if(y<4)above+=value;else below+=value;}return Math.abs(below-above)/(canvas.width*4*3);},{encoded:bytes.toString('base64'),boundary});
+  try {
+    for(const expanded of [false,true]) {
+      await page.goto(origin);await page.evaluate(()=>document.fonts.ready);if(expanded)await page.getByRole('button',{name:'View Tracklist'}).click();await page.evaluate(()=>scrollTo(0,document.scrollingElement.scrollHeight));await settle();
+      const initial=await geometry();assert.equal(await page.evaluate(()=>CSS.supports('overscroll-behavior-y','none')),true);assert.equal(initial.policy,'none');assert.equal(initial.touchAction,'auto');assert(Math.abs(initial.documentHeight-initial.pageHeight)<=1,'paint adds no document height');
+      for(const delta of [120,240,500]){await page.mouse.wheel(0,delta);await settle();const frame=await geometry();assert(frame.scrollY<=frame.max+1&&frame.scrollY>=frame.max-1,`${engine}: terminal wheel remains at native end`);assert(frame.pageBottom>=frame.visualTop+frame.visualHeight-1&&frame.grainBottom>=frame.visualTop+frame.visualHeight-1,`${engine}: document and texture cover visual viewport end`);}
+      await page.waitForTimeout(120);const released=await geometry();assert(Math.abs(released.scrollY-initial.scrollY)<=1);await page.mouse.wheel(0,-140);await settle();assert((await geometry()).scrollY<initial.max-50,`${engine}: upward reversal remains available`);
+      console.log(`${engine}: terminal input/release/reversal ${expanded?'expanded':'default'} ${JSON.stringify(initial)}`);
+    }
+    // Native wheel does not emulate iPhone elasticity. Translate only document paint to expose
+    // its lower boundary synthetically; fixed forms/grain keep their viewport coordinate system.
+    await page.goto(origin);await page.evaluate(()=>document.fonts.ready);await page.locator('[data-media-object]').evaluateAll(elements=>elements.forEach(el=>el.getAnimations().forEach(animation=>{animation.pause();animation.currentTime=24000;})));await page.evaluate(()=>scrollTo(0,document.scrollingElement.scrollHeight));await settle();
+    const ignoredPolicy=await page.addStyleTag({content:'html,body{overscroll-behavior-y:auto!important}'});
+    for(const exposure of [48,80,120]) {
+      await page.locator('[data-site-page]').evaluate((el,exposure)=>el.style.translate=`0 -${exposure}px`,exposure);const boundary=await page.locator('[data-site-page]').evaluate(el=>el.getBoundingClientRect().bottom);const continuous=await jump(await page.screenshot(),boundary);assert(continuous<4,`${engine}: exposed final paint has hard edge ${continuous}`);
+      // Restore the old document grain / clipped page / box-extent scrim as a negative control.
+      await page.locator('[data-site-page]').evaluate(el=>el.style.overflow='clip');await page.locator('[data-media-backdrop]').evaluate((root,exposure)=>{const grain=root.lastElementChild;grain.style.position='absolute';grain.style.minBlockSize='0';grain.style.translate=`0 -${exposure}px`;},exposure);
+      const oldScrim=await page.addStyleTag({content:'footer > [class*="footerContent"]::before{inset-block-end:calc(-2 * var(--layout-space-fixed-2xl) - var(--layout-space-fixed-lg))!important;box-shadow:none!important}'});
+      const clipped=await jump(await page.screenshot(),boundary);assert(clipped>15,`${engine}: old-layer negative must reveal bright boundary ${clipped}`);
+      await oldScrim.evaluate(el=>el.remove());await page.locator('[data-site-page]').evaluate(el=>el.style.overflow='');await page.locator('[data-media-backdrop]').evaluate(root=>root.lastElementChild.removeAttribute('style'));
+      console.log(`${engine}: synthetic end exposure=${exposure}px finalRGBJump=${continuous.toFixed(3)} oldClippedJump=${clipped.toFixed(3)}`);
+    }
+    await ignoredPolicy.evaluate(el=>el.remove());
+    await page.goto(origin);
+    for(const [width,height] of [[393,664],[393,852],[852,393]]){await page.setViewportSize({width,height});await page.evaluate(()=>scrollTo(0,document.scrollingElement.scrollHeight));await settle();const metrics=await geometry();assert(metrics.pageBottom>=metrics.visualTop+metrics.visualHeight-1&&metrics.grainBottom>=metrics.visualTop+metrics.visualHeight-1);assert(Math.abs(metrics.documentHeight-metrics.pageHeight)<=1);console.log(`${engine}: end client/visual viewport ${width}x${height} ${JSON.stringify(metrics)}`);}
+    if(engine==='chromium'){const protocol=await context.newCDPSession(page);await protocol.send('Emulation.setPageScaleFactor',{pageScaleFactor:1.25});await settle();const zoomed=await geometry();assert(zoomed.scale>1&&zoomed.visualHeight<zoomed.clientHeight);assert(zoomed.grainBottom>=zoomed.visualTop+zoomed.visualHeight-1);await protocol.send('Emulation.setPageScaleFactor',{pageScaleFactor:1});console.log(`${engine}: synthetic pinch visual viewport ${JSON.stringify(zoomed)}`);}
+    console.log(`${engine}: terminal clamp/paint/old-boundary negative/visual-viewport PASS (engine + explicit synthetic exposure, not native iPhone)`);
   } finally {await context.close();}
 }
 
@@ -337,7 +373,7 @@ try {
       for(const fraction of [0,.5,1]) {
         await page.evaluate(f=>scrollTo(0,f*(document.documentElement.scrollHeight-innerHeight)),fraction); await page.waitForTimeout(40);
         assert.deepEqual(await backgroundFrame(),[0,0,width,height],"artwork frame remains viewport-bound");
-        assert.ok((await artwork()).equals(initial),"actual artwork pixels stay fixed through scroll/expanded content");
+        const stationary=await compareArtworkFrames(page,initial,await artwork());assert.ok(stationary.stationary,`actual artwork stays fixed through scroll/expanded content ${JSON.stringify(stationary)}`);
         if(!expanded && fraction===1 && await page.evaluate(()=>scrollY>0)) assert.ok(await page.locator("[data-card]").evaluate(el=>el.getBoundingClientRect().top)<cardTop,"foreground still scrolls");
         assert.equal(await overflow(),false);
         assert.ok(await page.evaluate(()=>Math.abs(document.documentElement.scrollHeight-document.querySelector("[data-site-page]").getBoundingClientRect().height)<=1),"decorative paint adds no document height");
@@ -395,8 +431,9 @@ try {
   await verifyDesktopFit(context,"chromium");
   await verifyAmbient(context,"chromium");
   await verifyActiveScroll(browser,"chromium");
+  await verifyTerminalPaint(browser,"chromium");
   if(process.env.HITO_VERIFY_WEBKIT==="1") {
-    const webkitBrowser=await webkit.launch();try {const webkitContext=await webkitBrowser.newContext({isMobile:true,hasTouch:true,reducedMotion:"no-preference"});await verifyDesktopFit(webkitContext,"webkit");await verifyAmbient(webkitContext,"webkit");await verifyActiveScroll(webkitBrowser,"webkit");await webkitContext.close();} finally {await webkitBrowser.close();}
+    const webkitBrowser=await webkit.launch();try {const webkitContext=await webkitBrowser.newContext({isMobile:true,hasTouch:true,reducedMotion:"no-preference"});await verifyDesktopFit(webkitContext,"webkit");await verifyAmbient(webkitContext,"webkit");await verifyActiveScroll(webkitBrowser,"webkit");await verifyTerminalPaint(webkitBrowser,"webkit");await webkitContext.close();} finally {await webkitBrowser.close();}
   }
   assert.deepEqual(failures, []);
   const npm = process.platform === "win32" ? "npm.cmd" : "npm";
