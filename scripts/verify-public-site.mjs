@@ -116,7 +116,7 @@ async function verifyAmbient(context, engine) {
     assert.equal(await chromaticBelow(),0,"counterfactual viewport clip reproduces lost color while foreground continues");
     await page.locator("[data-media-viewport]").evaluate(el=>{el.style.overflow="";el.style.blockSize="";});
     const canvas=await page.evaluate(()=>({html:getComputedStyle(document.documentElement).backgroundColor,body:getComputedStyle(document.body).backgroundColor,root:getComputedStyle(document.querySelector("#root")).backgroundColor,page:getComputedStyle(document.querySelector("[data-site-page]")).backgroundColor}));
-    assert.equal(await page.locator("[data-media-backdrop]").evaluate(root=>[root,...root.querySelectorAll("*")].some(el=>["fixed","sticky"].includes(getComputedStyle(el).position))),false,"live decoration has no native fixed/sticky layer");
+    assert.equal(await page.locator("[data-media-backdrop]").evaluate(root=>{const fixed=[root,...root.querySelectorAll("*")].filter(el=>["fixed","sticky"].includes(getComputedStyle(el).position));const anchor=root.querySelector("[data-media-anchor]"),style=getComputedStyle(anchor);return fixed.length===1&&fixed[0]===anchor&&style.position==="fixed"&&anchor.getBoundingClientRect().height===0&&style.backgroundColor==="rgba(0, 0, 0, 0)"&&style.overflow==="visible"&&getComputedStyle(root).position==="absolute"&&getComputedStyle(root.querySelector("[data-media-viewport]")).overflow==="visible";}),true,"only a transparent zero-height native anchor; no fixed clipped viewport painter");
     assert.equal(canvas.html,canvas.root);assert.equal(canvas.body,"rgba(0, 0, 0, 0)");assert.equal(canvas.page,"rgba(0, 0, 0, 0)");
     // Isolate grain: actual time-separated frames must be static while forms still run.
     await page.locator("[data-site-content]").evaluate(el=>el.style.visibility="hidden");await page.locator("[data-media-anchor]").evaluate(el=>el.style.visibility="hidden");
@@ -183,6 +183,48 @@ async function verifyDesktopFit(context, engine) {
   assert(await page.getByRole('link',{name:'Built with Hito DS'}).isVisible());
   assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
   await page.close();console.log(`${engine}: desktop first-viewport Card/actions/credit and expanded/reflow reachability PASS`);
+}
+
+async function verifyActiveScroll(browser, engine) {
+  // Desktop wheel input at mobile CSS geometry; this is not native iPhone touch/momentum proof.
+  const context=await browser.newContext({viewport:{width:393,height:852},reducedMotion:"no-preference"}),page=await context.newPage();
+  const trace=async (busy=false)=>page.evaluate(busy=>{
+    window.__hitoScrollFrames=[];window.__hitoTracing=true;
+    const sample=time=>{const anchor=document.querySelector('[data-media-anchor]');window.__hitoScrollFrames.push({time,scrollY,top:anchor.getBoundingClientRect().top,visualTop:window.visualViewport?.offsetTop??0});if(window.__hitoTracing)requestAnimationFrame(sample);};requestAnimationFrame(sample);
+    if(busy)setTimeout(()=>{const until=performance.now()+120;while(performance.now()<until){}},75);
+  },busy);
+  const stop=()=>page.evaluate(()=>{window.__hitoTracing=false;return window.__hitoScrollFrames;});
+  const input=async()=>{await page.mouse.move(200,400);for(const delta of [70,110,80,50,30,15,-80,-100,-45,-15]){await page.mouse.wheel(0,delta);await page.waitForTimeout(25);}};
+  try {
+    for(const variant of ['default','expanded','long']) {
+      await page.goto(origin);await page.locator('img[src*="coastal"]').evaluate(el=>el.decode());await page.evaluate(()=>document.fonts.ready);
+      assert.equal(await page.evaluate(()=>CSS.supports('position','fixed')),true,`${engine}: target native positioning support`);
+      if(variant!=='default')await page.getByRole('button',{name:'View Tracklist'}).click();
+      if(variant==='long')await page.locator('footer').evaluate(footer=>{const extension=document.createElement('div');extension.style.blockSize='1200px';footer.after(extension);});
+      await page.evaluate(()=>scrollTo(0,0));await trace(true);await input();await page.waitForTimeout(60);const frames=await stop();
+      assert(frames.length>=5&&new Set(frames.map(f=>f.scrollY)).size>=3,`${engine}: active frames include real scroll progression`);
+      const error=Math.max(...frames.map(f=>Math.abs(f.top-f.visualTop)));
+      assert(error<=1,`${engine}: active field drifts ${variant}: ${error}px`);
+      const gaps=frames.slice(1).map((f,i)=>f.time-frames[i].time);assert(Math.max(...gaps)>=100,`${engine}: main-thread contention exercised`);
+      assert(frames.some((f,i)=>i&&f.scrollY<frames[i-1].scrollY),`${engine}: direction reversal sampled`);
+      console.log(`${engine}: active ${variant} frames=${frames.length} maxAnchorError=${error} mainThreadGap=${Math.max(...gaps).toFixed(1)}`);
+    }
+    // Delayed old-style event compensation must fail transiently, yet pass the old settled check.
+    await page.goto(origin);await page.locator('[data-media-anchor]').waitFor({state:'attached'});await page.evaluate(()=>{
+      const anchor=document.querySelector('[data-media-anchor]');anchor.style.position='absolute';anchor.style.transform='translate3d(0,0,0)';let timer;
+      const sync=()=>{clearTimeout(timer);timer=setTimeout(()=>{anchor.style.transform=`translate3d(0,${scrollY}px,0)`},180)};
+      window.__hitoOldCleanup=()=>{clearTimeout(timer);removeEventListener('scroll',sync)};addEventListener('scroll',sync,{passive:true});
+    });await trace(true);await input();await page.waitForTimeout(260);const delayed=await stop(),drift=Math.max(...delayed.map(f=>Math.abs(f.top-f.visualTop)));
+    assert(drift>30,`${engine}: negative control must expose event catch-up`);assert(Math.abs(delayed.at(-1).top-delayed.at(-1).visualTop)<=1,`${engine}: delayed control eventually anchors`);
+    console.log(`${engine}: old-compensation negative transient=${drift}px settled=${delayed.at(-1).top}px`);
+    // Deliberately force the unsupported-positioning fallback, without restoring any JS compensation.
+    await page.evaluate(()=>{window.__hitoOldCleanup();const anchor=document.querySelector('[data-media-anchor]');anchor.style.transform='';anchor.style.position='absolute';scrollTo(0,0)});
+    await trace();await input();const fallback=await stop();assert(fallback.some(f=>f.scrollY>50));assert(fallback.every(f=>Math.abs(f.top+f.scrollY)<=1),`${engine}: fallback remains ordinary document paint, without snap-back`);
+    const extent=await page.locator('[data-media-backdrop]').evaluate(root=>({carrier:root.getBoundingClientRect().height,page:document.querySelector('[data-site-page]').getBoundingClientRect().height,animations:root.querySelector('[data-media-object]').getAnimations().length}));assert(extent.carrier>=extent.page);assert.equal(extent.animations,1);
+    // Same-document viewport-height changes retain native anchoring and full document extent.
+    await page.goto(origin);for(const height of [664,852,700]){await page.setViewportSize({width:393,height});await page.mouse.wheel(0,100);await page.waitForTimeout(30);assert(Math.abs(await page.locator('[data-media-anchor]').evaluate(e=>e.getBoundingClientRect().top))<=1);}
+    console.log(`${engine}: active scroll/reversal/contention/delayed negative/fallback/resize PASS (engine input, not Codex mobile iPhone)`);
+  } finally {await context.close();}
 }
 
 let browser;
@@ -316,6 +358,7 @@ try {
   await page.waitForTimeout(300); assert.equal(await page.locator("[data-live-dot]").evaluate(el=>getComputedStyle(el).opacity),"1");
   console.log("Checking keyboard/reflow and external CTA clicks");
   await page.setViewportSize({ width: 1366, height: 1000 }); await page.goto(origin);
+  await page.getByRole("link", { name: "Skip to main content" }).waitFor({state:"attached"});
   await page.keyboard.press("Tab"); assert.equal(await page.getByRole("link", { name: "Skip to main content" }).evaluate(el => el === document.activeElement), true);
   await page.keyboard.press("Enter"); assert.equal(await page.locator("main").evaluate(el => el === document.activeElement), true);
   await page.keyboard.press("Tab");
@@ -351,8 +394,9 @@ try {
   assert.ok(!external.some(url => /fonts\.googleapis|fonts\.gstatic/.test(url)), "fonts must remain local");
   await verifyDesktopFit(context,"chromium");
   await verifyAmbient(context,"chromium");
+  await verifyActiveScroll(browser,"chromium");
   if(process.env.HITO_VERIFY_WEBKIT==="1") {
-    const webkitBrowser=await webkit.launch();try {const webkitContext=await webkitBrowser.newContext({isMobile:true,hasTouch:true,reducedMotion:"no-preference"});await verifyDesktopFit(webkitContext,"webkit");await verifyAmbient(webkitContext,"webkit");await webkitContext.close();} finally {await webkitBrowser.close();}
+    const webkitBrowser=await webkit.launch();try {const webkitContext=await webkitBrowser.newContext({isMobile:true,hasTouch:true,reducedMotion:"no-preference"});await verifyDesktopFit(webkitContext,"webkit");await verifyAmbient(webkitContext,"webkit");await verifyActiveScroll(webkitBrowser,"webkit");await webkitContext.close();} finally {await webkitBrowser.close();}
   }
   assert.deepEqual(failures, []);
   const npm = process.platform === "win32" ? "npm.cmd" : "npm";
