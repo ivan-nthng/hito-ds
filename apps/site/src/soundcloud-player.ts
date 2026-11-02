@@ -1,8 +1,11 @@
 export const trackUrl = "https://soundcloud.com/vanya-nichego/you-think-youre-stuck";
 export const playerUrl = `https://w.soundcloud.com/player/?url=${encodeURIComponent(trackUrl)}&auto_play=false&buying=false&sharing=false&download=false&show_artwork=false&show_user=false&show_playcount=false`;
+export type SoundCloudEvent = { currentPosition?: number };
 export interface SoundCloudWidget {
-  bind(event: string, handler: () => void): void;
+  bind(event: string, handler: (event?: SoundCloudEvent) => void): void;
   unbind(event: string): void;
+  getDuration(callback: (duration: number) => void): void;
+  getPosition(callback: (position: number) => void): void;
   play(): void;
   pause(): void;
   seekTo(position: number): void;

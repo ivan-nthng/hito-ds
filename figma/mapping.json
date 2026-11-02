@@ -490,9 +490,13 @@
     {
       "path": "packages/design-system/src/components/StatePanel/StatePanel.stories.tsx",
       "nodeId": "9034:22"
+    },
+    {
+      "path": "packages/design-system/src/components/Media/RoundControl.stories.tsx",
+      "nodeId": "11421:1040"
     }
   ],
-  "nodeReferencesChecked": 104,
+  "nodeReferencesChecked": 105,
   "missingNodeReferences": [],
   "nativeCodeConnect": "blocked-by-figma-plan"
 }

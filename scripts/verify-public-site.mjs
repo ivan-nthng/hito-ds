@@ -36,7 +36,7 @@ const fixtureContexts = new WeakSet();
 async function sitePage(context) {
  if (!fixtureContexts.has(context)) {
   fixtureContexts.add(context);
-  await context.route("https://w.soundcloud.com/player/api.js", route => route.fulfill({contentType:"text/javascript",body:`window.SC={Widget:Object.assign(function(){const h={};return {bind:(e,f)=>{h[e]=f;if(e==='READY')setTimeout(f,0)},unbind:e=>delete h[e],play:()=>h.PLAY?.(),pause:()=>h.PAUSE?.(),seekTo:()=>{}}},{Events:Object.fromEntries(['READY','PLAY','PAUSE','FINISH','ERROR'].map(e=>[e,e]))})};`}));
+  await context.route("https://w.soundcloud.com/player/api.js", route => route.fulfill({contentType:"text/javascript",body:`window.SC={Widget:Object.assign(function(){const h={};return {bind:(e,f)=>{h[e]=f;if(e==='READY')setTimeout(f,0)},unbind:e=>delete h[e],getDuration:fn=>fn(208248),getPosition:fn=>fn(0),play:()=>h.PLAY?.(),pause:()=>h.PAUSE?.(),seekTo:()=>{}}},{Events:Object.fromEntries(['READY','PLAY','PAUSE','FINISH','ERROR','PLAY_PROGRESS','SEEK'].map(e=>[e,e]))})};`}));
   await context.route("https://w.soundcloud.com/player/?**", route => route.fulfill({contentType:"text/html",body:"<!doctype html><title>Transport fixture</title>"}));
  }
  return context.newPage();
@@ -320,7 +320,7 @@ try {
     assert.equal(geometry.dotAnimation,"none"); assert.equal(geometry.liveOpacity,"1");
     assert.equal(geometry.separatorWidth,geometry.width,"full-bleed normal-flow separator");
     if(width===1440 || width===390) {
-      assert.equal(geometry.width,width===1440?448:358); assert.equal(geometry.height,width===1440?593:605);
+      assert.equal(geometry.width,width===1440?448:358); assert.equal(geometry.height,width===1440?629:709);
       assert.equal(geometry.radius,width===1440?"24px":"16px"); assert.equal(geometry.photoRadius,width===1440?"16px":"8px");
     }
     assert.equal(await page.getByRole("navigation",{name:"Breadcrumb"}).count(),0);

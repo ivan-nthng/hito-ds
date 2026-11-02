@@ -5,8 +5,8 @@ vi.mock("./soundcloud-player", () => ({
  playerUrl: "about:blank", trackUrl: "https://soundcloud.com/vanya-nichego/you-think-youre-stuck",
  loadSoundCloud: async () => Object.assign(() => {
   const handlers: Record<string, () => void> = {};
-  return { bind: (name: string, fn: () => void) => { handlers[name] = fn; if (name === "READY") queueMicrotask(fn); }, unbind: (name: string) => { delete handlers[name]; }, play: () => handlers.PLAY?.(), pause: () => handlers.PAUSE?.(), seekTo: vi.fn() };
- }, { Events: Object.fromEntries(["READY","PLAY","PAUSE","FINISH","ERROR"].map(key => [key,key])) })
+  return { bind: (name: string, fn: () => void) => { handlers[name] = fn; if (name === "READY") queueMicrotask(fn); }, unbind: (name: string) => { delete handlers[name]; }, getDuration: (fn: (value: number) => void) => fn(208248), getPosition: (fn: (value: number) => void) => fn(0), play: () => handlers.PLAY?.(), pause: () => handlers.PAUSE?.(), seekTo: vi.fn() };
+ }, { Events: Object.fromEntries(["READY","PLAY","PAUSE","FINISH","ERROR","PLAY_PROGRESS","SEEK"].map(key => [key,key])) })
 }));
 import { App } from "./App";
 beforeEach(() => {

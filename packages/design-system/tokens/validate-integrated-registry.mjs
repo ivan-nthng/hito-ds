@@ -20,6 +20,7 @@ import { cardResponsiveRadii } from "./component-card.mjs";
 import { avatarDimensions, avatarRadii, avatarSizes } from "./component-avatar.mjs";
 
 const EXPECTED_GROUP_COUNTS = Object.freeze({
+  "component/round-control-defaults": 9,
   "recipe/media": 45,
   "component/avatar-dimensions": 8,
   "component/avatar-radii": 4,
@@ -135,7 +136,7 @@ for (const group of registryGroups) {
 }
 
 assert(
-  registryEntries.length === 493,
+  registryEntries.length === 502,
   "Integrated registry entry count drifted",
 );
 assert(
@@ -147,7 +148,7 @@ assert(
   "Semantic registry count drifted",
 );
 assert(
-  registryComponentEntries.length === 66,
+  registryComponentEntries.length === 75,
   "Admitted component alias count drifted",
 );
 assert(!registryEntries.some(entry => /^radius\/\d/u.test(entry.id)),
@@ -400,6 +401,14 @@ for (const [part, aliasId] of [
   assert(entry.aliasIds.includes(aliasId), `Spinner alias drifted: ${part}`);
   assert(css.includes(`${entry.definition.cssVariable}: ${entry.definition.webValue};`), `Spinner adapter drifted: ${part}`);
 }
+const roundDefaults = registryGroups.find(group => group.id === "component/round-control-defaults");
+assert(roundDefaults?.entries.length === 9, "RoundControl owned defaults missing");
+for (const entry of roundDefaults.entries) {
+  const token = entry.definition;
+  assert(css.includes(`${token.cssVariable}: ${token.webValue};`), `RoundControl adapter drifted: ${token.id}`);
+}
+assert(registryEntriesById["component/round-control/radius"].aliasIds.includes("radius/shape/round"), "RoundControl must remain a circle");
+
 for (const variable of declaredCssVariables) {
   assert(
     cssProperties.has(variable),

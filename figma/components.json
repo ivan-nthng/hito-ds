@@ -313,6 +313,18 @@
       "nodeId": "9626:261",
       "source": "packages/design-system/src/components/AppShell/AppShell.tsx",
       "figmaUrl": "https://www.figma.com/design/C8ymDNFqGISrgIe6iGimHX/Hito-DS?node-id=9626-261"
+    },
+    {
+      "name": "RoundControl",
+      "nodeId": "11420:1016",
+      "source": "packages/design-system/src/components/Media/Media.tsx",
+      "figmaUrl": "https://www.figma.com/design/C8ymDNFqGISrgIe6iGimHX/Hito-DS?node-id=11420-1016"
+    },
+    {
+      "name": "RoundPlayButton",
+      "nodeId": "11420:1103",
+      "source": "packages/design-system/src/components/Media/Media.tsx",
+      "figmaUrl": "https://www.figma.com/design/C8ymDNFqGISrgIe6iGimHX/Hito-DS?node-id=11420-1103"
     }
   ]
 }

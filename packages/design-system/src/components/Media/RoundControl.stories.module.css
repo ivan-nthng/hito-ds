@@ -1,0 +1,7 @@
+.grid { display: grid; gap: var(--layout-space-fixed-2xl); }
+.row { display: flex; flex-wrap: wrap; align-items: center; gap: var(--layout-space-fixed-xl); }
+.time { font: var(--type-data-sm-font-size) / var(--type-data-sm-line-height) var(--type-family-base); font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+.scrim { background: var(--color-surface-scrim); padding: var(--layout-space-fixed-lg); }
+
+.legacyWidth { display: grid; inline-size: var(--ref-space-64); gap: var(--layout-space-fixed-xl); }

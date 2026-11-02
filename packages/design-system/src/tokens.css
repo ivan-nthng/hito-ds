@@ -1424,6 +1424,20 @@
   }
 }
 
+@layer hito.tokens {
+  :root {
+    --round-control-size-sm: var(--ui-control-height-sm);
+    --round-control-size-md: var(--ui-control-height-md);
+    --round-control-size-lg: var(--ui-control-height-lg);
+    --round-control-size-xl: var(--ui-control-height-xl);
+    --round-control-progress-inset: var(--ui-space-3xs);
+    --round-control-progress-stroke: var(--border-width-strong);
+    --round-control-progress-track-opacity: var(--ref-opacity-24);
+    --round-control-progress-color: currentColor;
+    --round-control-radius: var(--radius-shape-round);
+  }
+}
+
 /* HDS-41 media recipe start */
 @layer hito.tokens {
   :root {

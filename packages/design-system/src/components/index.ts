@@ -78,4 +78,4 @@ export { PickerPanel, type PickerPanelProps } from "./PickerPanel/PickerPanel";
 
 export { CardHeader, type CardHeaderProps } from "./Card/Card";
 export { AppShell, type AppShellProps, type AppShellNavItem, type AppShellPresentation } from "./AppShell/AppShell";
-export { Dot, Live, MediaBackdrop, RoundPlayButton, MediaActionLink, MediaFooter, type RoundPlayButtonProps } from "./Media/Media";
+export { Dot, Live, MediaBackdrop, RoundPlayButton, MediaActionLink, MediaFooter, type RoundControlProps, type RoundPlayButtonProps } from "./Media/Media";

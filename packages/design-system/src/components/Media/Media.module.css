@@ -3,7 +3,25 @@
   .live { display: inline-flex; align-items: center; gap: var(--layout-space-fixed-sm); padding: var(--layout-space-fixed-sm); border-radius: var(--radius-layout-fixed-sm); background: var(--color-surface-scrim); color: var(--color-foreground-on-scrim); }
   .liveDot { inline-size: var(--media-live-dot-size); block-size: var(--media-live-dot-size); flex: none; border-radius: var(--radius-shape-round); background: var(--color-icon-success-default); animation: live-pulse var(--media-live-cycle) var(--media-live-easing) infinite; }
   @keyframes live-pulse { 0%,100% { opacity: 1; } 50% { opacity: var(--media-live-dim); } }
-  .play[data-size="xl"][data-icon-position="only"] { border-radius: var(--radius-shape-round); corner-shape: round; flex: none; }
+
+  .roundFrame { position: relative; display: inline-flex; flex: none; vertical-align: middle; }
+  .round[data-icon-position="only"][data-size] { border-radius: var(--round-control-radius); corner-shape: round; flex: none; aspect-ratio: 1; }
+  .round[data-icon-position="only"][data-size="sm"] { --button-height: var(--round-control-size-sm); }
+  .round[data-icon-position="only"][data-size="md"] { --button-height: var(--round-control-size-md); }
+  .round[data-icon-position="only"][data-size="lg"] { --button-height: var(--round-control-size-lg); }
+  .round[data-icon-position="only"][data-size="xl"] { --button-height: var(--round-control-size-xl); }
+  .round[data-icon-position="only"][data-size]:focus-visible { outline-offset: var(--focus-indicator-offset); }
+  .round[data-round-progress]::after {
+    content: ""; position: absolute; pointer-events: none;
+    /* Native Button's transparent border is outside the absolute containing block. */
+    inset: calc(var(--round-control-progress-inset) - var(--border-width-default));
+    border-radius: var(--round-control-radius);
+    background: conic-gradient(var(--round-control-progress-color) calc(var(--round-control-progress) * 1turn), rgb(from var(--round-control-progress-color) r g b / var(--round-control-progress-track-opacity)) 0);
+    mask-image: radial-gradient(farthest-side, transparent calc(100% - var(--round-control-progress-stroke)), #000 calc(100% - var(--round-control-progress-stroke)));
+  }
+  .progressSemantic { position: absolute; inline-size: var(--ref-space-px); block-size: var(--ref-space-px); overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  @media (forced-colors: active) { .round[data-round-progress]::after { --round-control-progress-color: ButtonText; forced-color-adjust: none; } }
+
   .actionLink { min-block-size: var(--ui-control-height-md); padding: var(--ui-space-xs) var(--ui-space-2xl); border: var(--border-width-default) solid transparent; border-radius: var(--radius-ui-md); background: var(--color-surface-neutral-strong-default); color: var(--color-foreground-on-neutral-strong); text-decoration: none; justify-content: center; }
   .actionLink:active { background: var(--color-surface-neutral-strong-pressed); color: var(--color-foreground-on-neutral-strong); }
   .footer { margin-inline: calc(-1 * var(--layout-space-fixed-sm)); }
