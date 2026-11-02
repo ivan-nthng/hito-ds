@@ -29,20 +29,9 @@
 }
 
 .footerContent { position: relative; display: grid; gap: var(--layout-space-fixed-lg); justify-self: start; max-inline-size: 100%; }
-.footerContent::before {
- content: ""; position: absolute; z-index: -1; pointer-events: none;
- inset: calc(-2 * var(--layout-space-fixed-2xl) - var(--layout-space-fixed-lg));
- inset-block-end: 0;
- box-shadow: 0 calc(2 * var(--layout-space-fixed-2xl) + var(--layout-space-fixed-lg)) 0 0 var(--color-surface-scrim);
- background: var(--color-surface-scrim);
- filter: blur(var(--layout-space-fixed-2xl));
-}
 
-@media (forced-colors: active) { .footerContent::before { display: none; } }
 
 .intro { position: relative; }
-.intro::before { content: ""; position: absolute; z-index: -1; pointer-events: none; inset: calc(-2 * var(--layout-space-fixed-2xl)); background: var(--color-surface-scrim); filter: blur(var(--layout-space-fixed-2xl)); }
-@media (forced-colors: active) { .intro::before { display: none; } }
 
 /* Budget the desktop composition against available content height. */
 .hero { display: contents; }
