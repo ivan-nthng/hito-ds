@@ -16,8 +16,6 @@
 .attribution { justify-self: center; --link-color: var(--color-text-secondary); --link-color-hover: var(--color-text-primary); }
 .attribution:active { color: var(--color-text-secondary); }
 
-.attribution::after { content: ""; position: absolute; z-index: -1; pointer-events: none; inset: calc(-1 * var(--layout-space-fixed-xl)); background: var(--color-surface-scrim); filter: blur(var(--layout-space-fixed-lg)); }
-@media (forced-colors: active) { .attribution::after { display: none; } }
 
 /* Reserve native header, copy, actions and credit; crop only the short desktop photo. */
 @media (min-width: 64.001rem) {
@@ -27,3 +25,7 @@
 @media (min-width: 64.001rem) {
  .statusFrame { aspect-ratio: auto; block-size: clamp(var(--ref-space-40), calc(100svh - var(--ref-space-96) - var(--ref-space-10)), var(--ref-space-72)); }
 }
+
+.spotifyHost { min-inline-size: 0; inline-size: 100%; }
+.spotifyHost iframe { display: block; inline-size: 100%; max-inline-size: 100%; border: 0; }
+.tracklist:not([hidden]) { display: grid; gap: var(--layout-space-fixed-sm); }
