@@ -26,6 +26,6 @@
  .statusFrame { aspect-ratio: auto; block-size: clamp(var(--ref-space-40), calc(100svh - var(--ref-space-96) - var(--ref-space-10)), var(--ref-space-72)); }
 }
 
-.spotifyHost { min-inline-size: 0; inline-size: 100%; }
-.spotifyHost iframe { display: block; inline-size: 100%; max-inline-size: 100%; border: 0; }
-.tracklist:not([hidden]) { display: grid; gap: var(--layout-space-fixed-sm); }
+.credits { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--layout-space-fixed-md); }
+
+.audioEngine { position: fixed; inline-size: 1px; block-size: 1px; clip-path: inset(50%); overflow: hidden; pointer-events: none; border: 0; }

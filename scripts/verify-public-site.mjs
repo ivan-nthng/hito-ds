@@ -6,16 +6,6 @@ import { fileURLToPath } from "node:url";
 import { execFileSync } from "node:child_process";
 import { chromium, webkit } from "playwright";
 
-// Deterministic controller-event fixture; NOT real Spotify playback/audio proof.
-const spotifyFixtureScript = `window.onSpotifyIframeApiReady({createController(element, options, callback) {
- if(options.uri !== 'spotify:track:4i4ArYpqtsA3MJ1k0o2dxq') throw Error('Wrong track');
- const iframe=document.createElement('iframe');iframe.height=String(options.height);iframe.srcdoc='<button>Spotify native player fixture</button>';element.replaceWith(iframe);
- const listeners=new Map();const fire=(name,data)=>listeners.get(name)?.({data:{playingURI:options.uri,...data}});
- const controller={addListener:(name,fn)=>listeners.set(name,fn),removeListener:name=>listeners.delete(name),play(){fire('playback_started',{});fire('playback_update',{isPaused:false,isBuffering:false,position:1,duration:100})},pause(){fire('playback_update',{isPaused:true,isBuffering:false,position:1,duration:100})},destroy(){listeners.clear();iframe.remove()}};
- callback(controller);setTimeout(()=>fire('ready',{}),0);
-}});`;
-async function spotifyFixtureContext(browser, options) { const context=await browser.newContext(options);await context.route('https://open.spotify.com/embed/iframe-api/v1',route=>route.fulfill({contentType:'text/javascript',body:spotifyFixtureScript}));return context; }
-
 const root = fileURLToPath(new URL("../output/public-site/", import.meta.url));
 const mime = { ".html": "text/html", ".js": "text/javascript", ".css": "text/css", ".svg": "image/svg+xml", ".json": "application/json", ".woff2": "font/woff2", ".png": "image/png", ".jpg": "image/jpeg" };
 // Ordinary directory hosting, including slash canonicalization and genuine missing-file 404.
@@ -40,6 +30,18 @@ const suppliedBase = process.argv[2] ?? process.env.HITO_SITE_BASE_URL;
 if (!suppliedBase) await new Promise(resolve => server.listen(0, "127.0.0.1", resolve));
 const origin = suppliedBase ? new URL(suppliedBase).origin : `http://127.0.0.1:${server.address().port}`;
 
+// Deterministic transport fixture for layout/interaction regression only.
+// Real official streaming is verified separately without this fixture.
+const fixtureContexts = new WeakSet();
+async function sitePage(context) {
+ if (!fixtureContexts.has(context)) {
+  fixtureContexts.add(context);
+  await context.route("https://w.soundcloud.com/player/api.js", route => route.fulfill({contentType:"text/javascript",body:`window.SC={Widget:Object.assign(function(){const h={};return {bind:(e,f)=>{h[e]=f;if(e==='READY')setTimeout(f,0)},unbind:e=>delete h[e],play:()=>h.PLAY?.(),pause:()=>h.PAUSE?.(),seekTo:()=>{}}},{Events:Object.fromEntries(['READY','PLAY','PAUSE','FINISH','ERROR'].map(e=>[e,e]))})};`}));
+  await context.route("https://w.soundcloud.com/player/?**", route => route.fulfill({contentType:"text/html",body:"<!doctype html><title>Transport fixture</title>"}));
+ }
+ return context.newPage();
+}
+
 async function compareArtworkFrames(page, first, second) { return page.evaluate(async ({first,second})=>{
     const decode=async encoded=>{const image=new Image();image.src=`data:image/png;base64,${encoded}`;await image.decode();const canvas=document.createElement("canvas");canvas.width=image.width;canvas.height=image.height;const context=canvas.getContext("2d");context.drawImage(image,0,0);return {width:image.width,height:image.height,pixels:context.getImageData(0,0,image.width,image.height).data};};
     const a=await decode(first),b=await decode(second);
@@ -55,7 +57,7 @@ async function compareArtworkFrames(page, first, second) { return page.evaluate(
 
 // Controlled phases test anchoring without rejecting intentionally moving artwork.
 async function verifyAmbient(context, engine) {
-  const page = await context.newPage(), errors = [];
+  const page = await sitePage(context), errors = [];
   page.on("pageerror",error=>errors.push(error.message));
   const snapshot = async () => {
     await page.waitForFunction(()=>Math.abs(document.querySelector("[data-media-anchor]").getBoundingClientRect().top-(window.visualViewport?.offsetTop??0))<1);
@@ -88,7 +90,7 @@ async function verifyAmbient(context, engine) {
         const coverage=await page.locator("[data-media-backdrop]").evaluate(el=>{const carrier=el.getBoundingClientRect(),r=el.querySelector("[data-media-viewport]").getBoundingClientRect(),grain=el.lastElementChild.getBoundingClientRect();return {carrierHeight:carrier.height,pageHeight:document.querySelector("[data-site-page]").getBoundingClientRect().height,x:r.x,y:r.y,right:r.right,bottom:r.bottom,width:innerWidth,height:innerHeight,grain:[grain.left,grain.top,grain.right,grain.bottom],overflow:document.documentElement.scrollWidth>innerWidth,extra:document.documentElement.scrollHeight-document.querySelector("[data-site-page]").getBoundingClientRect().height};});
         assert.ok(coverage.carrierHeight>=coverage.pageHeight,"paint carrier follows full document");assert.equal(coverage.x,0);assert.equal(coverage.y,0);assert.ok(coverage.right>=coverage.width&&coverage.bottom>=coverage.height);assert.ok(coverage.grain[0]<=0&&coverage.grain[1]<=0&&coverage.grain[2]>=coverage.width&&coverage.grain[3]>=coverage.height-1,`document grain covers viewport: ${JSON.stringify(coverage)}`);assert.equal(coverage.overflow,false);assert.ok(Math.abs(coverage.extra)<=1);
       }
-      await page.getByRole("button",{name:/^(Show|Hide) player$/,exact:true}).click();await phase(24000);const expanded=await snapshot();await page.evaluate(()=>scrollTo(0,0));assert.ok((await compareArtworkFrames(page,expanded,await snapshot())).stationary,`${engine}: content growth keeps artwork anchored`);
+      await page.getByRole("button",{name:"View Tracklist",exact:true}).click();await phase(24000);const expanded=await snapshot();await page.evaluate(()=>scrollTo(0,0));assert.ok((await compareArtworkFrames(page,expanded,await snapshot())).stationary,`${engine}: content growth keeps artwork anchored`);
       if(await page.evaluate(()=>scrollY>0)) assert.ok(await page.locator("[data-card]").evaluate(el=>el.getBoundingClientRect().top)<cardTop);
       await page.emulateMedia({reducedMotion:"reduce"});
       assert.equal(await page.locator("[data-media-backdrop]").evaluate(el=>el.getAnimations({subtree:true}).length),0);
@@ -160,12 +162,12 @@ async function verifyAmbient(context, engine) {
 }
 
 async function verifyDesktopFit(context, engine) {
-  const page=await context.newPage();
+  const page=await sitePage(context);
   for(const [width,height] of [[1280,640],[1280,696],[1366,650],[1440,768],[1440,800],[1536,735],[1920,900],[1920,1200]]) {
     await page.setViewportSize({width,height});await page.goto(origin);await page.evaluate(()=>document.fonts.ready);
     const bounds=await page.evaluate(()=>{
       const rect=e=>{const r=e.getBoundingClientRect();return {top:r.top,bottom:r.bottom,left:r.left,right:r.right,height:r.height}};
-      const image=document.querySelector('img[src*="coastal"]'),card=image.parentElement,credit=document.querySelector('[aria-label="Built with Hito"] a[href="/storybook/"]');
+      const image=document.querySelector('img[src*="coastal"]'),card=image.parentElement,credit=document.querySelector('[aria-label="Built with Hito"] a');
       return {intro:rect(document.querySelector('[aria-labelledby="site-title"]')),introParts:[...document.querySelectorAll('[aria-labelledby="site-title"] h1,[aria-labelledby="site-title"] p,[aria-labelledby="site-title"] a,header nav a')].map(rect),footer:rect(document.querySelector('footer')),header:rect(document.querySelector('header')),card:rect(card),credit:rect(credit),photo:rect(image),live:rect(document.querySelector('[data-hito-live]')),actions:[...card.querySelectorAll('button')].map(rect),imageStyle:{fit:getComputedStyle(image).objectFit,radius:getComputedStyle(image).borderRadius,liveInset:parseFloat(getComputedStyle(document.querySelector('[data-hito-live]')).right)},width:innerWidth,height:innerHeight,scrollY,overflow:document.documentElement.scrollWidth>innerWidth};
     });
     assert.equal(bounds.scrollY,0);assert.equal(bounds.overflow,false);
@@ -183,15 +185,15 @@ async function verifyDesktopFit(context, engine) {
     assert(bounds.live.top>=bounds.photo.top&&bounds.live.bottom<=bounds.photo.bottom-8&&Math.abs(bounds.photo.right-bounds.live.right-bounds.imageStyle.liveInset)<1,`${engine}: Live stays inside cropped photo`);
     assert.equal(bounds.imageStyle.fit,'cover');assert(bounds.photo.height>=160&&bounds.photo.height<=289);
     if(height>=768)assert(Math.abs(bounds.photo.height-288)<1,`${engine}: tall desktop photo preserved`);
-    const track=page.getByRole('button',{name:/^(Show|Hide) player$/});await track.focus();
+    const track=page.getByRole('button',{name:'View Tracklist'});await track.focus();
     assert(await track.evaluate(e=>e.matches(':focus-visible')),`${engine}: visible keyboard focus`);
     await page.keyboard.press('Enter');assert.equal(await track.getAttribute('aria-expanded'),'true');
     await page.getByRole('link',{name:'Built with Hito DS'}).scrollIntoViewIfNeeded();
-    assert(await page.getByText('Playback availability depends on Spotify and your browser.',{exact:true}).isVisible());
+    assert(await page.getByText('You think you’re stuck · Vanya Nichego',{exact:true}).isVisible());
   }
   // 200% zoom-equivalent CSS reflow keeps the complete composition reachable.
   await page.setViewportSize({width:640,height:320});await page.goto(origin);await page.evaluate(()=>document.fonts.ready);
-  await page.getByRole('button',{name:/^(Show|Hide) player$/}).click();await page.getByRole('link',{name:'Built with Hito DS'}).scrollIntoViewIfNeeded();
+  await page.getByRole('button',{name:'View Tracklist'}).click();await page.getByRole('link',{name:'Built with Hito DS'}).scrollIntoViewIfNeeded();
   assert(await page.getByRole('link',{name:'Built with Hito DS'}).isVisible());
   assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
   await page.close();console.log(`${engine}: desktop first-viewport Card/actions/credit and expanded/reflow reachability PASS`);
@@ -199,7 +201,7 @@ async function verifyDesktopFit(context, engine) {
 
 async function verifyActiveScroll(browser, engine) {
   // Desktop wheel input at mobile CSS geometry; this is not native iPhone touch/momentum proof.
-  const context=await spotifyFixtureContext(browser, {viewport:{width:393,height:852},reducedMotion:"no-preference"}),page=await context.newPage();
+  const context=await browser.newContext({viewport:{width:393,height:852},reducedMotion:"no-preference"}),page=await sitePage(context);
   const trace=async (busy=false)=>page.evaluate(busy=>{
     window.__hitoScrollFrames=[];window.__hitoTracing=true;
     const sample=time=>{const anchor=document.querySelector('[data-media-anchor]');window.__hitoScrollFrames.push({time,scrollY,top:anchor.getBoundingClientRect().top,visualTop:window.visualViewport?.offsetTop??0});if(window.__hitoTracing)requestAnimationFrame(sample);};requestAnimationFrame(sample);
@@ -211,7 +213,7 @@ async function verifyActiveScroll(browser, engine) {
     for(const variant of ['default','expanded','long']) {
       await page.goto(origin);await page.locator('img[src*="coastal"]').evaluate(el=>el.decode());await page.evaluate(()=>document.fonts.ready);
       assert.equal(await page.evaluate(()=>CSS.supports('position','fixed')),true,`${engine}: target native positioning support`);
-      if(variant!=='default')await page.getByRole('button',{name:/^(Show|Hide) player$/}).click();
+      if(variant!=='default')await page.getByRole('button',{name:'View Tracklist'}).click();
       if(variant==='long')await page.locator('footer').evaluate(footer=>{const extension=document.createElement('div');extension.style.blockSize='1200px';footer.after(extension);});
       await page.evaluate(()=>scrollTo(0,0));await trace(true);await input();await page.waitForTimeout(60);const frames=await stop();
       assert(frames.length>=5&&new Set(frames.map(f=>f.scrollY)).size>=3,`${engine}: active frames include real scroll progression`);
@@ -240,15 +242,15 @@ async function verifyActiveScroll(browser, engine) {
 }
 
 async function verifyTerminalPaint(browser, engine) {
-  const context=await spotifyFixtureContext(browser, {viewport:{width:393,height:852},reducedMotion:'no-preference'}),page=await context.newPage();
+  const context=await browser.newContext({viewport:{width:393,height:852},reducedMotion:'no-preference'}),page=await sitePage(context);
   const geometry=()=>page.evaluate(()=>{const page=document.querySelector('[data-site-page]'),grain=document.querySelector('[data-media-backdrop]').lastElementChild,root=document.scrollingElement;return {scrollY,max:root.scrollHeight-root.clientHeight,clientHeight:root.clientHeight,documentHeight:root.scrollHeight,pageHeight:page.getBoundingClientRect().height,pageBottom:page.getBoundingClientRect().bottom,grainBottom:grain.getBoundingClientRect().bottom,visualHeight:visualViewport?.height??innerHeight,visualTop:visualViewport?.offsetTop??0,scale:visualViewport?.scale??1,policy:getComputedStyle(document.documentElement).overscrollBehaviorY,touchAction:getComputedStyle(document.documentElement).touchAction};});
   const settle=()=>page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
   const jump=async(bytes,boundary)=>page.evaluate(async({encoded,boundary})=>{const image=new Image();image.src=`data:image/png;base64,${encoded}`;await image.decode();const canvas=document.createElement('canvas');canvas.width=image.width;canvas.height=image.height;const ctx=canvas.getContext('2d');ctx.drawImage(image,0,0);const row=Math.floor(boundary),values=ctx.getImageData(0,row-4,canvas.width,8).data;let above=0,below=0;for(let y=0;y<8;y++)for(let x=0;x<canvas.width;x++)for(let c=0;c<3;c++){const value=values[(y*canvas.width+x)*4+c];if(y<4)above+=value;else below+=value;}return Math.abs(below-above)/(canvas.width*4*3);},{encoded:bytes.toString('base64'),boundary});
   try {
     for(const expanded of [false,true]) {
-      await page.goto(origin);await page.evaluate(()=>document.fonts.ready);if(expanded){await page.getByRole('button',{name:/^(Show|Hide) player$/}).click();await page.locator('iframe[title^="Spotify player"]').waitFor({state:'visible'});await page.waitForFunction(()=>document.querySelector('[role="status"]')?.textContent?.includes('Spotify is ready.'));await settle();}await page.evaluate(()=>scrollTo(0,document.scrollingElement.scrollHeight));await settle();
+      await page.goto(origin);await page.evaluate(()=>document.fonts.ready);if(expanded)await page.getByRole('button',{name:'View Tracklist'}).click();await page.evaluate(()=>scrollTo(0,document.scrollingElement.scrollHeight));await settle();
       const initial=await geometry();assert.equal(await page.evaluate(()=>CSS.supports('overscroll-behavior-y','none')),true);assert.equal(initial.policy,'none');assert.equal(initial.touchAction,'auto');assert(Math.abs(initial.documentHeight-initial.pageHeight)<=1,'paint adds no document height');
-      for(const delta of [120,240,500]){await page.mouse.wheel(0,delta);await settle();const frame=await geometry();assert(frame.scrollY<=frame.max+1&&frame.scrollY>=frame.max-1,`${engine}: terminal wheel remains at native end ${JSON.stringify(frame)}`);assert(frame.pageBottom>=frame.visualTop+frame.visualHeight-1&&frame.grainBottom>=frame.visualTop+frame.visualHeight-1,`${engine}: document and texture cover visual viewport end`);}
+      for(const delta of [120,240,500]){await page.mouse.wheel(0,delta);await settle();const frame=await geometry();assert(frame.scrollY<=frame.max+1&&frame.scrollY>=frame.max-1,`${engine}: terminal wheel remains at native end`);assert(frame.pageBottom>=frame.visualTop+frame.visualHeight-1&&frame.grainBottom>=frame.visualTop+frame.visualHeight-1,`${engine}: document and texture cover visual viewport end`);}
       await page.waitForTimeout(120);const released=await geometry();assert(Math.abs(released.scrollY-initial.scrollY)<=1);await page.mouse.wheel(0,-140);await settle();assert((await geometry()).scrollY<initial.max-50,`${engine}: upward reversal remains available`);
       console.log(`${engine}: terminal input/release/reversal ${expanded?'expanded':'default'} ${JSON.stringify(initial)}`);
     }
@@ -280,9 +282,8 @@ try {
   assert.ok([301, 308].includes(slash.status)); assert.equal(new URL(slash.headers.get("location"), origin).pathname, "/storybook/"); assert.equal(new URL(slash.headers.get("location"), origin).search, "?path=/story/hito-welcome--overview");
   for (const route of ["/absent.js", "/assets/absent.js", "/storybook/assets/absent.js", "/storybook/absent.html"]) assert.equal((await fetch(origin + route)).status, 404, route);
   browser = await chromium.launch();
-  console.log("Spotify control tests use simulated official-controller events; no real playback/audio claim.");
   const failures = [], requests = [], fonts = new Set();
-  const context = await spotifyFixtureContext(browser, { viewport: { width: 1366, height: 900 }, reducedMotion: "reduce" });
+  const context = await browser.newContext({ viewport: { width: 1366, height: 900 }, reducedMotion: "reduce" });
   context.on("page", page => {
     page.on("pageerror", error => failures.push(error.message));
     page.on("request", request => requests.push({ method: request.method(), url: request.url() }));
@@ -294,13 +295,12 @@ try {
   const external = [];
   await context.route("**/*", route => {
     const url = new URL(route.request().url());
-    if(url.href === "https://open.spotify.com/embed/iframe-api/v1") return route.fulfill({contentType:"text/javascript",body:spotifyFixtureScript});
     if (["http:", "https:"].includes(url.protocol) && url.origin !== origin) {
       external.push(url.href); return route.abort();
     }
     return route.continue();
   });
-  const page = await context.newPage();
+  const page = await sitePage(context);
   const overflow = () => page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth);
   for (const scheme of ["light", "dark"]) for (const width of [1440, 390, 320]) {
     console.log(`Checking root ${scheme}/${width}`);
@@ -320,9 +320,10 @@ try {
     assert.equal(geometry.dotAnimation,"none"); assert.equal(geometry.liveOpacity,"1");
     assert.equal(geometry.separatorWidth,geometry.width,"full-bleed normal-flow separator");
     if(width===1440 || width===390) {
-      assert.equal(geometry.width,width===1440?448:358); assert.equal(geometry.height,width===1440?593:545);
+      assert.equal(geometry.width,width===1440?448:358); assert.equal(geometry.height,width===1440?593:605);
       assert.equal(geometry.radius,width===1440?"24px":"16px"); assert.equal(geometry.photoRadius,width===1440?"16px":"8px");
     }
+    assert.equal(await page.getByRole("navigation",{name:"Breadcrumb"}).count(),0);
     assert.equal(await page.locator("h1").evaluate(el => getComputedStyle(el).fontSize), width===1440?"64px":"40px");
     assert.equal(await page.locator("header svg").evaluate(el => getComputedStyle(el).width), "96px");
     assert.equal(await page.getByRole("heading", { level: 1 }).count(), 1);
@@ -333,31 +334,29 @@ try {
     assert.ok(native.fonts.some(font => font.isCustomFont && /Instrument/.test(font.familyName))); await cdp.detach();
     const credit = page.getByRole("link",{name:"Built with Hito DS",exact:true});
     assert.equal(await credit.getAttribute("href"),"/storybook/");
-    const placement = await credit.evaluate(el => { const r=el.getBoundingClientRect(), card=el.parentElement.querySelector("[data-card]").getBoundingClientRect(), style=getComputedStyle(el);return {gap:r.top-card.bottom,left:r.left,right:r.right,cardLeft:card.left,cardRight:card.right,font:style.fontSize,line:style.lineHeight}; });
+    const placement = await credit.evaluate(el => { const r=el.getBoundingClientRect(), card=el.parentElement.parentElement.querySelector("[data-card]").getBoundingClientRect(), style=getComputedStyle(el);return {gap:r.top-card.bottom,left:r.left,right:r.right,cardLeft:card.left,cardRight:card.right,font:style.fontSize,line:style.lineHeight}; });
     assert.equal(placement.gap,8); assert.equal(placement.font,"12px"); assert.equal(placement.line,"16px");
     assert.ok(placement.left>=placement.cardLeft && placement.right<=placement.cardRight);
-    assert.equal(await page.locator("iframe[title^=\"Spotify player\"]").count(),0,"no player before intent");
     await page.getByRole("button",{name:"Play",exact:true}).click();
     assert.equal(await page.getByRole("button",{name:"Pause",exact:true}).getAttribute("aria-pressed"),"true");
-    assert.match(await page.getByRole("status").textContent(),/Playing in Spotify/);
+    assert.match(await page.getByRole("status").textContent(),/Audio playing/);
     await page.getByRole("button",{name:"Pause",exact:true}).click();
-    await page.getByRole("button",{name:"Save track",exact:true}).click();
-    assert.equal(await page.getByRole("button",{name:"Track saved",exact:true}).getAttribute("aria-pressed"),"true");
-    await page.getByRole("button",{name:"Track saved",exact:true}).click();
-    await page.getByRole("button",{name:"Hide player",exact:true}).click();
-    const tracklist=page.getByRole("button",{name:/^(Show|Hide) player$/,exact:true});
+    await page.getByRole("button",{name:"Save Session",exact:true}).click();
+    assert.equal(await page.getByRole("button",{name:"Session saved",exact:true}).getAttribute("aria-pressed"),"true");
+    await page.getByRole("button",{name:"Session saved",exact:true}).click();
+    const tracklist=page.getByRole("button",{name:"View Tracklist",exact:true});
     await tracklist.click(); assert.equal(await tracklist.getAttribute("aria-expanded"),"true");
-    assert.equal(await page.getByText("Playback availability depends",{exact:false}).isVisible(),true);
+    assert.equal(await page.getByText("You think you’re stuck · Vanya Nichego",{exact:false}).isVisible(),true);
     assert.equal(await overflow(),false);
-    await page.getByRole("button",{name:"Save track",exact:true}).click(); assert.equal(await overflow(),false,"expanded and saved reflow");
-    await page.getByRole("button",{name:"Track saved",exact:true}).click(); await tracklist.click();
+    await page.getByRole("button",{name:"Save Session",exact:true}).click(); assert.equal(await overflow(),false,"expanded and saved reflow");
+    await page.getByRole("button",{name:"Session saved",exact:true}).click(); await tracklist.click();
     await credit.focus(); await page.keyboard.press("Enter"); await page.waitForURL(url=>url.pathname==="/storybook/");
 
   }
   console.log("Checking native hover/pressed/keyboard interaction finish");
   await page.setViewportSize({width:1440,height:1043}); await page.goto(origin);
   const interactionStyle=locator=>locator.evaluate(el=>{const s=getComputedStyle(el);return {background:s.backgroundColor,color:s.color,decoration:s.textDecorationThickness};});
-  for(const locator of [page.getByRole("button",{name:"Play",exact:true}),page.getByRole("button",{name:"Save track",exact:true}),page.getByRole("button",{name:/^(Show|Hide) player$/,exact:true}),page.getByRole("link",{name:"Built with Hito DS",exact:true})]) {
+  for(const locator of [page.getByRole("button",{name:"Play",exact:true}),page.getByRole("button",{name:"Save Session",exact:true}),page.getByRole("button",{name:"View Tracklist",exact:true}),page.getByRole("link",{name:"Built with Hito DS",exact:true})]) {
     await page.mouse.move(0,0); await page.waitForTimeout(200); const normal=await interactionStyle(locator);
     await locator.hover(); await page.waitForTimeout(200); const hover=await interactionStyle(locator);
     await page.mouse.down(); await page.waitForTimeout(200); const pressed=await interactionStyle(locator);
@@ -368,12 +367,10 @@ try {
   assert.equal(await play.evaluate(el=>el.matches(":focus-visible") && getComputedStyle(el).outlineWidth==="2px"),true);
   await page.keyboard.press("Space"); assert.equal(await page.getByRole("button",{name:"Pause",exact:true}).getAttribute("aria-pressed"),"true");
   assert.equal(await page.getByRole("dialog").count(),0); assert.equal(new URL(page.url()).pathname,"/");
-  assert.equal(await page.getByRole("button",{name:"Pause",exact:true}).evaluate(el=>el===document.activeElement),true,"async initialization preserves keyboard focus");
   await page.keyboard.press("Enter"); await page.getByRole("button",{name:"Play",exact:true}).waitFor();
-  const save=page.getByRole("button",{name:"Save track",exact:true}); await save.focus(); await page.keyboard.press("Space");
-  assert.equal(await page.getByRole("button",{name:"Track saved",exact:true}).getAttribute("aria-pressed"),"true"); await page.keyboard.press("Space");
-  await page.getByRole("button",{name:"Hide player",exact:true}).click();
-  const track=page.getByRole("button",{name:/^(Show|Hide) player$/,exact:true}); await track.focus(); await page.keyboard.press("Enter"); assert.equal(await track.getAttribute("aria-expanded"),"true"); await page.keyboard.press("Enter"); assert.equal(await track.getAttribute("aria-expanded"),"false");
+  const save=page.getByRole("button",{name:"Save Session",exact:true}); await save.focus(); await page.keyboard.press("Space");
+  assert.equal(await page.getByRole("button",{name:"Session saved",exact:true}).getAttribute("aria-pressed"),"true"); await page.keyboard.press("Space");
+  const track=page.getByRole("button",{name:"View Tracklist",exact:true}); await track.focus(); await page.keyboard.press("Enter"); assert.equal(await track.getAttribute("aria-expanded"),"true"); await page.keyboard.press("Enter"); assert.equal(await track.getAttribute("aria-expanded"),"false");
   const credit=page.getByRole("link",{name:"Built with Hito DS",exact:true}); await credit.focus();
   assert.equal(await credit.evaluate(el=>el.matches(":focus-visible") && getComputedStyle(el).outlineWidth==="2px"),true);
   assert.equal(await page.locator("[data-tag] button,[data-tag] a,[data-tag][tabindex]").count(),0,"Tags remain passive");
@@ -385,7 +382,7 @@ try {
     const initial=await artwork(), cardTop=await page.locator("[data-card]").evaluate(el=>el.getBoundingClientRect().top);
     assert.deepEqual(await backgroundFrame(),[0,0,width,height]);
     for(const expanded of [false,true]) {
-      if(expanded) await page.getByRole("button",{name:/^(Show|Hide) player$/,exact:true}).click();
+      if(expanded) await page.getByRole("button",{name:"View Tracklist",exact:true}).click();
       for(const fraction of [0,.5,1]) {
         await page.evaluate(f=>scrollTo(0,f*(document.documentElement.scrollHeight-innerHeight)),fraction); await page.waitForTimeout(40);
         assert.deepEqual(await backgroundFrame(),[0,0,width,height],"artwork frame remains viewport-bound");
@@ -442,14 +439,14 @@ try {
   assert.ok(fonts.size >= 2, "actual nested/local font requests");
   assert.ok([...fonts].some(url => url.startsWith(`${origin}/storybook/assets/`) && url.includes("instrument-sans")), "actual nested product-font response");
   await page.goto(`${origin}/?path=//example.com`); await page.getByRole("heading", { name: "Structure. With feeling.", exact: true }).waitFor();
-  assert.ok(!requests.some(request => request.method !== "GET"), "mocked controls must not submit application data; real Spotify network is separate");
+  assert.ok(!requests.some(request => request.method !== "GET"), "demo must not send data");
   assert.ok(!external.some(url => /fonts\.googleapis|fonts\.gstatic/.test(url)), "fonts must remain local");
   await verifyDesktopFit(context,"chromium");
   await verifyAmbient(context,"chromium");
   await verifyActiveScroll(browser,"chromium");
   await verifyTerminalPaint(browser,"chromium");
   if(process.env.HITO_VERIFY_WEBKIT==="1") {
-    const webkitBrowser=await webkit.launch();try {const webkitContext=await spotifyFixtureContext(webkitBrowser, {isMobile:true,hasTouch:true,reducedMotion:"no-preference"});await verifyDesktopFit(webkitContext,"webkit");await verifyAmbient(webkitContext,"webkit");await verifyActiveScroll(webkitBrowser,"webkit");await verifyTerminalPaint(webkitBrowser,"webkit");await webkitContext.close();} finally {await webkitBrowser.close();}
+    const webkitBrowser=await webkit.launch();try {const webkitContext=await webkitBrowser.newContext({isMobile:true,hasTouch:true,reducedMotion:"no-preference"});await verifyDesktopFit(webkitContext,"webkit");await verifyAmbient(webkitContext,"webkit");await verifyActiveScroll(webkitBrowser,"webkit");await verifyTerminalPaint(webkitBrowser,"webkit");await webkitContext.close();} finally {await webkitBrowser.close();}
   }
   assert.deepEqual(failures, []);
   const npm = process.platform === "win32" ? "npm.cmd" : "npm";

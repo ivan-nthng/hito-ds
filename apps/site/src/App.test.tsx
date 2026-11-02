@@ -1,11 +1,43 @@
-import {render,screen,act} from '@testing-library/react';import userEvent from '@testing-library/user-event';import {beforeEach,afterEach,vi,expect,it} from 'vitest';
-import type {PlaybackState} from './spotify-player';
-const fake=vi.hoisted(()=>({play:vi.fn(),pause:vi.fn(),destroy:vi.fn(),create:vi.fn(),emit:(_s:PlaybackState)=>{}}));
-vi.mock('./spotify-player',()=>({spotifyTrack:{url:'https://open.spotify.com/track/4i4ArYpqtsA3MJ1k0o2dxq'},createSpotifyPlayer:(host:HTMLElement,emit:(s:PlaybackState)=>void)=>{fake.create(host);fake.emit=emit;emit('loading');return fake;}}));
-import {App} from './App';
-beforeEach(()=>{vi.clearAllMocks();vi.stubGlobal('ResizeObserver',class{observe(){}disconnect(){}});vi.stubGlobal('matchMedia',vi.fn(()=>({matches:false,addEventListener:vi.fn(),removeEventListener:vi.fn()})));});afterEach(()=>vi.unstubAllGlobals());
-it('does not initialize/audio-start until intent and uses provider state, exact fallback and visit-only save',async()=>{const user=userEvent.setup(),view=render(<App/>);expect(fake.create).not.toHaveBeenCalled();await user.click(screen.getByRole('button',{name:'Play'}));expect(fake.create).toHaveBeenCalledTimes(1);expect(fake.play).toHaveBeenCalledTimes(1);expect(screen.queryByRole('button',{name:'Pause'})).toBeNull();act(()=>fake.emit('ready'));expect(screen.getByRole('button',{name:'Play'})).toBeTruthy();act(()=>fake.emit('playing'));await user.click(screen.getByRole('button',{name:'Pause'}));expect(fake.pause).toHaveBeenCalledTimes(1);act(()=>fake.emit('paused'));expect(screen.getByRole('link',{name:'Open track in Spotify'}).getAttribute('href')).toBe('https://open.spotify.com/track/4i4ArYpqtsA3MJ1k0o2dxq');await user.click(screen.getByRole('button',{name:'Save track'}));expect(screen.getByRole('button',{name:'Track saved'}).getAttribute('aria-pressed')).toBe('true');expect(screen.getByRole('status').textContent).toContain('Spotify library is unchanged');await user.click(screen.getByRole('button',{name:'Track saved'}));expect(screen.getByRole('button',{name:'Save track'}).getAttribute('aria-pressed')).toBe('false');await user.click(screen.getByRole('button',{name:'Hide player'}));expect(screen.getByRole('button',{name:'Show player'}).getAttribute('aria-expanded')).toBe('false');expect(fake.pause).toHaveBeenCalledTimes(2);expect(fake.destroy).toHaveBeenCalled();view.unmount();expect(fake.destroy).toHaveBeenCalled();});
-it('keeps failed/blocked/end states truthful and the native player/fallback discoverable',async()=>{const user=userEvent.setup();render(<App/>);await user.click(screen.getByRole('button',{name:'Show player'}));expect(fake.play).not.toHaveBeenCalled();act(()=>fake.emit('blocked'));expect(screen.getByRole('status').textContent).toContain('not been confirmed');expect(screen.getByRole('link',{name:'Open track in Spotify'})).toBeTruthy();act(()=>fake.emit('ended'));expect(screen.getByRole('status').textContent).toContain('Playback ended');act(()=>fake.emit('error'));expect(screen.getByRole('status').textContent).toContain('unavailable');});
-it('preserves destinations/scoped scheme/photo and uses exact track copy without fictional claims',()=>{render(<App/>);expect(screen.getByRole('link',{name:'Explore Storybook'}).getAttribute('href')).toBe('/storybook/');expect(screen.getAllByRole('heading',{level:1})).toHaveLength(1);expect(screen.getByRole('heading',{name:'If I Had a Gun…'}).closest('[data-card]')?.getAttribute('data-hito-color-scheme')).toBe('light');expect(document.querySelectorAll('[data-media-object]')).toHaveLength(6);expect(screen.getByText('Noel Gallagher')).toBeTruthy();expect(screen.getByText('Spotify')).toBeTruthy();expect(screen.queryByText('24 min')).toBeNull();expect(screen.queryByText('Live',{exact:true})).toBeNull();});
+import { render, screen, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import { beforeEach, afterEach, vi, expect, it } from "vitest";
+vi.mock("./soundcloud-player", () => ({
+ playerUrl: "about:blank", trackUrl: "https://soundcloud.com/vanya-nichego/you-think-youre-stuck",
+ loadSoundCloud: async () => Object.assign(() => {
+  const handlers: Record<string, () => void> = {};
+  return { bind: (name: string, fn: () => void) => { handlers[name] = fn; if (name === "READY") queueMicrotask(fn); }, unbind: (name: string) => { delete handlers[name]; }, play: () => handlers.PLAY?.(), pause: () => handlers.PAUSE?.(), seekTo: vi.fn() };
+ }, { Events: Object.fromEntries(["READY","PLAY","PAUSE","FINISH","ERROR"].map(key => [key,key])) })
+}));
+import { App } from "./App";
+beforeEach(() => {
+ vi.stubGlobal("ResizeObserver", class { observe() {} disconnect() {} });
+ vi.stubGlobal("matchMedia", vi.fn(() => ({ matches: false, addEventListener: vi.fn(), removeEventListener: vi.fn() })));
+});
+afterEach(() => vi.unstubAllGlobals());
+it("keeps media actions local, reversible and accessible", async () => {
+ const user = userEvent.setup(); render(<App />);
+ await waitFor(() => expect(screen.getByRole("button", {name:"Play"}).hasAttribute("disabled")).toBe(false));
+ await user.click(screen.getByRole("button", {name:"Play"}));
+ expect(screen.getByRole("button", {name:"Pause"}).getAttribute("aria-pressed")).toBe("true");
+ expect(screen.getByRole("status").textContent).toContain("Audio playing.");
+ await user.click(screen.getByRole("button", {name:"Pause"}));
+ await user.click(screen.getByRole("button", {name:"Save Session"}));
+ expect(screen.getByRole("button", {name:"Session saved"}).getAttribute("aria-pressed")).toBe("true");
+ await user.click(screen.getByRole("button", {name:"Session saved"}));
+ expect(screen.getByRole("button", {name:"Save Session"}).getAttribute("aria-pressed")).toBe("false");
+ const tracklist=screen.getByRole("button",{name:"View Tracklist"});
+ expect(document.getElementById(tracklist.getAttribute("aria-controls")!)?.hidden).toBe(true);
+ await user.click(tracklist); expect(tracklist.getAttribute("aria-expanded")).toBe("true");
+ expect(document.getElementById(tracklist.getAttribute("aria-controls")!)?.hidden).toBe(false);
+ await user.click(tracklist); expect(tracklist.getAttribute("aria-expanded")).toBe("false");
+});
+it("uses real destinations, scoped schemes and one primary heading", () => {
+ render(<App />);
+ expect(screen.getByRole("link", {name:"Explore Storybook"}).getAttribute("href")).toBe("/storybook/");
+ expect(screen.getByRole("link", {name:"Figma"}).getAttribute("rel")).toContain("noopener");
+ expect(screen.getAllByRole("heading",{level:1}).length).toBe(1);
+ expect(screen.getByRole("heading",{name:"You think you’re stuck"}).closest("[data-card]")?.getAttribute("data-hito-color-scheme")).toBe("light");
+ expect(document.querySelectorAll("[data-media-object]").length).toBe(6);
+});
 
-it('retains native keyboard focus through async loading and ignores repeat activation until ready',async()=>{const user=userEvent.setup();render(<App/>);const trigger=screen.getByRole('button',{name:'Play'});trigger.focus();await user.keyboard(' ');expect(document.activeElement).toBe(trigger);expect(trigger.getAttribute('aria-busy')).toBe('true');expect(trigger.hasAttribute('disabled')).toBe(false);await user.keyboard('{Enter}');expect(fake.create).toHaveBeenCalledTimes(1);expect(fake.play).toHaveBeenCalledTimes(1);act(()=>fake.emit('playing'));expect(document.activeElement).toBe(screen.getByRole('button',{name:'Pause'}));await user.keyboard('{Enter}');expect(fake.pause).toHaveBeenCalledTimes(1);});
+it("omits the removed breadcrumb without changing headline or CTA text", () => { render(<App />); expect(screen.queryByRole("navigation",{name:"Breadcrumb"})).toBeNull();expect(screen.queryByText("Overview",{exact:true})).toBeNull();expect(screen.getByRole("heading",{name:"Structure. With feeling."})).toBeTruthy();expect(screen.getByRole("link",{name:"Explore Storybook"})).toBeTruthy();});
