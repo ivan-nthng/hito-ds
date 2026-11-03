@@ -40,7 +40,8 @@ export function MediaSession() {
   const [expanded, setExpanded] = useState(false);
   const id = useId();
   const elapsed = duration === undefined ? undefined : Math.min(position, duration);
-  const time = elapsed === undefined || duration === undefined ? "--:-- / --:--" : `${formatTime(elapsed)} / ${formatTime(duration)}`;
+  const time = elapsed === undefined || duration === undefined ? "-:-- / -:--" : `${formatTime(elapsed)} / ${formatTime(duration)}`;
+  const timeTemplate = (duration === undefined ? "0:00" : formatTime(duration)).replace(/\d/g, "0");
   const progress = elapsed === undefined || duration === undefined ? undefined : { value: elapsed, max: duration, valueText: `${formatTime(elapsed)} of ${formatTime(duration)}`, label: "Playback progress" };
   return <div className={styles.wrapper}>
     <Card data-hito-color-scheme="light" size="compact" layout="fixed" elevation="raised" className={styles.card}>
@@ -56,7 +57,7 @@ export function MediaSession() {
       <span role="status" className={styles.srOnly}>{failed ? "Audio unavailable." : !ready ? "Audio loading." : playing ? "Audio playing." : "Audio paused."} {saved ? "Session saved for this visit." : "Session not saved."}</span>
     </Card>
     <iframe ref={frame} src={playerUrl} title="Audio playback engine" tabIndex={-1} aria-hidden="true" allow="autoplay" className={styles.audioEngine} />
-    <div className={styles.statusFrame}><Live className={styles.live} /><Live className={styles.timeChip} data-playback-chip=""><span className={styles.time} data-playback-time="">{time}</span></Live></div>
+    <div className={styles.statusFrame}><Live className={styles.live} /><Live className={styles.timeChip} data-playback-chip=""><span className={styles.time}><span className={styles.timeMeasure} aria-hidden="true">{timeTemplate} / {timeTemplate}</span><span className={styles.timeValue} data-playback-time="">{time}</span></span></Live></div>
     <div className={styles.credits}><Link href="/storybook/" size="sm" className={styles.attribution}>Built with Hito DS</Link><Link href={trackUrl} size="sm" className={styles.attribution}>SoundCloud</Link></div>
   </div>;
 }
