@@ -47,7 +47,7 @@ export function MediaSession() {
       <img className={styles.photo} src="/media/coastal-session.jpg" alt="Surfers waiting in calm coastal water beneath a cloudy sky" width="2789" height="2092" fetchPriority="high" />
       <div className={styles.body}>
         <div className={styles.metadata}><Text as="span" variant="body-sm" emphasis="strong">Vanya Nichego</Text><Dot /><Text as="span" variant="body-sm" className={styles.secondary}>Deep House</Text></div>
-        <div className={styles.title}><Text as="h2" variant="heading-lg">You think you’re stuck</Text><div className={styles.playback}><Text as="span" variant="data-sm" className={styles.time} data-playback-time="">{time}</Text><RoundPlayButton progress={progress} playing={playing} aria-label={playing ? "Pause" : "Play"} aria-pressed={playing} disabled={!ready} aria-busy={!ready && !failed} onClick={() => { if (playing) engine.current?.pause(); else engine.current?.play(); }} /></div></div>
+        <div className={styles.title}><Text as="h2" variant="heading-lg">You think you’re stuck</Text><RoundPlayButton progress={progress} playing={playing} aria-label={playing ? "Pause" : "Play"} aria-pressed={playing} disabled={!ready} aria-busy={!ready && !failed} onClick={() => { if (playing) engine.current?.pause(); else engine.current?.play(); }} /></div>
         <Text as="p" variant="body-sm" className={styles.secondary}>Inspired by old Detroit hip-hop and house, with dusty drums, chopped samples and a warm, rolling bassline. A late-night groove for moving forward.</Text>
         <div className={styles.tags} aria-label="Session details"><Tag label="Detroit house" /><Tag label="Chicago house" /><Tag label="Garage house" /></div>
       </div>
@@ -56,7 +56,7 @@ export function MediaSession() {
       <span role="status" className={styles.srOnly}>{failed ? "Audio unavailable." : !ready ? "Audio loading." : playing ? "Audio playing." : "Audio paused."} {saved ? "Session saved for this visit." : "Session not saved."}</span>
     </Card>
     <iframe ref={frame} src={playerUrl} title="Audio playback engine" tabIndex={-1} aria-hidden="true" allow="autoplay" className={styles.audioEngine} />
-    <div className={styles.statusFrame}><Live className={styles.live} /></div>
+    <div className={styles.statusFrame}><Live className={styles.live} /><Live className={styles.timeChip} data-playback-chip=""><span className={styles.time} data-playback-time="">{time}</span></Live></div>
     <div className={styles.credits}><Link href="/storybook/" size="sm" className={styles.attribution}>Built with Hito DS</Link><Link href={trackUrl} size="sm" className={styles.attribution}>SoundCloud</Link></div>
   </div>;
 }

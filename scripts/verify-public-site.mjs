@@ -311,7 +311,7 @@ try {
     assert.equal(await page.locator("html").getAttribute("data-hito-color-scheme"), "dark");
     assert.equal(await overflow(), false, `${scheme}/${width} overflow`);
     const geometry = await page.locator("[data-card]").evaluate(el => {
-      const r = el.getBoundingClientRect(), photo = el.querySelector("img"), play = el.querySelector('button[aria-label="Play"]'), live = document.querySelector("[data-hito-live]"), dot = document.querySelector("[data-live-dot]"), separator = el.querySelector('[role="presentation"]');
+      const r = el.getBoundingClientRect(), photo = el.querySelector("img"), play = el.querySelector('button[aria-label="Play"]'), live = document.querySelector("[data-hito-live]"), dot = document.querySelector("[data-hito-live]:not([data-playback-chip]) [data-live-dot]"), separator = el.querySelector('[role="presentation"]');
       return { width:r.width,height:r.height,scheme:el.getAttribute("data-hito-color-scheme"),radius:getComputedStyle(el).borderRadius,photoRadius:getComputedStyle(photo).borderRadius,photoWidth:photo.width,photoHeight:photo.height,playRadius:getComputedStyle(play).borderRadius,corner:getComputedStyle(play).getPropertyValue("corner-shape"),playWidth:play.getBoundingClientRect().width,separatorWidth:separator.getBoundingClientRect().width,liveOpacity:getComputedStyle(live).opacity,dotAnimation:getComputedStyle(dot).animationName,objects:document.querySelectorAll("[data-media-object]").length };
     });
     assert.equal(geometry.scheme,"light"); assert.equal(geometry.objects,6);
@@ -320,7 +320,7 @@ try {
     assert.equal(geometry.dotAnimation,"none"); assert.equal(geometry.liveOpacity,"1");
     assert.equal(geometry.separatorWidth,geometry.width,"full-bleed normal-flow separator");
     if(width===1440 || width===390) {
-      assert.equal(geometry.width,width===1440?448:358); assert.equal(geometry.height,width===1440?629:709);
+      assert.equal(geometry.width,width===1440?448:358); assert.equal(geometry.height,width===1440?613:645);
       assert.equal(geometry.radius,width===1440?"24px":"16px"); assert.equal(geometry.photoRadius,width===1440?"16px":"8px");
     }
     assert.equal(await page.getByRole("navigation",{name:"Breadcrumb"}).count(),0);
@@ -398,13 +398,13 @@ try {
   console.log("Checking actual repeated Live beyond the finite native export and reduced motion");
   await page.setViewportSize({width:1440,height:1019}); await page.emulateMedia({reducedMotion:"no-preference"}); await page.goto(origin);
   const phases=[];
-  for(let index=0;index<27;index++) { phases.push(await page.locator("[data-live-dot]").evaluate(el=>({opacity:Number(getComputedStyle(el).opacity),time:el.getAnimations()[0]?.currentTime,duration:el.getAnimations()[0]?.effect.getTiming().duration,iterations:el.getAnimations()[0]?.effect.getTiming().iterations===Infinity,label:getComputedStyle(el.nextElementSibling).opacity}))); await page.waitForTimeout(250); }
+  for(let index=0;index<27;index++) { phases.push(await page.locator("[data-hito-live]:not([data-playback-chip]) [data-live-dot]").evaluate(el=>({opacity:Number(getComputedStyle(el).opacity),time:el.getAnimations()[0]?.currentTime,duration:el.getAnimations()[0]?.effect.getTiming().duration,iterations:el.getAnimations()[0]?.effect.getTiming().iterations===Infinity,label:getComputedStyle(el.nextElementSibling).opacity}))); await page.waitForTimeout(250); }
   assert.ok(phases.every(p=>p.duration===1920 && p.iterations && p.label==="1"));
   assert.ok(Math.max(...phases.map(p=>p.opacity))>.95 && Math.min(...phases.map(p=>p.opacity))<.5);
   const late=phases.filter(p=>p.time>5760); assert.ok(late.length>=3 && Math.max(...late.map(p=>p.opacity))-Math.min(...late.map(p=>p.opacity))>.1,"Live must keep changing beyond5.76s");
   await page.emulateMedia({reducedMotion:"reduce"});
-  assert.equal(await page.locator("[data-live-dot]").evaluate(el=>getComputedStyle(el).animationName),"none");
-  await page.waitForTimeout(300); assert.equal(await page.locator("[data-live-dot]").evaluate(el=>getComputedStyle(el).opacity),"1");
+  assert.equal(await page.locator("[data-hito-live]:not([data-playback-chip]) [data-live-dot]").evaluate(el=>getComputedStyle(el).animationName),"none");
+  await page.waitForTimeout(300); assert.equal(await page.locator("[data-hito-live]:not([data-playback-chip]) [data-live-dot]").evaluate(el=>getComputedStyle(el).opacity),"1");
   console.log("Checking keyboard/reflow and external CTA clicks");
   await page.setViewportSize({ width: 1366, height: 1000 }); await page.goto(origin);
   await page.getByRole("link", { name: "Skip to main content" }).waitFor({state:"attached"});
