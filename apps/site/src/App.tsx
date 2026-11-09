@@ -4,7 +4,7 @@ import { HitoWordmark } from "./HitoWordmark";
 import { PageBackground } from "./PageBackground";
 import { MediaSession } from "./MediaSession";
 import styles from "./App.module.css";
-const repository = "https://github.com/ivan-nthng/hito-runner";
+const repository = "https://github.com/ivan-nthng/hito-ds";
 export function App() {
   const entrance = useLandingEntrance();
   return <>

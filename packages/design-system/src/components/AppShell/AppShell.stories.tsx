@@ -32,7 +32,7 @@ function Example({ pt }: { pt: boolean }) {
   </AppShell>;
 }
 const meta = { title: "Components/Navigation/AppShell", id: "navigation-app-shell", tags: ["test", "context-matrix"],
-  parameters: { layout: "fullscreen", figma: { label: "Accepted workspace shell", url: "https://github.com/ivan-nthng/hito-runner/blob/main/docs/figma-and-code.md#figma-file-and-mappings" }, docs: { description: { component: "One structural renderer for existing workspaces. Callers own navigation availability, guards, identity and content. Collapse is mounted presentation state; mobile uses the native topbar Menu. Playground intentionally disables Production to demonstrate a disabled item; the actual consumer fixtures use staging-ready availability. No routes, storage or business requests." } } },
+  parameters: { layout: "fullscreen", figma: { label: "Accepted workspace shell", url: "https://github.com/ivan-nthng/hito-ds/blob/main/docs/figma-and-code.md#figma-file-and-mappings" }, docs: { description: { component: "One structural renderer for existing workspaces. Callers own navigation availability, guards, identity and content. Collapse is mounted presentation state; mobile uses the native topbar Menu. Playground intentionally disables Production to demonstrate a disabled item; the actual consumer fixtures use staging-ready availability. No routes, storage or business requests." } } },
   render: (_args, { globals }) => <Example pt={String(globals.storyContentProfile).startsWith("pt")} />,
 } satisfies Meta;
 export default meta;

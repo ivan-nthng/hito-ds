@@ -20,7 +20,7 @@ function Example({ locale, value: initial = "12:00", label, ...props }: Partial<
 const localeOf = (globals: Record<string, unknown>): "en" | "pt" => String(globals.storyContentProfile).startsWith("pt") ? "pt" : "en";
 const meta = {
   title: "Components/Forms/TimePicker", id: "forms-time-picker", component: TimePicker, tags: ["test", "context-matrix"],
-  parameters: { layout: "fullscreen", figma: { url: "https://github.com/ivan-nthng/hito-runner/blob/main/docs/figma-and-code.md#figma-file-and-mappings" },
+  parameters: { layout: "fullscreen", figma: { url: "https://github.com/ivan-nthng/hito-ds/blob/main/docs/figma-and-code.md#figma-file-and-mappings" },
     docs: { description: { component: "Controlled local24-hour HH:mm. Two independent hour/minute lists edit a draft; only Set time commits. Close/Escape/outside dismiss discard. Existing Popover and compact BottomSheet own focus and safe areas. No timezone, interval duration, minute-step policy or server eligibility. Restaurant schedule consumers own those facts." } } },
   args: { value: "12:00", locale: "en", label: "Start time", appearance: "soft", size: "sm", width: "fill", disabled: false, readOnly: false },
   argTypes: { value: { control: "text" }, locale: { control: "inline-radio", options: ["en", "pt"] }, size: { control: "inline-radio", options: ["sm", "md", "lg"] },

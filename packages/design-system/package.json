@@ -74,9 +74,13 @@
   },
   "description": "Hito DS: React components, semantic design tokens and Storybook, aligned with Figma.",
   "license": "MIT",
+  "homepage": "https://www.hitocajon.com/",
+  "bugs": {
+    "url": "https://github.com/ivan-nthng/hito-ds/issues"
+  },
   "repository": {
     "type": "git",
-    "url": "https://github.com/ivan-nthng/hito-runner.git",
+    "url": "https://github.com/ivan-nthng/hito-ds.git",
     "directory": "packages/design-system"
   },
   "files": [

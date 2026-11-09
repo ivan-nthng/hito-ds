@@ -33,7 +33,7 @@ The site dev server prints its local URL. Run `npm run storybook` for the separa
 
 ## Use the components
 
-The package is included in this workspace as `@hito-ds/react`. There is no npm registry release yet. To consume it in another application, add the package from a local checkout or vendor the source and configure your bundler for TypeScript and CSS Modules.
+Install the React package with `npm install @hito-ds/react`. See [package documentation](https://www.npmjs.com/package/@hito-ds/react) for the application and Storybook setup.
 
 ```tsx
 import '@hito-ds/react/tokens.css';

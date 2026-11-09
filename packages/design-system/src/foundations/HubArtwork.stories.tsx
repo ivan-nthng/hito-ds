@@ -28,7 +28,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Family: Story = {
   tags: ["context-matrix"],
-  render: () => <FoundationStoryPage title="Hub artwork" description={<>Decorative service and Hub navigation artwork at 64 CSS px. Use the theme toolbar to compare backgrounds. <a href="https://github.com/ivan-nthng/hito-runner/blob/main/docs/figma-and-code.md">Integration guide</a> · <a href={prompts}>Prompts</a> · <a href={provenance}>Master provenance</a> · <a href={hubProvenance}>Hub provenance</a></>}>
+  render: () => <FoundationStoryPage title="Hub artwork" description={<>Decorative service and Hub navigation artwork at 64 CSS px. Use the theme toolbar to compare backgrounds. <a href="https://github.com/ivan-nthng/hito-ds/blob/main/docs/figma-and-code.md">Integration guide</a> · <a href={prompts}>Prompts</a> · <a href={provenance}>Master provenance</a> · <a href={hubProvenance}>Hub provenance</a></>}>
     <FoundationSpecimenGrid minItemWidth="compact">
       {family.map(icon => {
         const source = images[`../../assets/hub-soft-3d/${icon.path}`];

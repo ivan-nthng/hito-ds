@@ -415,7 +415,7 @@ try {
   assert.equal(focus.tag, "A"); assert.equal(focus.outline, "2px");
   await page.setViewportSize({width:683,height:1000}); assert.equal(await overflow(), false, "200% browser-zoom equivalent CSS viewport reflow (1366/2)");
   await page.setViewportSize({width:1366,height:1000});
-  for (const [name, expected] of [["GitHub", "https://github.com/ivan-nthng/hito-runner"], ["Figma", "https://www.figma.com/design/C8ymDNFqGISrgIe6iGimHX"], ["Source & contributions", "https://github.com/ivan-nthng/hito-runner"], ["MIT license", "https://github.com/ivan-nthng/hito-runner/blob/main/LICENSE"]]) {
+  for (const [name, expected] of [["GitHub", "https://github.com/ivan-nthng/hito-ds"], ["Figma", "https://www.figma.com/design/C8ymDNFqGISrgIe6iGimHX"], ["Source & contributions", "https://github.com/ivan-nthng/hito-ds"], ["MIT license", "https://github.com/ivan-nthng/hito-ds/blob/main/LICENSE"]]) {
     const popupPromise = context.waitForEvent("page");
     await page.getByRole("link", { name, exact: true }).click(); const popup = await popupPromise;
     await page.waitForTimeout(100); assert.ok(external.includes(expected), `${name} click destination`); await popup.close();

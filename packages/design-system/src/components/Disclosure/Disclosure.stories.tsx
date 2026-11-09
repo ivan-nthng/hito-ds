@@ -107,7 +107,7 @@ export const KeyboardAndDraft: Story = {
 
 export const SoftInCard: Story = {
   tags: ["context-matrix"], args: { variant: "soft", content: "form" },
-  parameters: { controls: { disable: true }, figma: { label: "Nutrition Disclosure in Figma", url: "https://github.com/ivan-nthng/hito-runner/blob/main/docs/figma-and-code.md#figma-file-and-mappings" } },
+  parameters: { controls: { disable: true }, figma: { label: "Nutrition Disclosure in Figma", url: "https://github.com/ivan-nthng/hito-ds/blob/main/docs/figma-and-code.md#figma-file-and-mappings" } },
   render: (args, { globals }) => <InteractiveExample {...args} profile={globals.storyContentProfile} inCard />,
   play: async context => {
     const trigger = within(context.canvasElement).getByRole("button", { name: disclosureCopy(context.globals.storyContentProfile).title });

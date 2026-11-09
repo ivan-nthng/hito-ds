@@ -16,7 +16,7 @@ export const Overview: Story = {
       <Text as="p"><Link href="/" target="_top">Hito home</Link></Text>
       <Text as="p"><Link href="./?path=/story/actions-button--default" target="_top">Components</Link></Text>
       <Text as="p"><Link href="./?path=/story/foundations-color-primitives-palettes--neutral" target="_top">Foundations</Link></Text>
-      <Text as="p"><Link href="https://github.com/ivan-nthng/hito-runner" external target="_blank">Source &amp; contributions</Link></Text>
+      <Text as="p"><Link href="https://github.com/ivan-nthng/hito-ds" external target="_blank">Source &amp; contributions</Link></Text>
     </FoundationStorySection>
   </FoundationStoryPage>,
   play: async ({ canvas }) => {
