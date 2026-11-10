@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-11-10 — Figma and Storybook catalogue update
+
+- HDS-121 simplified collection names and guidance in the editable Figma library.
+- HDS-122 aligned 44 existing UI and layout roles in the editable Figma library and live Storybook. The [catalogue guide](docs/figma-and-code.md#figma-variable-catalogue) records their runtime mappings.
+- HDS-126 verified 146 additional variable renames in the editable Figma library. The local Storybook source aligns the four affected labels. Live Storybook retains the HDS-122 labels, and publication of the HDS-126 names to Figma Community is paused.
+- The Figma Community listing provides the published snapshot. The editable library contains the latest catalogue names. [Figma Community](https://www.figma.com/community/file/1701056607203868758/hito-design-system) · [Live Storybook](https://www.hitocajon.com/storybook/)
+- The npm package remains at 0.3.0.
+
 ## 0.3.0
 
 - DateRangePicker fits the visible months and presets, places compact date fields below the calendar, and keeps the selection announcement available to assistive technology.

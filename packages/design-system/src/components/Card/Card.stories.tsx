@@ -375,7 +375,7 @@ export const Geometry: Story = {
   render: (_, { globals }) => {
     const copy = getCopy(globals.storyContentProfile);
     return (
-      <FoundationStoryPage title="Card geometry" description="Compare Card/Responsive compact padding, Card/Responsive comfortable padding, Radius/Compact Card and Radius/Comfortable Card. Elevation is independent.">
+      <FoundationStoryPage title="Card geometry" description="Compare Padding/Responsive compact, Padding/Responsive comfortable, Radius/Compact Card and Radius/Comfortable Card. Elevation is independent.">
         <FoundationSpecimenGrid lang={copy.lang}>
           {cardLayouts.flatMap(layout => cardSizes.flatMap(size => cardElevations.map(elevation => (
             <FoundationSpecimen key={`${layout}-${size}-${elevation}`} label={`${size} · ${layout} · ${elevation}`}>

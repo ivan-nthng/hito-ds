@@ -24,16 +24,18 @@ Use `data-hito-theme="neutral"` or `"inherited"` independently of `data-hito-col
 
 ## Figma file and mappings
 
-The [standalone Hito DS Figma file](https://www.figma.com/design/C8ymDNFqGISrgIe6iGimHX/Hito-DS) is an exact duplicate of the source library, with node IDs preserved. File and node mappings are recorded in `figma/mapping.json` and exposed by the Storybook toolbar. Community publication and public access still require verification; an editable file link is not a Community release.
+Open [Figma Community](https://www.figma.com/community/file/1701056607203868758/hito-design-system) for the published snapshot and [live Storybook](https://www.hitocajon.com/storybook/) for the HDS-122 catalogue. Fresh duplicates from Community use the published snapshot available at the time. Existing duplicates keep their own copy and require a manual update.
+
+The [editable Hito Figma library](https://www.figma.com/design/WzxP3PfefGcN1dGdelGtHI/) contains the latest catalogue names. For contributors, `figma/mapping.json` records the [original standalone duplicate](https://www.figma.com/design/C8ymDNFqGISrgIe6iGimHX/Hito-DS) and its preserved node IDs. Storybook toolbar references use the recorded node mappings.
 
 ## Figma variable catalogue
 
-These 44 roles name the existing variables in the customer Figma library. Use the registry IDs and CSS variables for runtime integration. Where a Figma role spans several modes, the table lists its existing runtime identifiers.
+These 44 roles use the current names from the editable Figma library. The local Storybook source uses the HDS-126 names for the four affected roles. Live Storybook retains the HDS-122 labels. Use the registry IDs and CSS variables for runtime integration. Where a Figma role spans several modes, the table lists the mapped runtime identifiers. The React 0.1.0 source in this checkout uses the responsive spacing aliases for Card padding. The Card-specific padding identifiers in the table describe the catalogue mapping.
 
 | Figma collection | Figma role | Registry IDs | CSS variables |
 | --- | --- | --- | --- |
-| Controls · size | Control/Corner radius | `radius/ui/sm`, `radius/ui/md`, `radius/ui/lg`, `radius/ui/xl` | `--radius-ui-lg`, `--radius-ui-md`, `--radius-ui-sm`, `--radius-ui-xl` |
-| Controls · size | Control/Height | `ui/control/height/sm`, `ui/control/height/md`, `ui/control/height/lg`, `ui/control/height/xl` | `--ui-control-height-lg`, `--ui-control-height-md`, `--ui-control-height-sm`, `--ui-control-height-xl` |
+| Controls · size | Radius/Base | `radius/ui/sm`, `radius/ui/md`, `radius/ui/lg`, `radius/ui/xl` | `--radius-ui-lg`, `--radius-ui-md`, `--radius-ui-sm`, `--radius-ui-xl` |
+| Controls · size | Height | `ui/control/height/sm`, `ui/control/height/md`, `ui/control/height/lg`, `ui/control/height/xl` | `--ui-control-height-lg`, `--ui-control-height-md`, `--ui-control-height-sm`, `--ui-control-height-xl` |
 | Controls · size | Icon/Size | `ui/icon/size/sm`, `ui/icon/size/md`, `ui/icon/size/lg`, `ui/icon/size/xl` | `--ui-icon-size-lg`, `--ui-icon-size-md`, `--ui-icon-size-sm`, `--ui-icon-size-xl` |
 | Controls · size | Shape/Round | `radius/shape/round` | `--radius-shape-round` |
 | Controls · size | Target/Minimum | `ui/interaction/target/min` | `--ui-interaction-target-min` |
@@ -53,8 +55,8 @@ These 44 roles name the existing variables in the customer Figma library. Use th
 | Layout · density | Card/Compact padding | `component/card/padding/fixed-compact` | `--card-padding-fixed-compact` |
 | Layout · density | Fieldset/Control gap | `ui/space/sm` | `--fieldset-density-control-gap`, `--ui-space-sm` |
 | Layout · density | Fieldset/Group gap | `ui/space/2xl` | `--fieldset-density-group-gap`, `--ui-space-2xl` |
-| Layout · viewport | Card/Responsive comfortable padding | `component/card/padding/responsive-comfortable` | `--card-padding-responsive-comfortable` |
-| Layout · viewport | Card/Responsive compact padding | `component/card/padding/responsive-compact` | `--card-padding-responsive-compact` |
+| Layout · viewport | Padding/Responsive comfortable | `component/card/padding/responsive-comfortable` | `--card-padding-responsive-comfortable` |
+| Layout · viewport | Padding/Responsive compact | `component/card/padding/responsive-compact` | `--card-padding-responsive-compact` |
 | Layout · viewport | Radius/Comfortable Card | `component/card/radius/responsive/comfortable` | `--card-radius-responsive-comfortable` |
 | Layout · viewport | Radius/Compact Card | `component/card/radius/responsive/compact` | `--card-radius-responsive-compact` |
 | Layout · viewport | Radius/Fixed 2XL | `radius/layout/fixed/2xl` | `--radius-layout-fixed-2xl` |

@@ -151,7 +151,7 @@ export const ControlHeights = scaleStory(
   "control",
   "Control Heights",
   "Fixed visual heights for single-line controls, independent from viewport width.",
-  "Control/Height",
+  "Height",
 );
 
 export const IconSizes = scaleStory(
@@ -210,7 +210,7 @@ export const UsageRules: Story = {
             <thead>
               <tr>
                 <th>Size</th>
-                <th>Control/Height</th>
+                <th>Height</th>
                 <th>Text/Size and Text/Line height</th>
                 <th>Icon/Size</th>
                 <th>Target/Minimum</th>

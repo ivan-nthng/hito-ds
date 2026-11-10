@@ -203,7 +203,7 @@ export const UI: Story = {
 export const UiControlGeometry: Story = {
   tags: ["context-matrix", "!dev", "!autodocs"],
   parameters: { controls: { disable: true } },
-  render: () => <FoundationStoryPage title="Buttons and inputs" description="Control/Corner radius follows control size; control heights and typography stay unchanged.">
+  render: () => <FoundationStoryPage title="Buttons and inputs" description="Radius/Base follows control size; control heights and typography stay unchanged.">
     <div className={styles.scaleContent}>
       {controlSizes.map(size => <section className={styles.scaleContent} data-control-radius={size} key={size}>
         <Text variant="label-sm">{size.toUpperCase()}</Text>

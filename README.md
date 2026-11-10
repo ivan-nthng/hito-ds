@@ -4,7 +4,7 @@
 
 Hito DS connects a Figma library, reusable React components and a working Storybook. It comes from building real products: dense workspaces, forms, data tables and the small interactions that make them usable.
 
-**[Hito DS](https://www.hitocajon.com/)** · **[Explore Storybook](https://www.hitocajon.com/storybook/)** · **[Figma library](https://www.figma.com/design/C8ymDNFqGISrgIe6iGimHX/Hito-DS)** · **[How design and code connect](docs/figma-and-code.md)**
+**[Hito DS](https://www.hitocajon.com/)** · **[Explore Storybook](https://www.hitocajon.com/storybook/)** · **[Figma Community](https://www.figma.com/community/file/1701056607203868758/hito-design-system)** · **[How design and code connect](docs/figma-and-code.md)**
 
 **Status: alpha.** See [verification notes](docs/verification.md) before adopting.
 
