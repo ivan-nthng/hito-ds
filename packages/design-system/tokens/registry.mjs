@@ -3,7 +3,7 @@ import { mediaRecipe } from "./media-recipe.mjs";
 import { statusBadgeColorAliases } from "./component-status-badge.mjs";
 import { avatarDimensions, avatarRadii } from "./component-avatar.mjs";
 import { spinnerOpacityAliases, spinnerStroke } from "./component-spinner.mjs";
-import { cardResponsiveRadii } from "./component-card.mjs";
+import { cardPaddingAliases, cardResponsiveRadii } from "./component-card.mjs";
 import { segmentedTabsRadii, selectionPanelRadii, switchThumbRadius } from "./component-radii.mjs";
 import {
   borderFocusPolicy,
@@ -220,6 +220,11 @@ const groupDefinitions = [
     id: "component/card-radius", domain: "radius-border-elevation-motion",
     layer: "component", tokenType: "responsive-dimension-alias", sourceTask: "SAVI-165",
     definitions: cardResponsiveRadii,
+  },
+  {
+    id: "component/card-padding", domain: "radius-border-elevation-motion",
+    layer: "component", tokenType: "component-layout-padding", sourceTask: "HDS-21",
+    definitions: cardPaddingAliases,
   },
   {
     id: "component/spinner-stroke", domain: "radius-border-elevation-motion",

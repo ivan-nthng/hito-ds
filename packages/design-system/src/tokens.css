@@ -1438,6 +1438,52 @@
   }
 }
 
+/* HDS-21 generated responsive Card padding density. */
+@layer hito.tokens {
+  :root {
+    --card-padding-responsive-compact: var(--layout-space-responsive-sm);
+    --card-padding-responsive-comfortable: var(--layout-space-responsive-lg);
+  }
+  :root[data-hito-layout-density="compact"] {
+    --card-padding-responsive-compact: var(--ref-space-2-5);
+    --card-padding-responsive-comfortable: var(--ref-space-3);
+  }
+  :root[data-hito-layout-density="spacious"] {
+    --card-padding-responsive-compact: var(--ref-space-4);
+    --card-padding-responsive-comfortable: var(--ref-space-5);
+  }
+  @media (min-width: 40rem) {
+  :root[data-hito-layout-density="compact"] {
+    --card-padding-responsive-compact: var(--ref-space-3);
+    --card-padding-responsive-comfortable: var(--ref-space-4);
+  }
+  :root[data-hito-layout-density="spacious"] {
+    --card-padding-responsive-compact: var(--ref-space-5);
+    --card-padding-responsive-comfortable: var(--ref-space-6);
+  }
+  }
+  @media (min-width: 64rem) {
+  :root[data-hito-layout-density="compact"] {
+    --card-padding-responsive-compact: var(--ref-space-3);
+    --card-padding-responsive-comfortable: var(--ref-space-5);
+  }
+  :root[data-hito-layout-density="spacious"] {
+    --card-padding-responsive-compact: var(--ref-space-5);
+    --card-padding-responsive-comfortable: var(--ref-space-8);
+  }
+  }
+  @media (min-width: 80rem) {
+  :root[data-hito-layout-density="compact"] {
+    --card-padding-responsive-compact: var(--ref-space-4);
+    --card-padding-responsive-comfortable: var(--ref-space-6);
+  }
+  :root[data-hito-layout-density="spacious"] {
+    --card-padding-responsive-compact: var(--ref-space-6);
+    --card-padding-responsive-comfortable: var(--ref-space-10);
+  }
+  }
+}
+
 /* HDS-41 media recipe start */
 @layer hito.tokens {
   :root {

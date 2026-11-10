@@ -1,6 +1,6 @@
 import { fixedLayoutRadii } from "./semantic-radii.mjs";
-import { responsiveLayoutModes } from "./responsive-layout-spacing.mjs";
-import { referenceSpacingById } from "./reference-spacing.mjs";
+import { responsiveLayoutModes, responsiveLayoutSpacingById } from "./responsive-layout-spacing.mjs";
+import { referenceSpacing, referenceSpacingById } from "./reference-spacing.mjs";
 import { radiusScale } from "./radius-geometry.mjs";
 
 function createResponsiveRadius(size, modeIds) {
@@ -56,3 +56,46 @@ export const cardResponsiveRadii = Object.freeze([
   cardCompactResponsiveRadius,
   cardComfortableResponsiveRadius,
 ]);
+
+const responsiveCardPadding = [
+  ["compact", "layout/space/responsive/sm"],
+  ["comfortable", "layout/space/responsive/lg"],
+];
+
+export const cardPaddingAliases = Object.freeze(responsiveCardPadding.map(([size, semanticId]) => {
+  const spacing = responsiveLayoutSpacingById[semanticId];
+  return Object.freeze({
+    id: `component/card/padding/responsive-${size}`,
+    cssVariable: `--card-padding-responsive-${size}`,
+    semanticId,
+    webValue: `var(${spacing.cssVariable})`,
+    sourceTask: "HDS-21",
+    lifecycle: "admitted",
+    modes: spacing.modes,
+  });
+}));
+
+const densityFactors = { compact: 0.75, spacious: 1.25 };
+const densityCandidates = referenceSpacing.filter(({ kind, sourcePx }) =>
+  kind === "space" && sourcePx >= 4 && sourcePx <= 40,
+);
+
+export function responsiveCardDensityAdapterCss() {
+  const defaults = cardPaddingAliases.map(({ cssVariable, webValue }) =>
+    `    ${cssVariable}: ${webValue};`,
+  ).join("\n");
+  const rules = responsiveLayoutModes.map(({ id, minWidthWebValue }) => {
+    const selectors = Object.entries(densityFactors).map(([density, factor]) => {
+      const declarations = cardPaddingAliases.map(({ cssVariable, modes }) => {
+        const target = modes[id].resolvedSourcePx * factor;
+        const [nearest] = densityCandidates.toSorted((a, b) =>
+          Math.abs(a.sourcePx - target) - Math.abs(b.sourcePx - target) || b.sourcePx - a.sourcePx,
+        );
+        return `    ${cssVariable}: var(${nearest.cssVariable});`;
+      }).join("\n");
+      return `  :root[data-hito-layout-density="${density}"] {\n${declarations}\n  }\n`;
+    }).join("");
+    return minWidthWebValue ? `  @media (min-width: ${minWidthWebValue}) {\n${selectors}  }\n` : selectors;
+  }).join("");
+  return `/* HDS-21 generated responsive Card padding density. */\n@layer hito.tokens {\n  :root {\n${defaults}\n  }\n${rules}}\n`;
+}

@@ -1,3 +1,4 @@
+import { responsiveCardDensityAdapterCss } from "./component-card.mjs";
 import { segmentedTabsRadii, selectionPanelRadii, switchThumbRadius } from "./component-radii.mjs";
 import { cardResponsiveRadii } from "./component-card.mjs";
 import { readdir, readFile } from "node:fs/promises";
@@ -790,6 +791,15 @@ await validateComponentRadii(new URL("../src/components/", import.meta.url));
 const choiceCss = await readFile(new URL("../src/components/choice-control/ChoiceControl.module.css", import.meta.url), "utf8");
 assert(choiceCss.includes("border-radius: var(--switch-thumb-radius)"), "Switch thumb must use its component radius");
 assert((choiceCss.match(/border-radius: var\(--radius-shape-round\)/gu) ?? []).length === 3, "Radio/dot/indeterminate must use round shape semantics");
+
+const cardDensityMarker = "/* HDS-21 generated responsive Card padding density. */";
+const cardDensityStart = css.indexOf(cardDensityMarker);
+const cardDensityEnd = css.indexOf("/* HDS-41 media recipe start */", cardDensityStart);
+assert(
+  cardDensityStart >= 0 && cardDensityEnd > cardDensityStart &&
+    css.slice(cardDensityStart, cardDensityEnd).trimEnd() === responsiveCardDensityAdapterCss().trimEnd(),
+  "Responsive Card density adapter is stale",
+);
 
 console.log(
   [

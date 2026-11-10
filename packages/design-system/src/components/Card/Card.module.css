@@ -3,7 +3,7 @@
     box-sizing: border-box;
     display: flow-root;
     min-inline-size: 0;
-    padding: var(--layout-space-responsive-sm);
+    padding: var(--card-padding-responsive-compact);
     border: 0;
     border-radius: var(--card-radius-responsive-compact);
     background: var(--color-surface-base);
@@ -13,7 +13,7 @@
   }
 
   .root[data-size="comfortable"] {
-    padding: var(--layout-space-responsive-lg);
+    padding: var(--card-padding-responsive-comfortable);
     border-radius: var(--card-radius-responsive-comfortable);
   }
 

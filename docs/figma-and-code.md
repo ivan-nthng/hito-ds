@@ -30,7 +30,7 @@ The [editable Hito Figma library](https://www.figma.com/design/WzxP3PfefGcN1dGde
 
 ## Figma variable catalogue
 
-These 44 roles use the current names from the editable Figma library. The local Storybook source uses the HDS-126 names for the four affected roles. Live Storybook retains the HDS-122 labels. Use the registry IDs and CSS variables for runtime integration. Where a Figma role spans several modes, the table lists the mapped runtime identifiers. The React 0.1.0 source in this checkout uses the responsive spacing aliases for Card padding. The Card-specific padding identifiers in the table describe the catalogue mapping.
+These 44 roles use the current names from the editable Figma library. The local Storybook source uses the HDS-126 names for the four affected roles. Live Storybook retains the HDS-122 labels. Use the registry IDs and CSS variables for runtime integration. Where a Figma role spans several modes, the table lists the mapped runtime identifiers. Responsive Card uses the two Card padding aliases and responds to `data-hito-layout-density` on the document root. Default uses the existing responsive spacing values.
 
 | Figma collection | Figma role | Registry IDs | CSS variables |
 | --- | --- | --- | --- |
