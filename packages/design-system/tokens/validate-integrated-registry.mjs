@@ -28,6 +28,7 @@ const EXPECTED_GROUP_COUNTS = Object.freeze({
   "component/selection-panel-radius": 3,
   "component/tabs-segmented-radius": 2,
   "component/card-radius": 2,
+  "component/card-padding": 2,
   "component/spinner-stroke": 1,
   "component/spinner-opacity": 3,
   "spacing/reference": 35,
@@ -136,7 +137,7 @@ for (const group of registryGroups) {
 }
 
 assert(
-  registryEntries.length === 502,
+  registryEntries.length === 504,
   "Integrated registry entry count drifted",
 );
 assert(
@@ -148,7 +149,7 @@ assert(
   "Semantic registry count drifted",
 );
 assert(
-  registryComponentEntries.length === 75,
+  registryComponentEntries.length === 77,
   "Admitted component alias count drifted",
 );
 assert(!registryEntries.some(entry => /^radius\/\d/u.test(entry.id)),
