@@ -151,14 +151,14 @@ export const ControlHeights = scaleStory(
   "control",
   "Control Heights",
   "Fixed visual heights for single-line controls, independent from viewport width.",
-  "SM–XL geometry",
+  "Control/Height",
 );
 
 export const IconSizes = scaleStory(
   "icon",
   "Icon Sizes",
   "Fixed glyph boxes. Icon size and interaction target are independent.",
-  "SM–XL optical boxes",
+  "Icon/Size",
 );
 
 export const InteractionTargets: Story = {
@@ -166,7 +166,7 @@ export const InteractionTargets: Story = {
     "target",
     "Interaction Targets",
     "The active area may exceed the visible control and never overlaps its neighbours.",
-    "Visible control versus active area",
+    "Target/Minimum",
     minimumTarget.id,
   ),
   play: async ({ canvasElement }) => {
@@ -210,10 +210,10 @@ export const UsageRules: Story = {
             <thead>
               <tr>
                 <th>Size</th>
-                <th>Control</th>
-                <th>UI type</th>
-                <th>Icon</th>
-                <th>Min target</th>
+                <th>Control/Height</th>
+                <th>Text/Size and Text/Line height</th>
+                <th>Icon/Size</th>
+                <th>Target/Minimum</th>
               </tr>
             </thead>
             <tbody>

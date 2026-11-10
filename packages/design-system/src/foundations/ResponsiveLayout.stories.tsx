@@ -45,7 +45,7 @@ export const ModesAndValues: Story = {
     >
       <FoundationStorySection
         description="SM is the default. MD, LG and XL begin at the existing shared boundaries; no additional breakpoint is introduced here."
-        title="Viewport modes"
+        title="Layout · viewport"
         token="registryModeSets.viewport"
       >
         <div className={styles.modeGrid}>
@@ -84,7 +84,7 @@ export const ModesAndValues: Story = {
               data-responsive-spacing={role.id}
               key={role.id}
             >
-              <Text variant="technical-sm">{role.id}</Text>
+              <Text variant="technical-sm">Spacing/Responsive {role.id.split("/").at(-1)?.toUpperCase()}</Text>
               {responsiveLayoutModes.map((mode) => {
                 const value = role.modes[mode.id];
                 const style = {
@@ -112,7 +112,7 @@ export const ModesAndValues: Story = {
 
       <FoundationStorySection
         description="This radius changes only when a container explicitly opts into the responsive layout role. Ordinary cards and controls keep their selected fixed radius."
-        title="Responsive outer radius"
+        title="Radius/Outer"
         token={responsiveLayoutOuterRadius.id}
       >
         <div className={styles.radiusGrid}>

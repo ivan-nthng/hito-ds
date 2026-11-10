@@ -161,7 +161,7 @@ export const UI: Story = {
     >
       <FoundationStorySection
         description="Controls share the XS–XL semantic radius scale: 4, 4, 6, 8 and 12. Radius changes do not change control height or typography."
-        title="Fixed XS–XL roles"
+        title="Corners"
       >
         <div className={styles.uiGrid}>
           {fixedUiRadii.map((role) => {
@@ -180,7 +180,7 @@ export const UI: Story = {
                   <Text variant="ui-md">{uiExamples[size]}</Text>
                 </div>
                 <div className={styles.radiusIdentity}>
-                  <Text variant="technical-sm">{role.id}</Text>
+                  <Text variant="technical-sm">Control/{size.toUpperCase()}</Text>
                   <Text className={styles.secondary} variant="body-sm">
                     {role.resolvedSourcePx}px · {role.referenceId}
                   </Text>
@@ -203,7 +203,7 @@ export const UI: Story = {
 export const UiControlGeometry: Story = {
   tags: ["context-matrix", "!dev", "!autodocs"],
   parameters: { controls: { disable: true } },
-  render: () => <FoundationStoryPage title="Buttons and inputs" description="Shared UI radius roles; control heights and typography stay unchanged.">
+  render: () => <FoundationStoryPage title="Buttons and inputs" description="Control/Corner radius follows control size; control heights and typography stay unchanged.">
     <div className={styles.scaleContent}>
       {controlSizes.map(size => <section className={styles.scaleContent} data-control-radius={size} key={size}>
         <Text variant="label-sm">{size.toUpperCase()}</Text>
@@ -261,7 +261,7 @@ export const Layout: Story = {
                 style={getRadiusStyle(role.cssVariable)}
               />
               <div className={styles.radiusIdentity}>
-                <Text variant="technical-sm">{role.id}</Text>
+                <Text variant="technical-sm">Radius/Fixed {role.id.split("/").at(-1)?.toUpperCase()}</Text>
                 <Text className={styles.secondary} variant="body-sm">
                   {role.resolvedSourcePx}px · {role.referenceId}
                 </Text>
@@ -273,7 +273,7 @@ export const Layout: Story = {
 
       <FoundationStorySection
         description="Only a container explicitly using radius/layout/responsive/outer changes with layout mode. Fixed cards and UI controls do not inherit this behavior."
-        title="Responsive outer · opt-in"
+        title="Radius/Outer"
         token={responsiveLayoutOuterRadius.id}
       >
         <div className={styles.responsiveGrid}>
@@ -430,7 +430,7 @@ export const Nesting: Story = {
 
 export const IntrinsicShape: Story = {
   render: () => <FoundationStoryPage title="Intrinsic round shape" description="Radio, its dot, indeterminate marks and loading rings use this role independently of control size.">
-    <FoundationStorySection title={intrinsicRoundRadius.id}>
+    <FoundationStorySection title="Shape/Round" token={intrinsicRoundRadius.id}>
       <div className={styles.uiSample} style={getRadiusStyle(intrinsicRoundRadius.cssVariable)}>
         <Text variant="ui-md">Round</Text>
       </div>

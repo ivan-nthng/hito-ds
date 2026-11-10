@@ -221,18 +221,21 @@ const familySpecimens = [
   {
     family: "Instrument Sans",
     role: "Base",
+    label: "Interface",
     sample: "Operational interfaces should stay clear and quiet.",
     variant: "body-lg" as const,
   },
   {
     family: "Poppins",
     role: "Display",
+    label: "Headings",
     sample: "A distinct voice for hierarchy and expression.",
     variant: "heading-lg" as const,
   },
   {
     family: "Fira Mono",
     role: "Data",
+    label: "Data",
     sample: "08:45  ·  R$ 1.248,90  ·  ORD-2026-1048",
     variant: "data-base" as const,
   },
@@ -336,7 +339,7 @@ export const Overview: Story = {
 export const Families: Story = {
   render: () => (
     <main className={styles.page}>
-      <StoryIntro title="Font families">
+      <StoryIntro title="Fonts">
         Three replaceable family slots. Components consume roles, never font
         names directly.
       </StoryIntro>
@@ -345,7 +348,7 @@ export const Families: Story = {
           <section className={styles.familyRow} key={specimen.role}>
             <div className={styles.identity}>
               <Text as="h2" variant="label-base">
-                {specimen.role}
+                {specimen.label}
               </Text>
               <Text className={styles.muted} variant="technical-sm">
                 {specimen.family}
@@ -364,7 +367,7 @@ export const Families: Story = {
 export const UI: Story = {
   render: () => (
     <SpecimenPage
-      description="Text inside controls and interactive items."
+      description="Text/Size and Text/Line height for controls and interactive items."
       specimens={uiSpecimens}
       title="UI text"
     />

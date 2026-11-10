@@ -26,6 +26,57 @@ Use `data-hito-theme="neutral"` or `"inherited"` independently of `data-hito-col
 
 The [standalone Hito DS Figma file](https://www.figma.com/design/C8ymDNFqGISrgIe6iGimHX/Hito-DS) is an exact duplicate of the source library, with node IDs preserved. File and node mappings are recorded in `figma/mapping.json` and exposed by the Storybook toolbar. Community publication and public access still require verification; an editable file link is not a Community release.
 
+## Figma variable catalogue
+
+These 44 roles name the existing variables in the customer Figma library. Use the registry IDs and CSS variables for runtime integration. Where a Figma role spans several modes, the table lists its existing runtime identifiers.
+
+| Figma collection | Figma role | Registry IDs | CSS variables |
+| --- | --- | --- | --- |
+| Controls · size | Control/Corner radius | `radius/ui/sm`, `radius/ui/md`, `radius/ui/lg`, `radius/ui/xl` | `--radius-ui-lg`, `--radius-ui-md`, `--radius-ui-sm`, `--radius-ui-xl` |
+| Controls · size | Control/Height | `ui/control/height/sm`, `ui/control/height/md`, `ui/control/height/lg`, `ui/control/height/xl` | `--ui-control-height-lg`, `--ui-control-height-md`, `--ui-control-height-sm`, `--ui-control-height-xl` |
+| Controls · size | Icon/Size | `ui/icon/size/sm`, `ui/icon/size/md`, `ui/icon/size/lg`, `ui/icon/size/xl` | `--ui-icon-size-lg`, `--ui-icon-size-md`, `--ui-icon-size-sm`, `--ui-icon-size-xl` |
+| Controls · size | Shape/Round | `radius/shape/round` | `--radius-shape-round` |
+| Controls · size | Target/Minimum | `ui/interaction/target/min` | `--ui-interaction-target-min` |
+| Controls · size | Text/Line height | `typography/ui/sm`, `typography/ui/md`, `typography/ui/lg`, `typography/ui/xl` | `--type-ui-lg-line-height`, `--type-ui-md-line-height`, `--type-ui-sm-line-height`, `--type-ui-xl-line-height` |
+| Controls · size | Text/Size | `typography/ui/sm`, `typography/ui/md`, `typography/ui/lg`, `typography/ui/xl` | `--type-ui-lg-font-size`, `--type-ui-md-font-size`, `--type-ui-sm-font-size`, `--type-ui-xl-font-size` |
+| Corners | Control/LG | `radius/ui/lg` | `--radius-ui-lg` |
+| Corners | Control/MD | `radius/ui/md` | `--radius-ui-md` |
+| Corners | Control/SM | `radius/ui/sm` | `--radius-ui-sm` |
+| Corners | Control/XL | `radius/ui/xl` | `--radius-ui-xl` |
+| Corners | Control/XS | `radius/ui/xs` | `--radius-ui-xs` |
+| Fonts | Data | `font/family/mono` | `--type-family-mono` |
+| Fonts | Headings | `font/family/display` | `--type-family-display` |
+| Fonts | Interface | `font/family/base` | `--type-family-base` |
+| Layout · density | App shell/Main padding LG | `layout/space/responsive/xs` | `--app-shell-density-main-padding`, `--layout-space-responsive-xs` |
+| Layout · density | App shell/Main padding XL | `layout/space/responsive/xs` | `--app-shell-density-main-padding`, `--layout-space-responsive-xs` |
+| Layout · density | Card/Comfortable padding | `component/card/padding/fixed-comfortable` | `--card-padding-fixed-comfortable` |
+| Layout · density | Card/Compact padding | `component/card/padding/fixed-compact` | `--card-padding-fixed-compact` |
+| Layout · density | Fieldset/Control gap | `ui/space/sm` | `--fieldset-density-control-gap`, `--ui-space-sm` |
+| Layout · density | Fieldset/Group gap | `ui/space/2xl` | `--fieldset-density-group-gap`, `--ui-space-2xl` |
+| Layout · viewport | Card/Responsive comfortable padding | `component/card/padding/responsive-comfortable` | `--card-padding-responsive-comfortable` |
+| Layout · viewport | Card/Responsive compact padding | `component/card/padding/responsive-compact` | `--card-padding-responsive-compact` |
+| Layout · viewport | Radius/Comfortable Card | `component/card/radius/responsive/comfortable` | `--card-radius-responsive-comfortable` |
+| Layout · viewport | Radius/Compact Card | `component/card/radius/responsive/compact` | `--card-radius-responsive-compact` |
+| Layout · viewport | Radius/Fixed 2XL | `radius/layout/fixed/2xl` | `--radius-layout-fixed-2xl` |
+| Layout · viewport | Radius/Fixed LG | `radius/layout/fixed/lg` | `--radius-layout-fixed-lg` |
+| Layout · viewport | Radius/Fixed MD | `radius/layout/fixed/md` | `--radius-layout-fixed-md` |
+| Layout · viewport | Radius/Fixed SM | `radius/layout/fixed/sm` | `--radius-layout-fixed-sm` |
+| Layout · viewport | Radius/Fixed XL | `radius/layout/fixed/xl` | `--radius-layout-fixed-xl` |
+| Layout · viewport | Radius/Fixed XS | `radius/layout/fixed/xs` | `--radius-layout-fixed-xs` |
+| Layout · viewport | Radius/Outer | `radius/layout/responsive/outer` | `--radius-layout-responsive-outer` |
+| Layout · viewport | Spacing/Fixed 2XL | `layout/space/fixed/2xl` | `--layout-space-fixed-2xl` |
+| Layout · viewport | Spacing/Fixed LG | `layout/space/fixed/lg` | `--layout-space-fixed-lg` |
+| Layout · viewport | Spacing/Fixed MD | `layout/space/fixed/md` | `--layout-space-fixed-md` |
+| Layout · viewport | Spacing/Fixed SM | `layout/space/fixed/sm` | `--layout-space-fixed-sm` |
+| Layout · viewport | Spacing/Fixed XL | `layout/space/fixed/xl` | `--layout-space-fixed-xl` |
+| Layout · viewport | Spacing/Fixed XS | `layout/space/fixed/xs` | `--layout-space-fixed-xs` |
+| Layout · viewport | Spacing/Responsive 2XL | `layout/space/responsive/2xl` | `--layout-space-responsive-2xl` |
+| Layout · viewport | Spacing/Responsive LG | `layout/space/responsive/lg` | `--layout-space-responsive-lg` |
+| Layout · viewport | Spacing/Responsive MD | `layout/space/responsive/md` | `--layout-space-responsive-md` |
+| Layout · viewport | Spacing/Responsive SM | `layout/space/responsive/sm` | `--layout-space-responsive-sm` |
+| Layout · viewport | Spacing/Responsive XL | `layout/space/responsive/xl` | `--layout-space-responsive-xl` |
+| Layout · viewport | Spacing/Responsive XS | `layout/space/responsive/xs` | `--layout-space-responsive-xs` |
+
 ## AI-assisted implementation
 
 Give your assistant the exported component APIs, token registry and an existing Storybook example before asking it to build a screen. Ask it to reuse components, list missing capabilities, preserve keyboard behavior and use semantic tokens. MCP can provide Figma context when configured by the consuming team. This repository does not include an MCP server or an automatic synchronization service.

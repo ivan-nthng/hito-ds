@@ -86,7 +86,7 @@ const meta = {
     content: { control: "select", options: ["text", "header", "actions"] },
   },
   render: (args, { globals }) => (
-    <FoundationStoryPage title="Card" description="A content container. Fixed or responsive geometry controls padding and radius together; the parent controls width.">
+    <FoundationStoryPage title="Card" description="A content container. In Figma, Card/Compact padding and Card/Comfortable padding are in Layout · density. Responsive padding and radius are in Layout · viewport.">
       <Example {...args} profile={globals.storyContentProfile} />
     </FoundationStoryPage>
   ),
@@ -375,7 +375,7 @@ export const Geometry: Story = {
   render: (_, { globals }) => {
     const copy = getCopy(globals.storyContentProfile);
     return (
-      <FoundationStoryPage title="Card geometry" description="Size, responsive geometry and elevation remain independent.">
+      <FoundationStoryPage title="Card geometry" description="Compare Card/Responsive compact padding, Card/Responsive comfortable padding, Radius/Compact Card and Radius/Comfortable Card. Elevation is independent.">
         <FoundationSpecimenGrid lang={copy.lang}>
           {cardLayouts.flatMap(layout => cardSizes.flatMap(size => cardElevations.map(elevation => (
             <FoundationSpecimen key={`${layout}-${size}-${elevation}`} label={`${size} · ${layout} · ${elevation}`}>
