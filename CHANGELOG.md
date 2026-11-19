@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-11-19 — Agent-assisted setup
+
+- Published the [agent setup guide](https://github.com/ivan-nthng/hito-ds/blob/main/docs/ai.md#agent-assisted-setup): configure colors, fonts, radius and density through the installed package while preserving existing preferences.
+- Published the [consumer template](examples/consumer-storybook/README.md) with one package-based theme configuration shared by the app and local Storybook.
+- Get Started on the [Hito website](https://www.hitocajon.com/) now includes a ready-to-copy request for your coding agent.
+
 ## 2026-11-10 — Figma and Storybook catalogue update
 
 - HDS-121 simplified collection names and guidance in the editable Figma library.
