@@ -1,0 +1,6 @@
+@import '@hito-ds/react/styles.css';
+/* Application styles, shared by app and Storybook. */
+:root { --color-surface-canvas: light-dark(#F8FAFC, #15191E); }
+body { margin: 0; background: var(--color-surface-canvas); color: var(--color-text-primary); font-family: var(--type-family-base); }
+:is(#root, #storybook-root) > main { padding: 1rem; display: grid; gap: 1rem; max-width: 30rem; }
+output { display: block; }

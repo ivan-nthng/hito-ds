@@ -1,0 +1,47 @@
+# Compose with Hito
+
+Use the actual installed package exports and TypeScript declarations as the version authority. Published **0.3.1** is the verified setup baseline; this repository's source metadata and hosted examples may describe other revisions. Follow [installation and updates](installation.md) for the supported consumer workflow.
+
+## Agent-assisted setup
+
+The [copyable setup request](../README.md#install-and-start-setup) points to the [canonical guide](https://github.com/ivan-nthng/hito-ds/blob/main/docs/ai.md#agent-assisted-setup). Read the document directly; a clone or checkout is not required. Inspect the installed Hito version and public APIs as the capability authority. If guide access fails, ask the user for the guide text or an accessible URL; do not assume a `docs/ai.md` in the consumer app.
+
+There are two entry routes. **Ordinary terminal install:** npm installs the dependency without starting a conversation; the user sends the setup request to their coding agent. **Agent-led install:** the agent follows the same [manual setup](installation.md#manual-setup) additively, verifies the actual package and app/CSS wiring, reports those completed steps and continues directly to the unanswered interview below in the same conversation. Do not stop at “installed” or ask whether to start theme setup. Report Storybook integration as ready only when its existing shared wiring has actually been checked. If wiring is blocked, report the precise blocker and do not claim it succeeded. Package install, app wiring and requested theme outcomes are separate results. No install hook, terminal questionnaire or setup service starts the interview.
+
+A compact first interview can use these **five topic groups**, omitting every answer already supplied in chat or explicit app preferences:
+
+> 1. Primary color — opaque HEX6, or keep?
+> 2. Optional secondary — opaque HEX6, off, or keep?
+> 3. Fonts — for each unanswered base/display/mono slot: keep, existing registration, family or provider link?
+> 4. Radius — Sharper, Default or Softer, or keep?
+> 5. Density — Compact, Default or Spacious, or keep?
+
+For example: “Primary #6D28D9; keep secondary and fonts; Softer; Compact.” A skip keeps an existing explicit choice; an unset skipped slot remains omitted and uses the installed default. Show retained values and ask only what is missing. The detailed installed-API, readiness and validation steps below remain the single setup guide.
+
+1. **Inspect first.** Read the dependency/lockfile, actual installed version and public `@hito-ds/react/theme-config` exports/types. Published **0.3.1** is the verified baseline. Inspect the app entry, one app-owned theme config, licensed font registrations/readiness, global CSS, Storybook preview and user stories. Save matching file/dependency checkpoints. Preserve existing providers, decorators, story globs, explicit theme choices and unrelated preferences. For an empty app, use the [existing template](../examples/consumer-storybook/README.md); integrate existing apps additively. Both hosts must use one physical installed compiled package, the same config, font registration and global CSS. Never alias library source or patch node_modules.
+2. **Ask only unanswered choices, once together.** A current explicit choice or a preference already stated in chat is answered. Show those retained values and ask about the remaining rows in one compact interview. Record each skip; a blank/“keep” preserves the existing value. If unset, leave the setting omitted and explain its installed default. Do not turn resolver-expanded defaults into new explicit preferences.
+
+   | Choice | Ask when unanswered | Skip when unset |
+   | --- | --- | --- |
+   | Primary | Opaque six-digit HEX color? | Installed primary baseline |
+   | Optional secondary | Opaque HEX6, or leave off? | Off |
+   | Base font | Existing registration, family or provider link? | Installed preset base |
+   | Display font | Existing registration, family or provider link? | Preset behavior; neutral follows base |
+   | Mono/data font | Existing registration, family or provider link? | Installed preset mono |
+   | Density | Compact, Default or Spacious? | Default |
+   | Radius | Sharper, Default or Softer? | Default |
+
+   Read `getThemeFontDefaults(preset)` locally instead of guessing font defaults. For 0.3.1, density values are `compact/default/spacious`; radius multipliers are Sharper `0.75`, Default `1`, Softer `1.25`. Do not re-ask the preset or light/dark scheme unless the user requests changing them; these axes are independent.
+3. **Prepare and validate locally before writes.** Start from the original complete app config, retain unrelated nested settings, and merge only explicit answers. Keep requested intent/skips separate from runtime config. A new secondary seed uses the installed `colors.secondary: { enabled: true, seed: '#…' }` schema and its [neutral eligibility/bootstrap rules](installation.md#shared-secondary); “off” uses `{ enabled: false, seed: null }`. Skip never means reset. An explicit primary reset omits `primary` and dependent `primaryMode`; an explicit font reset omits that slot, restoring preset behavior. Check linked tint dependencies before resetting secondary. Do not write a new null/string field or silently discard an unsupported choice.
+
+   Call the installed `resolveThemeConfig(candidate)` in the consumer, without a server. It returns `{ ok: true, config }` or `{ ok: false, code, reason }`. Inspect `ok` before any file write; malformed color, unknown fields or unsupported input must leave the config and unrelated files unchanged. Validate the entire proposed selection, not each answer in isolation. Preserve explicit intent in the saved `ThemeConfig`; resolved defaults are useful for inspection, not a replacement preference record. Use the installed types, not repository source metadata, as the version authority.
+4. **Verify font readiness.** Follow [licensed font setup](installation.md#add-licensed-application-fonts) and [runtime font selection](installation.md#runtime-font-selection). Resolve a family/provider link to the actual family, licensed source, requested normal styles/weights and script coverage. Source metadata does not register or load a face. Reuse existing readiness bindings and registrations; do not replace them to make a check pass. Google catalog links need actual requested styles/CSS; Adobe needs the user's existing Web Project embed and family/style metadata. Ask one precise follow-up only for missing source/coverage, mark that slot pending and continue independent supported settings. Never invent a URL, rehost Adobe files, create a provider project/account or change credentials. Missing required weight/script, mono600 or a failed face load is fallback with its reason. Omitted fonts use preset fallback without a loaded-face claim.
+5. **Apply once and inspect both hosts.** Save the validated choices to the one app-owned config already imported by app and Storybook. Use the existing `createThemeConfigController` root owner and readiness bindings, with cleanup on unmount; do not add another owner or config format. Read `accepted`, settled `ok`, per-request `outcomes` and `snapshot`: schema success alone is not runtime success. Check [primary refusal/last-valid retention](installation.md#primary-palette), actual fonts and geometry, and every requested setting's effective result. A refused color remains refused even when JSON validated. Density changes supported layout, not all control sizes or typography. Existing fills and unsupported selections keep their explicit reports; do not claim them applied. Reuse [manual setup's commands](installation.md#manual-setup) for strict app/Storybook type checks, both builds and both local starts. Inspect the real app composition and its local story at narrow and wide widths, confirm shared CSS/config and preserved stories/decorators, then exercise a synthetic interaction. Story args are transient; they must not write saved theme settings.
+
+Finish with changed files, installed version/lock/artifact identity, requested versus effective settings, retained preferences/skips, and each **applied / pending / fallback / refused / unsupported** result with its actual reason. Include font source/weight/script limits, app/Storybook checks and unresolved failures. Roll back using the matching config, registrations, dependency and lock checkpoints from [consumer updates](installation.md#consumer-local-storybook-and-updates). Report the next owner for unresolved items. Do not claim universal accessibility, all-font support, automatic Figma synchronization or matching hosted/package versions; [resource access](installation.md#storybook-and-figma) and the official Community snapshot keep their existing limits.
+
+## Compose, then review
+
+Reuse public Hito components and semantic tokens before introducing custom UI. Inspect installed component types and the existing app's composition; use [hosted Storybook](https://www.hitocajon.com/storybook/) as reference without assuming it matches the installed version.
+
+Use ordinary layout for grouped content, Surface for a semantic plane, and Card for a distinct bounded unit. Keep preset and light/dark independent, use supported spacing lanes and preserve native labels, keyboard behavior and state ownership. Test narrow layouts, foreground/background contrast, error/loading states and reduced motion in the actual consumer. A passing example is not a full accessibility or Figma-parity certificate.

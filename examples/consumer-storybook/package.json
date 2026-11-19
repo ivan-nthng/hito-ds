@@ -1,0 +1,28 @@
+{
+  "name": "hito-consumer-storybook",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=24 <25"
+  },
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "build": "vite build",
+    "typecheck": "tsc --noEmit && tsc --noEmit -p tsconfig.storybook.json",
+    "storybook": "storybook dev --port 6006 --no-open --disable-telemetry",
+    "build-storybook": "storybook build --disable-telemetry"
+  },
+  "dependencies": {
+    "react": "19.2.8",
+    "react-dom": "19.2.8"
+  },
+  "devDependencies": {
+    "@storybook/react-vite": "10.6.0",
+    "storybook": "10.6.0",
+    "@types/node": "24.13.3",
+    "@types/react": "19.2.18",
+    "@types/react-dom": "19.2.5",
+    "typescript": "5.9.3",
+    "vite": "8.2.2"
+  }
+}

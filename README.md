@@ -31,6 +31,21 @@ The site dev server prints its local URL. Run `npm run storybook` for the separa
 
 `npm run build` produces the combined static site in `output/public-site`: the landing at `/` and the complete Storybook at `/storybook/`. `npm run verify:site` checks that real combined artifact, including links, demo interactions, local assets and missing-file responses. Browser checks need the existing Playwright Chromium installation (`npx playwright install chromium`).
 
+## Install and start setup
+
+```sh
+npm install @hito-ds/react@0.3.1 --save-exact
+```
+
+**Installing in a terminal:** npm installs the package; it does not start a conversation or wire it into your app. Copy this request into your coding agent:
+
+> Install Hito if needed and set it up in this app. Read https://github.com/ivan-nthng/hito-ds/blob/main/docs/ai.md#agent-assisted-setup, inspect the installed Hito version and public APIs, and follow the guide. Preserve existing preferences and continue directly to unanswered theme questions after app wiring succeeds. If the guide cannot be accessed, ask me for its text or an accessible URL.
+
+**Asking your agent to install:** use the same request. After verifying the installed package and actual app/CSS wiring, the agent reports what is ready and continues directly to the unanswered theme interview. Package installation and theme application are separate results; npm success alone does not mean the app is configured.
+
+Read the [canonical agent guide](https://github.com/ivan-nthng/hito-ds/blob/main/docs/ai.md#agent-assisted-setup) directly; no clone or checkout is required to read it. [Manual setup](docs/installation.md#manual-setup) · [npm package](https://www.npmjs.com/package/@hito-ds/react)
+
+
 ## Use the components
 
 Install the React package with `npm install @hito-ds/react`. See [package documentation](https://www.npmjs.com/package/@hito-ds/react) for the application and Storybook setup.

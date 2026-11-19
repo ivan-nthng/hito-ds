@@ -1,0 +1,11 @@
+# Consumer-local Storybook (React + Vite)
+
+Follow the [manual installation guide](../../docs/installation.md#manual-setup) or the [agent-assisted guide](../../docs/ai.md#agent-assisted-setup) to copy the template, install the selected archive and run both hosts. Use the [font setup](../../docs/installation.md#add-licensed-application-fonts) and [update and rollback](../../docs/installation.md#consumer-local-storybook-and-updates) sections for those steps.
+
+The app and Storybook use one physical installed dependency, `src/theme-config.ts`, `src/font-registration.ts` and `src/global.css`. `Example.stories.tsx` imports the actual `Example.tsx` used by the app. Save config/CSS edits and let normal Vite/Storybook reload apply them. Restore the original shared config (or remove optional settings) and save to reset both; this is a deliberate source edit. Story controls such as actionLabel are transient and never write files, localStorage or theme settings. The template has no interactive postinstall or saved-setting control.
+
+Application type checking uses `skipLibCheck: false`. The separate Storybook config uses `skipLibCheck: true`, matching the existing repository setup: Storybook10.6.0 declarations produce upstream generic/unused-expect-error diagnostics under TypeScript5.9.3. No installed declaration is patched. Story source is still checked; library declaration validation remains covered by the strict app check.
+
+## Existing application / Storybook
+
+Do not copy over existing files or replace user stories. Keep existing scripts, addons, story globs, framework and lockfile. Add compatible Storybook development dependencies only if missing. Integrate the shared runtime into the existing app root and the existing preview decorator exactly once per document; append the real app-composition story to an existing stories directory. Import the same application-owned global CSS from app and preview. Keep Hito theme attributes on documentElement: the primary/geometry controllers require that owning root. Nested theme overrides are outside this setup's proof. Dispose the controller on unmount; do not mount two ThemeRuntime owners in one document (including per-story decorators combined with this global decorator). Existing providers/decorators remain intact. Existing incompatible framework/toolchain combinations require their own validation.

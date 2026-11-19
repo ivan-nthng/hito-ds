@@ -1,0 +1,16 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "skipLibCheck": true
+  },
+  "include": [
+    "src",
+    ".storybook",
+    "user-stories"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "storybook-static"
+  ]
+}
